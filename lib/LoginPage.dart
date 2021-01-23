@@ -194,11 +194,11 @@ class _LoginPageState extends State<LoginPage> {
                       emailController.text = "";
                       passwordController.text = "";
 
-                      /* Navigator.push(
+                      Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Dynamic(),
-                          )); */
+                            builder: (context) => LoginPage(),
+                          ));
                     },
                     child: Text(
                       "LOGIN",
