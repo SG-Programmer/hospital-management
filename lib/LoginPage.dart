@@ -6,290 +6,139 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool rememberMe = false;
-
-  Color sk = Colors.black;
-
   @override
   Widget build(BuildContext context) {
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      body: Container(
-        height: double.infinity,
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomCenter,
-                colors: [Colors.blue[300], Colors.blue[900]])),
-        padding: EdgeInsets.only(
-            top: height * 0.11, left: width * 0.01, right: width * 0.01),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                alignment: Alignment.center,
-                child: Text(
-                  "Sign In",
-                  style: TextStyle(
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white),
+      backgroundColor: Colors.white70,
+      body: SafeArea(
+          child: Stack(
+        children: [
+          Container(
+            height: height * 0.6,
+            width: double.infinity,
+            color: Colors.pink[400],
+            child: Padding(
+              padding: EdgeInsets.only(left: width * 0.06, top: height * 0.1),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Login to your Account",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 32.0),
+                  ),
+                  SizedBox(
+                    height: height * 0.01,
+                  ),
+                  Text(
+                    "Better Care and Better Understanding.",
+                    style: TextStyle(fontSize: 14.0, color: Colors.white),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: height * 0.3),
+            child: Align(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(18.0),
+                  color: Colors.white,
                 ),
-              ),
-              Container(
-                margin:
-                    EdgeInsets.only(left: width * 0.05, right: width * 0.05),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Email",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.w800),
-                    ),
-                    SizedBox(
-                      height: height * 0.02,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black26,
-                                offset: Offset(5, 3),
-                                blurRadius: 9.1,
-                                spreadRadius: 0.1)
-                          ],
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(17.0)),
-                      child: TextField(
-                        cursorColor: Colors.white,
-                        style: TextStyle(color: Colors.white),
-                        onChanged: (value) {},
-                        controller: emailController,
-                        decoration: InputDecoration(
-                            hintText: "Enter your Email",
-                            isDense: true,
-                            contentPadding: EdgeInsets.only(
-                                top: height * 0.02,
-                                right: width * 0.02,
-                                bottom: height * 0.02,
-                                left: width * 0.02),
-                            prefixIcon: Icon(
-                              Icons.email,
-                              color: Colors.white,
-                            ),
-                            hintStyle: TextStyle(color: Colors.white70),
-                            border: InputBorder.none,
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(17.0),
-                                borderSide: BorderSide(color: Colors.white))),
-                      ),
-                    ),
-                    SizedBox(
-                      height: height * 0.04,
-                    ),
-                    Text(
-                      "Password",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.w800),
-                    ),
-                    SizedBox(
-                      height: height * 0.01,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black38,
-                                blurRadius: 9.1,
-                                offset: Offset(2, 2),
-                                spreadRadius: 0.1)
-                          ],
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(17.0)),
-                      child: TextField(
-                        cursorColor: Colors.white,
-                        style: TextStyle(color: Colors.white),
-                        controller: passwordController,
-                        decoration: InputDecoration(
-                            hintText: "Enter your Password",
-                            isDense: true,
-                            contentPadding: EdgeInsets.only(
-                                top: height * 0.02,
-                                right: width * 0.02,
-                                bottom: height * 0.02,
-                                left: width * 0.02),
-                            prefixIcon: Icon(
-                              Icons.vpn_key,
-                              color: Colors.white,
-                            ),
-                            hintStyle: TextStyle(color: Colors.white70),
-                            border: InputBorder.none,
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
-                                borderRadius: BorderRadius.circular(17.0))),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Container(
-                alignment: Alignment.centerRight,
-                child: FlatButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Forgot Password?",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.w600),
-                    )),
-              ),
-              Container(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  child: Row(
+                height: height * 0.5,
+                width: width * 0.8,
+                child: Padding(
+                  padding:
+                      EdgeInsets.only(left: width * 0.04, right: width * 0.04),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Checkbox(
-                          value: rememberMe,
-                          onChanged: (value) {
-                            setState(() {
-                              rememberMe = value;
-                            });
-                          }),
-                      GestureDetector(
-                        child: Text(
-                          "RememberMe",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onTap: () {
-                          setState(() {
-                            rememberMe == true
-                                ? rememberMe = false
-                                : rememberMe = true;
-                          });
-                          print(rememberMe);
-                        },
+                      SizedBox(
+                        height: height * 0.06,
                       ),
+                      TextField(
+                        decoration: InputDecoration(hintText: "E-mail Address"),
+                      ),
+                      SizedBox(
+                        height: height * 0.03,
+                      ),
+                      TextField(
+                        decoration: InputDecoration(hintText: "Password"),
+                      ),
+                      SizedBox(
+                        height: height * 0.02,
+                      ),
+                      Text("Forgot Password ?"),
+                      SizedBox(
+                        height: height * 0.04,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.pink[900],
+                            borderRadius: BorderRadius.circular(12.0)),
+                        height: height * 0.06,
+                        width: double.infinity,
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0)),
+                          onPressed: null,
+                          child: Text(
+                            "Login",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: height * 0.05,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Don't have an Account ?"),
+                          Text("Register",
+                              style: TextStyle(
+                                color: Colors.orange,
+                              ))
+                        ],
+                      )
                     ],
                   ),
                 ),
               ),
-              SizedBox(
-                height: height * 0.03,
-              ),
-              Container(
-                  height: height * 0.06,
-                  width: width * 0.9,
-                  child: RaisedButton(
-                    disabledColor: Colors.white,
-                    onPressed: () {
-                      print("Email:-" +
-                          emailController.text +
-                          "Password:-" +
-                          passwordController.text);
-                      emailController.text = "";
-                      passwordController.text = "";
-
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LoginPage(),
-                          ));
-                    },
-                    child: Text(
-                      "LOGIN",
-                      style: TextStyle(
-                          color: Colors.blue[900],
-                          fontSize: 19.0,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50.0)),
-                  )),
-              SizedBox(
-                height: height * 0.03,
-              ),
-              Container(
-                child: Column(
-                  children: [
-                    Text(
-                      "-OR-",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.w600),
-                    ),
-                    SizedBox(
-                      height: height * 0.01,
-                    ),
-                    Text(
-                      "Sing in With",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.w600),
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: height * 0.03,
-              ),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        print("Facebook");
-                      },
-                      child: CircleAvatar(
-                        child: Text("F"),
-                        maxRadius: 28.0,
-                        backgroundColor: Colors.white,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        print("Google");
-                      },
-                      child: CircleAvatar(
-                        child: Text("G"),
-                        maxRadius: 28.0,
-                        backgroundColor: Colors.white,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: height * 0.04,
-              ),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Don't have a Account?",
-                      style: TextStyle(
-                        color: Colors.white60,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Text(
-                        "Sing In",
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.w500),
-                      ),
-                    )
-                  ],
-                ),
-              )
-            ],
+            ),
           ),
-        ),
-      ),
+          Padding(
+            padding: EdgeInsets.only(right: 68.0, bottom: height * 0.2),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Container(
+                height: height * 0.15,
+                width: width * 0.30,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(60.0),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                          blurRadius: 15,
+                          color: Colors.black54,
+                          offset: Offset(0, 5),
+                          spreadRadius: 0.01)
+                    ]),
+                child: Icon(
+                  Icons.local_hospital,
+                  size: 60.0,
+                ),
+              ),
+            ),
+          ),
+        ],
+      )),
     );
   }
 }

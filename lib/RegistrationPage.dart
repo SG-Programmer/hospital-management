@@ -19,15 +19,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    // double width = MediaQuery.of(context).size.width;
+    double width = MediaQuery.of(context).size.width;
 
     //!TextFields
     textfield(String hint, String label, Icon icon,
         TextEditingController controllerName) {
       return Padding(
-        padding: EdgeInsets.only(left: height * 0.05, right: height * 0.05),
+        padding: EdgeInsets.only(left: height * 0.04, right: height * 0.04),
         child: Container(
-          height: height * 0.06,
+          height: height * 0.05,
           decoration: BoxDecoration(boxShadow: [
             BoxShadow(
                 blurRadius: 2.0,
@@ -137,7 +137,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             onPressed: null,
                             child: Text(
                               "Forgot Password?",
-                              style: TextStyle(color: Colors.blue[800]),
+                              style: TextStyle(
+                                  color: Colors.blue[800],
+                                  fontSize: height * 0.014),
                             ))
                       ],
                     ),
