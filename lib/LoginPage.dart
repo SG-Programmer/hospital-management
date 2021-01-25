@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hospital_management/HomPage.dart';
+import 'package:hospital_management/RegistrationStep.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -12,14 +14,14 @@ class _LoginPageState extends State<LoginPage> {
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      backgroundColor: Colors.white70,
-      body: SafeArea(
-          child: Stack(
+      resizeToAvoidBottomPadding: false,
+      backgroundColor: Colors.white,
+      body: Stack(
         children: [
           Container(
             height: height * 0.6,
             width: double.infinity,
-            color: Colors.pink[400],
+            color: Colors.blue[400],
             child: Padding(
               padding: EdgeInsets.only(left: width * 0.06, top: height * 0.1),
               child: Column(
@@ -63,13 +65,16 @@ class _LoginPageState extends State<LoginPage> {
                         height: height * 0.06,
                       ),
                       TextField(
-                        decoration: InputDecoration(hintText: "E-mail Address"),
+                        decoration: InputDecoration(
+                            hintText: "E-mail Address",
+                            prefixIcon: Icon(Icons.email)),
                       ),
                       SizedBox(
                         height: height * 0.03,
                       ),
                       TextField(
-                        decoration: InputDecoration(hintText: "Password"),
+                        decoration: InputDecoration(
+                            hintText: "Password", prefixIcon: Icon(Icons.lock)),
                       ),
                       SizedBox(
                         height: height * 0.02,
@@ -85,9 +90,17 @@ class _LoginPageState extends State<LoginPage> {
                         height: height * 0.06,
                         width: double.infinity,
                         child: RaisedButton(
+                          disabledColor: Colors.pink[800],
+                          color: Colors.blue[800],
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12.0)),
-                          onPressed: null,
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HomePage(),
+                                ));
+                          },
                           child: Text(
                             "Login",
                             style: TextStyle(color: Colors.white),
@@ -101,10 +114,17 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text("Don't have an Account ?"),
-                          Text("Register",
-                              style: TextStyle(
-                                color: Colors.orange,
-                              ))
+                          GestureDetector(
+                              child: Text("Register",
+                                  style: TextStyle(
+                                    color: Colors.orange,
+                                  )),
+                              onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => RegistrationStep(),
+                                    ),
+                                  ))
                         ],
                       )
                     ],
@@ -138,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         ],
-      )),
+      ),
     );
   }
 }
