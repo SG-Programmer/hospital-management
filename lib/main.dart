@@ -3,6 +3,6 @@ import 'LoginPage.dart';
 
 void main() {
   runApp(MaterialApp(
-    home: rmna(),
+    home: LoginPage(),
   ));
 }
