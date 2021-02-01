@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:hospital_management/HomPage.dart';
 import 'package:hospital_management/RegistrationStep.dart';
@@ -19,18 +21,25 @@ class _LoginPageState extends State<LoginPage> {
       body: Stack(
         children: [
           Container(
+            decoration: BoxDecoration(
+                backgroundBlendMode: BlendMode.softLight,
+                color: Colors.white70,
+                image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: NetworkImage(
+                      "https://image.freepik.com/free-photo/portrait-female-doctor-with-interns-background_329181-9253.jpg",
+                    ))),
             height: height * 0.6,
             width: double.infinity,
-            color: Colors.blue[400],
             child: Padding(
-              padding: EdgeInsets.only(left: width * 0.06, top: height * 0.1),
+              padding: EdgeInsets.only(left: width * 0.06, top: height / 5),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     "Login to your Account",
                     style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.blue[900],
                         fontWeight: FontWeight.w600,
                         fontSize: 32.0),
                   ),
@@ -39,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   Text(
                     "Better Care and Better Understanding.",
-                    style: TextStyle(fontSize: 14.0, color: Colors.white),
+                    style: TextStyle(fontSize: 14.0, color: Colors.blue[900]),
                   )
                 ],
               ),
@@ -137,23 +146,10 @@ class _LoginPageState extends State<LoginPage> {
             padding: EdgeInsets.only(right: 68.0, bottom: height * 0.2),
             child: Align(
               alignment: Alignment.centerRight,
-              child: Container(
-                height: height * 0.15,
-                width: width * 0.30,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(60.0),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                          blurRadius: 15,
-                          color: Colors.black54,
-                          offset: Offset(0, 5),
-                          spreadRadius: 0.01)
-                    ]),
-                child: Icon(
-                  Icons.local_hospital,
-                  size: 60.0,
-                ),
+              child: CircleAvatar(
+                radius: 60,
+                backgroundImage: NetworkImage(
+                    "https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8ZGF3bnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"),
               ),
             ),
           ),

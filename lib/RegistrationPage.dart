@@ -14,12 +14,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
     double width = MediaQuery.of(context).size.width;
 /*     TextEditingController name = TextEditingController(); */
 
-    textfield(String hintName) {
+    textfield(String hintName, [Icon iconname]) {
       return Padding(
         padding: EdgeInsets.only(top: height * 0.01),
         child: Container(
           child: TextField(
-            decoration: InputDecoration(hintText: hintName),
+            decoration:
+                InputDecoration(hintText: hintName, prefixIcon: iconname),
           ),
         ),
       );
@@ -39,7 +40,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
             children: [
               Container(
                 width: width / 8,
-                child: textfield("Mr"),
+                child: textfield(
+                  "Mr",
+                ),
               ),
               Container(
                 width: width / 2.6,
@@ -51,11 +54,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
               ),
             ],
           ),
-          textfield("BirthDay"),
-          textfield("Mobile no"),
-          textfield("City"),
-          textfield("PinCode"),
-          textfield("Address"),
+          textfield("BirthDay", Icon(Icons.photo_camera_back)),
+          textfield("Mobile no", Icon(Icons.confirmation_number)),
+          textfield("City", Icon(Icons.location_city)),
+          textfield("PinCode", Icon(Icons.code)),
+          textfield("Address", Icon(Icons.location_city)),
           SizedBox(
             height: height * 0.05,
           ),
