@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
           Container(
             decoration: BoxDecoration(
                 backgroundBlendMode: BlendMode.softLight,
-                color: Colors.white70,
+                color: Colors.white,
                 image: DecorationImage(
                     fit: BoxFit.fill,
                     image: NetworkImage(
