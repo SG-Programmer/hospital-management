@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hospital_management/HomPage.dart';
+import 'package:hospital_management/receptionist/HomPage.dart';
 
 class FinalRegistrationPage extends StatefulWidget {
   @override

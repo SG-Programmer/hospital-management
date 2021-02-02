@@ -1,8 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:hospital_management/HomPage.dart';
-import 'package:hospital_management/RegistrationStep.dart';
+import 'package:hospital_management/receptionist/HomPage.dart';
+import 'package:hospital_management/registration/RegistrationStep.dart';
 
 class LoginPage extends StatefulWidget {
   @override

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hospital_management/FinalRegistrationPage.dart';
-import 'package:hospital_management/LoginPage.dart';
+import 'package:hospital_management/Registration/FinalRegistrationPage.dart';
+import 'package:hospital_management/registration/LoginPage.dart';
 
-import 'package:hospital_management/RegistrationPage.dart';
+import 'package:hospital_management/registration/RegistrationPage.dart';
 
 class RegistrationStep extends StatefulWidget {
   @override
