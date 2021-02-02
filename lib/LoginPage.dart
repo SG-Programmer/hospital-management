@@ -25,21 +25,20 @@ class _LoginPageState extends State<LoginPage> {
                 backgroundBlendMode: BlendMode.softLight,
                 color: Colors.white,
                 image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: NetworkImage(
-                      "https://image.freepik.com/free-photo/portrait-female-doctor-with-interns-background_329181-9253.jpg",
-                    ))),
-            height: height * 0.6,
+                    fit: BoxFit.fitWidth,
+                    image: AssetImage('images/LoginBackground.jpg'))),
+            height: height * 0.7,
             width: double.infinity,
             child: Padding(
-              padding: EdgeInsets.only(left: width * 0.06, top: height / 5),
+              padding:
+                  EdgeInsets.only(left: width * 0.06, top: height * 0.1 + 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     "Login to your Account",
                     style: TextStyle(
-                        color: Colors.blue[900],
+                        color: Color(0xffE7EBFE),
                         fontWeight: FontWeight.w600,
                         fontSize: 32.0),
                   ),
@@ -48,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   Text(
                     "Better Care and Better Understanding.",
-                    style: TextStyle(fontSize: 14.0, color: Colors.blue[900]),
+                    style: TextStyle(fontSize: 14.0, color: Color(0xffE7EBFE)),
                   )
                 ],
               ),
@@ -59,6 +58,13 @@ class _LoginPageState extends State<LoginPage> {
             child: Align(
               child: Container(
                 decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 5,
+                      offset: Offset(0, 0),
+                    )
+                  ],
                   borderRadius: BorderRadius.circular(18.0),
                   color: Colors.white,
                 ),
@@ -88,7 +94,12 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(
                         height: height * 0.02,
                       ),
-                      Text("Forgot Password ?"),
+                      Text(
+                        "Forgot Password ?",
+                        style: TextStyle(
+                            color: Color(0xff272549),
+                            fontWeight: FontWeight.w600),
+                      ),
                       SizedBox(
                         height: height * 0.04,
                       ),
@@ -99,8 +110,8 @@ class _LoginPageState extends State<LoginPage> {
                         height: height * 0.06,
                         width: double.infinity,
                         child: RaisedButton(
-                          disabledColor: Colors.pink[800],
-                          color: Colors.blue[800],
+                          disabledColor: Color(0xff1B34B6),
+                          color: Color(0xff1B34B6),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12.0)),
                           onPressed: () {
@@ -126,8 +137,8 @@ class _LoginPageState extends State<LoginPage> {
                           GestureDetector(
                               child: Text("Register",
                                   style: TextStyle(
-                                    color: Colors.orange,
-                                  )),
+                                      color: Color(0xffFF7f2D),
+                                      fontWeight: FontWeight.w600)),
                               onTap: () => Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -147,10 +158,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Align(
               alignment: Alignment.centerRight,
               child: CircleAvatar(
-                radius: 60,
-                backgroundImage: NetworkImage(
-                    "https://images.unsplash.com/photo-1494548162494-384bba4ab999?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8ZGF3bnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"),
-              ),
+                  radius: 60, backgroundImage: AssetImage('images/mecare.png')),
             ),
           ),
         ],

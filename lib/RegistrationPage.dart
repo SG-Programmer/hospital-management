@@ -12,6 +12,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+
 /*     TextEditingController name = TextEditingController(); */
 
     textfield(String hintName, [Icon iconname]) {
