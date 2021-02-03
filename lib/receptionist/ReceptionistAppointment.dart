@@ -98,6 +98,7 @@ class _ReceptionistAppointmentState extends State<ReceptionistAppointment>
         ),
         body: TabBarView(
           controller: controller,
+          physics: NeverScrollableScrollPhysics(),
           children: [Online(), Offline(), Upcomming(), Complite()],
         ));
   }
