@@ -8,8 +8,8 @@ class ReceptionistChat extends StatefulWidget {
 class _ReceptionistChatState extends State<ReceptionistChat> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text("Chat Page"),
+    return Stack(
+      children: [],
     );
   }
 }

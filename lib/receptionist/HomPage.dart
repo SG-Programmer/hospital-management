@@ -7,7 +7,6 @@ import 'ReceptionistDoctor.dart';
 import 'ReceptionistPatient.dart';
 
 class HomePage extends StatefulWidget {
-  static bool bottomsheet = false;
   int indexOfTabs;
   HomePage(this.indexOfTabs);
   @override
@@ -26,14 +25,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    clickme() {
-      return Container(
-        height: 200,
-        color: Colors.red,
-      );
-    }
-
-    var column = Column(
+    return Scaffold(
+        body: Column(
       children: [
         Expanded(
           child: TabBarView(
@@ -69,10 +62,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           },
         )
       ],
-    );
-    return Scaffold(
-      body: column,
-      bottomSheet: HomePage.bottomsheet ? clickme() : null,
-    );
+    ));
   }
 }
