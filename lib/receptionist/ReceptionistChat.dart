@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hospital_management/Chat.dart';
+import 'package:hospital_management/ChatPage.dart';
 import 'package:hospital_management/utils/size.dart';
 
 class ReceptionistChat extends StatefulWidget {
@@ -47,7 +48,7 @@ class _ReceptionistChatState extends State<ReceptionistChat> {
       children: [
         Container(
           height: screenHeight * 0.3,
-          color: Color(0xff7565f7),
+          color: Color(0xff465efc),
         ),
         Padding(
           padding: EdgeInsets.only(
@@ -65,11 +66,21 @@ class _ReceptionistChatState extends State<ReceptionistChat> {
                 top: screenHeight * 0.05, left: screenWidth * 0.06),
             height: screenHeight * 0.8,
             width: double.infinity,
-            color: Color(0xffEAEAF1),
+            color: Color(0xfff5f6f1),
             child: ListView.builder(
               itemCount: profileList.length,
               itemBuilder: (BuildContext context, int index) {
-                return chat(profilePhoto[index]);
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ChatPage("Dr.Jatin Patel", profilePhoto[index]),
+                        ));
+                  },
+                  child: chat(profilePhoto[index]),
+                );
               },
             ),
           ),
@@ -78,7 +89,8 @@ class _ReceptionistChatState extends State<ReceptionistChat> {
           padding: EdgeInsets.only(top: screenHeight * 0.2 - 27),
           child: Container(
             decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(23.0)),
+                color: Color(0xffffffff),
+                borderRadius: BorderRadius.circular(23.0)),
             height: screenHeight * 0.2,
             width: double.infinity,
             child: Column(
