@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hospital_management/receptionist/HomPage.dart';
 
 class DashBord extends StatefulWidget {
   @override
@@ -200,7 +201,11 @@ class _DashBordState extends State<DashBord> {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
-                            print("object");
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HomePage(index),
+                                ));
                           },
                           child: Container(
                               alignment: Alignment.center,

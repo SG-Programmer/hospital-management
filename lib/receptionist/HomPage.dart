@@ -8,15 +8,19 @@ import 'ReceptionistPatient.dart';
 
 class HomePage extends StatefulWidget {
   static bool bottomsheet = false;
+  int indexOfTabs;
+  HomePage(this.indexOfTabs);
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   TabController navcontroller;
+
   @override
   void initState() {
     navcontroller = TabController(length: 4, vsync: this);
+    navcontroller.index = widget.indexOfTabs;
     super.initState();
   }
 
