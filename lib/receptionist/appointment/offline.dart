@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hospital_management/receptionist/List.dart';
+import 'package:hospital_management/utils/size.dart';
 
 class Offline extends StatefulWidget {
   @override
@@ -9,8 +10,7 @@ class Offline extends StatefulWidget {
 class _OfflineState extends State<Offline> {
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    ScreenSize.setSize(context);
 
     return Scaffold(
         floatingActionButton: FloatingActionButton(
@@ -24,12 +24,12 @@ class _OfflineState extends State<Offline> {
                 context: context,
                 builder: (BuildContext context) {
                   return Container(
-                    height: height * 0.6,
+                    height: screenHeight * 0.6,
                   );
                 });
           },
           child: Icon(Icons.add),
         ),
-        body: listOfCard(height, width));
+        body: listOfCard(screenHeight, screenWidth));
   }
 }

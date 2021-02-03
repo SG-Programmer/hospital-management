@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hospital_management/utils/size.dart';
 
 class RegistrationPage extends StatefulWidget {
   TabController controller;
@@ -19,14 +20,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    ScreenSize.setSize(context);
 
 /*     TextEditingController name = TextEditingController(); */
 
     textfield(String hintName, String labeltext, [Icon iconname]) {
       return Padding(
-        padding: EdgeInsets.only(top: height * 0.01),
+        padding: EdgeInsets.only(top: screenHeight * 0.01),
         child: Container(
           child: TextField(
             obscureText: true,
@@ -54,28 +54,28 @@ class _RegistrationPageState extends State<RegistrationPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                width: width / 8,
+                width: screenWidth / 8,
                 child: textfield(
                   "Mr",
                   "Mr",
                 ),
               ),
               Container(
-                width: width / 2.6,
+                width: screenWidth / 2.6,
                 child: textfield("Last Name", "First Name"),
               ),
               Container(
-                width: width / 2.6,
+                width: screenWidth / 2.6,
                 child: textfield("Last Name", "Last Name"),
               ),
             ],
           ),
           SizedBox(
-            height: height * 0.01,
+            height: screenHeight * 0.01,
           ),
           Container(
-            height: height * 0.09,
-            padding: EdgeInsets.only(left: width * 0.03),
+            height: screenHeight * 0.09,
+            padding: EdgeInsets.only(left: screenWidth * 0.03),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4.0), border: Border.all()),
             child: Row(
@@ -85,7 +85,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   children: [
                     Icon(Icons.calendar_today),
                     SizedBox(
-                      width: width * 0.02,
+                      width: screenWidth * 0.02,
                     ),
                     Text(date.day.toString() +
                         "/" +
@@ -107,7 +107,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           textfield("PinCode", "PinCode", Icon(Icons.code)),
           textfield("Address", "Address", Icon(Icons.location_city)),
           SizedBox(
-            height: height * 0.05,
+            height: screenHeight * 0.05,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -117,8 +117,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   borderRadius: BorderRadius.circular(12.0),
                   color: Colors.yellow,
                 ),
-                height: height * 0.07,
-                width: width * 0.4,
+                height: screenHeight * 0.07,
+                width: screenWidth * 0.4,
                 child: RaisedButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0)),

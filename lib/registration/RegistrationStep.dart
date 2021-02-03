@@ -3,6 +3,7 @@ import 'package:hospital_management/Registration/FinalRegistrationPage.dart';
 import 'package:hospital_management/registration/LoginPage.dart';
 
 import 'package:hospital_management/registration/RegistrationPage.dart';
+import 'package:hospital_management/utils/size.dart';
 
 class RegistrationStep extends StatefulWidget {
   @override
@@ -22,8 +23,7 @@ class _RegistrationStepState extends State<RegistrationStep>
   int i = 0;
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    /*  double width = MediaQuery.of(context).size.width; */
+    ScreenSize.setSize(context);
 
     Color on = Colors.deepOrange[600];
     Color off = Colors.deepOrange[300];
@@ -34,8 +34,8 @@ class _RegistrationStepState extends State<RegistrationStep>
         children: [
           Container(
             alignment: Alignment.center,
-            height: height * 0.05,
-            width: height * 0.05,
+            height: screenHeight * 0.05,
+            width: screenHeight * 0.05,
             decoration: BoxDecoration(
                 color: colorname, borderRadius: BorderRadius.circular(8.0)),
             child: Text(
@@ -44,7 +44,7 @@ class _RegistrationStepState extends State<RegistrationStep>
             ),
           ),
           SizedBox(
-            height: height * 0.01,
+            height: screenHeight * 0.01,
           ),
           Text(data),
         ],
@@ -74,7 +74,7 @@ class _RegistrationStepState extends State<RegistrationStep>
             child: Column(
               children: [
                 Container(
-                    height: height / 7,
+                    height: screenHeight / 7,
                     child: Padding(
                       padding: EdgeInsets.only(top: 34.0),
                       child: Column(
@@ -94,8 +94,8 @@ class _RegistrationStepState extends State<RegistrationStep>
                       ),
                     )),
                 Container(
-                  height: height / 1.2,
-                  padding: EdgeInsets.only(top: height * 0.02),
+                  height: screenHeight / 1.2,
+                  padding: EdgeInsets.only(top: screenHeight * 0.02),
                   width: double.infinity,
                   child: TabBarView(
                     controller: controller,

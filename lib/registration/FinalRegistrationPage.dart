@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hospital_management/receptionist/DashBord.dart';
+import 'package:hospital_management/utils/size.dart';
 
 class FinalRegistrationPage extends StatefulWidget {
   @override
@@ -9,12 +10,11 @@ class FinalRegistrationPage extends StatefulWidget {
 class _FinalRegistrationPageState extends State<FinalRegistrationPage> {
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    ScreenSize.setSize(context);
 
     textfield(String hintName, String lablename) {
       return Padding(
-        padding: EdgeInsets.only(top: height * 0.01),
+        padding: EdgeInsets.only(top: screenHeight * 0.01),
         child: Container(
           child: TextField(
             decoration: InputDecoration(
@@ -37,15 +37,15 @@ class _FinalRegistrationPageState extends State<FinalRegistrationPage> {
           textfield("********", "Password"),
           textfield("********", "Conform Password"),
           SizedBox(
-            height: height * 0.07,
+            height: screenHeight * 0.07,
           ),
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12.0),
               color: Colors.yellow,
             ),
-            height: height * 0.07,
-            width: width * 0.4,
+            height: screenHeight * 0.07,
+            width: screenWidth * 0.4,
             child: RaisedButton(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0)),

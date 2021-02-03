@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hospital_management/receptionist/List.dart';
+import 'package:hospital_management/utils/size.dart';
 
 class Complite extends StatefulWidget {
   @override
@@ -9,8 +10,7 @@ class Complite extends StatefulWidget {
 class _CompliteState extends State<Complite> {
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-    return listOfCard(height, width);
+    ScreenSize.setSize(context);
+    return listOfCard(screenHeight, screenWidth);
   }
 }

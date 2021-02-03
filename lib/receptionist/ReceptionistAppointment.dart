@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hospital_management/utils/size.dart';
 
 import 'appointment/complite.dart';
 import 'appointment/offline.dart';
@@ -17,8 +18,7 @@ class _ReceptionistAppointmentState extends State<ReceptionistAppointment>
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    ScreenSize.setSize(context);
     controller = TabController(length: 4, vsync: this);
     List<AssetImage> imageList = [
       AssetImage('images/ra1.png'),
@@ -29,15 +29,15 @@ class _ReceptionistAppointmentState extends State<ReceptionistAppointment>
     return Scaffold(
         appBar: AppBar(
           bottom: PreferredSize(
-              preferredSize: Size(0, height * 0.2),
+              preferredSize: Size(0, screenHeight * 0.2),
               child: Column(
                 children: [
                   Container(
                     margin: EdgeInsets.only(
-                        bottom: height * 0.03,
-                        left: width * 0.03,
-                        right: width * 0.03),
-                    height: height * 0.1 + 40,
+                        bottom: screenHeight * 0.03,
+                        left: screenWidth * 0.03,
+                        right: screenWidth * 0.03),
+                    height: screenHeight * 0.1 + 40,
                     child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: 4,
@@ -50,11 +50,13 @@ class _ReceptionistAppointmentState extends State<ReceptionistAppointment>
                                   color: Colors.blue[200],
                                   borderRadius: BorderRadius.circular(14)),
                               margin: EdgeInsets.only(
-                                  left: width * 0.02, right: width * 0.02),
-                              width: width * 0.3 + 16,
+                                  left: screenWidth * 0.02,
+                                  right: screenWidth * 0.02),
+                              width: screenWidth * 0.3 + 16,
                               child: Padding(
                                 padding: EdgeInsets.only(
-                                    top: height * 0.02, left: width * 0.03),
+                                    top: screenHeight * 0.02,
+                                    left: screenWidth * 0.03),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -80,12 +82,13 @@ class _ReceptionistAppointmentState extends State<ReceptionistAppointment>
                     color: Colors.white,
                     child: TabBar(
                         labelPadding: EdgeInsets.only(
-                            top: height * 0.02, bottom: height * 0.02),
+                            top: screenHeight * 0.02,
+                            bottom: screenHeight * 0.02),
                         controller: controller,
                         labelColor: Colors.black,
                         indicatorColor: Colors.black,
                         indicatorPadding: EdgeInsets.only(
-                            left: width * 0.1, right: width * 0.1),
+                            left: screenWidth * 0.1, right: screenWidth * 0.1),
                         tabs: [
                           Text("online"),
                           Text("Offline"),

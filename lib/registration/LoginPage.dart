@@ -1,8 +1,8 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:hospital_management/receptionist/DashBord.dart';
 import 'package:hospital_management/registration/RegistrationStep.dart';
+import 'package:hospital_management/utils/size.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -12,8 +12,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    ScreenSize.setSize(context);
 
     return Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -27,11 +26,11 @@ class _LoginPageState extends State<LoginPage> {
                 image: DecorationImage(
                     fit: BoxFit.fitWidth,
                     image: AssetImage('images/LoginBackground.jpg'))),
-            height: height * 0.7,
+            height: screenHeight * 0.7,
             width: double.infinity,
             child: Padding(
-              padding:
-                  EdgeInsets.only(left: width * 0.06, top: height * 0.1 + 20),
+              padding: EdgeInsets.only(
+                  left: screenWidth * 0.06, top: screenHeight * 0.1 + 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -43,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
                         fontSize: 32.0),
                   ),
                   SizedBox(
-                    height: height * 0.01,
+                    height: screenHeight * 0.01,
                   ),
                   Text(
                     "Better Care and Better Understanding.",
@@ -54,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: height * 0.3),
+            padding: EdgeInsets.only(top: screenHeight * 0.3),
             child: Align(
               child: Container(
                 decoration: BoxDecoration(
@@ -68,16 +67,16 @@ class _LoginPageState extends State<LoginPage> {
                   borderRadius: BorderRadius.circular(18.0),
                   color: Colors.white,
                 ),
-                height: height * 0.5,
-                width: width * 0.8,
+                height: screenHeight * 0.5,
+                width: screenWidth * 0.8,
                 child: Padding(
-                  padding:
-                      EdgeInsets.only(left: width * 0.04, right: width * 0.04),
+                  padding: EdgeInsets.only(
+                      left: screenWidth * 0.04, right: screenWidth * 0.04),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       SizedBox(
-                        height: height * 0.06,
+                        height: screenHeight * 0.06,
                       ),
                       TextField(
                         decoration: InputDecoration(
@@ -85,14 +84,14 @@ class _LoginPageState extends State<LoginPage> {
                             prefixIcon: Icon(Icons.email)),
                       ),
                       SizedBox(
-                        height: height * 0.03,
+                        height: screenHeight * 0.03,
                       ),
                       TextField(
                         decoration: InputDecoration(
                             hintText: "Password", prefixIcon: Icon(Icons.lock)),
                       ),
                       SizedBox(
-                        height: height * 0.02,
+                        height: screenHeight * 0.02,
                       ),
                       Text(
                         "Forgot Password ?",
@@ -101,13 +100,13 @@ class _LoginPageState extends State<LoginPage> {
                             fontWeight: FontWeight.w600),
                       ),
                       SizedBox(
-                        height: height * 0.04,
+                        height: screenHeight * 0.04,
                       ),
                       Container(
                         decoration: BoxDecoration(
                             color: Colors.pink[900],
                             borderRadius: BorderRadius.circular(12.0)),
-                        height: height * 0.06,
+                        height: screenHeight * 0.06,
                         width: double.infinity,
                         child: RaisedButton(
                           disabledColor: Color(0xff1B34B6),
@@ -128,7 +127,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       SizedBox(
-                        height: height * 0.05,
+                        height: screenHeight * 0.05,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -154,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(right: 68.0, bottom: height * 0.2),
+            padding: EdgeInsets.only(right: 68.0, bottom: screenHeight * 0.2),
             child: Align(
               alignment: Alignment.centerRight,
               child: CircleAvatar(

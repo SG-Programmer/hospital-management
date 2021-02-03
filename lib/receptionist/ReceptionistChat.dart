@@ -9,7 +9,7 @@ class _ReceptionistChatState extends State<ReceptionistChat> {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: [],
+      children: [Container()],
     );
   }
 }

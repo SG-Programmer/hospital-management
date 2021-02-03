@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hospital_management/receptionist/HomPage.dart';
+import 'package:hospital_management/utils/size.dart';
 
 class DashBord extends StatefulWidget {
   @override
@@ -9,8 +10,7 @@ class DashBord extends StatefulWidget {
 class _DashBordState extends State<DashBord> {
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    ScreenSize.setSize(context);
 
     List<String> menulist = ["Appoitment", "Chat", "Doctro", "User", "Five"];
     List<IconData> iconlist = [
@@ -29,9 +29,9 @@ class _DashBordState extends State<DashBord> {
             children: [
               Padding(
                 padding: EdgeInsets.only(
-                    left: width * 0.06,
-                    right: width * 0.06,
-                    top: height * 0.03),
+                    left: screenWidth * 0.06,
+                    right: screenWidth * 0.06,
+                    top: screenHeight * 0.03),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -48,8 +48,8 @@ class _DashBordState extends State<DashBord> {
                 ),
               ),
               Padding(
-                padding:
-                    EdgeInsets.only(top: height * 0.05, left: width * 0.06),
+                padding: EdgeInsets.only(
+                    top: screenHeight * 0.05, left: screenWidth * 0.06),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -76,28 +76,30 @@ class _DashBordState extends State<DashBord> {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                    left: width * 0.03,
-                    right: width * 0.03,
-                    top: height * 0.03),
+                    left: screenWidth * 0.03,
+                    right: screenWidth * 0.03,
+                    top: screenHeight * 0.03),
                 child: Container(
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(360.0)),
-                  height: height * 0.2,
+                  height: screenHeight * 0.2,
                   child: PageView.builder(
                     itemBuilder: (context, index) {
                       return Container(
                         margin: index == 0
                             ? EdgeInsets.only(
-                                left: width * 0.04, right: width * 0.04)
+                                left: screenWidth * 0.04,
+                                right: screenWidth * 0.04)
                             : EdgeInsets.only(
-                                left: width * 0.04, right: width * 0.04),
+                                left: screenWidth * 0.04,
+                                right: screenWidth * 0.04),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                             color: index % 2 == 0
                                 ? Colors.yellow[500]
                                 : Colors.red[300],
                             borderRadius: BorderRadius.circular(30.0)),
-                        height: height * 0.2,
+                        height: screenHeight * 0.2,
                         child: Text(menulist[index]),
                       );
                     },
@@ -106,31 +108,31 @@ class _DashBordState extends State<DashBord> {
                 ),
               ),
               Padding(
-                padding:
-                    EdgeInsets.only(top: height * 0.03, bottom: height * 0.01),
+                padding: EdgeInsets.only(
+                    top: screenHeight * 0.03, bottom: screenHeight * 0.01),
                 child: Container(
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(31.0)),
-                  height: height * 0.1 + 12,
+                  height: screenHeight * 0.1 + 12,
                   child: ListView.builder(
                     itemBuilder: (context, index) {
                       return Container(
                           alignment: Alignment.center,
                           padding: index == 4
-                              ? EdgeInsets.only(right: width * 0.06)
+                              ? EdgeInsets.only(right: screenWidth * 0.06)
                               : EdgeInsets.only(right: 0),
                           margin: index == 0
                               ? EdgeInsets.only(
-                                  left: width * 0.06,
-                                  top: height * 0.01,
-                                  bottom: height * 0.01)
+                                  left: screenWidth * 0.06,
+                                  top: screenHeight * 0.01,
+                                  bottom: screenHeight * 0.01)
                               : EdgeInsets.only(
-                                  left: width * 0.05,
-                                  top: height * 0.01,
-                                  bottom: height * 0.01),
+                                  left: screenWidth * 0.05,
+                                  top: screenHeight * 0.01,
+                                  bottom: screenHeight * 0.01),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(35.0)),
-                          width: width * 0.6,
+                          width: screenWidth * 0.6,
                           child: Container(
                             decoration: BoxDecoration(
                                 color: Colors.white,
@@ -176,9 +178,9 @@ class _DashBordState extends State<DashBord> {
                 alignment: Alignment.bottomLeft,
                 child: Padding(
                   padding: EdgeInsets.only(
-                      left: width * 0.06,
-                      top: width * 0.02,
-                      bottom: width * 0.03),
+                      left: screenWidth * 0.06,
+                      top: screenWidth * 0.02,
+                      bottom: screenWidth * 0.03),
                   child: Text(
                     "Somethig  New Text..!",
                     style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
@@ -189,9 +191,9 @@ class _DashBordState extends State<DashBord> {
                 child: Container(
                   child: GridView.builder(
                       padding: EdgeInsets.only(
-                          top: height * 0.01,
-                          left: width * 0.06,
-                          right: width * 0.06),
+                          top: screenHeight * 0.01,
+                          left: screenWidth * 0.06,
+                          right: screenWidth * 0.06),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
                         crossAxisSpacing: 13,
@@ -228,7 +230,7 @@ class _DashBordState extends State<DashBord> {
                                     size: 35.0,
                                   ),
                                   SizedBox(
-                                    height: height * 0.01,
+                                    height: screenHeight * 0.01,
                                   ),
                                   Text(menulist[index])
                                 ],

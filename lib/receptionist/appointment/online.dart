@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hospital_management/utils/size.dart';
 
 class Online extends StatefulWidget {
   @override
@@ -8,8 +9,7 @@ class Online extends StatefulWidget {
 class _OnlineState extends State<Online> {
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    ScreenSize.setSize(context);
     String data = "4";
     return data == ""
         ? Center(
@@ -30,23 +30,24 @@ class _OnlineState extends State<Online> {
                         color: Colors.blue[50],
                         borderRadius: BorderRadius.circular(20.0)),
                     margin: EdgeInsets.only(
-                        top: height * 0.02,
-                        left: width * 0.06,
-                        right: width * 0.06),
-                    height: height * 0.2 - 40,
+                        top: screenHeight * 0.02,
+                        left: screenWidth * 0.06,
+                        right: screenWidth * 0.06),
+                    height: screenHeight * 0.2 - 40,
                     child: Padding(
                       padding: EdgeInsets.only(
-                          top: height * 0.02, left: width * 0.03),
+                          top: screenHeight * 0.02, left: screenWidth * 0.03),
                       child: Column(
                         children: [
                           Row(
                             children: [
                               Icon(
                                 Icons.supervised_user_circle,
-                                size: height * 0.05,
+                                size: screenHeight * 0.05,
                               ),
                               Padding(
-                                padding: EdgeInsets.only(left: width * 0.03),
+                                padding:
+                                    EdgeInsets.only(left: screenWidth * 0.03),
                                 child: Column(
                                   children: [
                                     Text(
@@ -55,7 +56,7 @@ class _OnlineState extends State<Online> {
                                           fontSize: 15.0,
                                           fontWeight: FontWeight.w500),
                                     ),
-                                    SizedBox(height: height * 0.01 - 5),
+                                    SizedBox(height: screenHeight * 0.01 - 5),
                                     Text(
                                       "+91992266448574",
                                       style: TextStyle(color: Colors.black54),
@@ -67,13 +68,15 @@ class _OnlineState extends State<Online> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                                top: height * 0.01, left: width * 0.1 + 10),
+                                top: screenHeight * 0.01,
+                                left: screenWidth * 0.1 + 10),
                             child: Row(
                               children: [
                                 Container(
-                                  margin: EdgeInsets.only(right: width * 0.03),
-                                  width: width * 0.2 + 19,
-                                  height: height * 0.04 + 7,
+                                  margin: EdgeInsets.only(
+                                      right: screenWidth * 0.03),
+                                  width: screenWidth * 0.2 + 19,
+                                  height: screenHeight * 0.04 + 7,
                                   decoration: BoxDecoration(
                                       color: Colors.white,
                                       border:
@@ -86,8 +89,8 @@ class _OnlineState extends State<Online> {
                                   ),
                                 ),
                                 Container(
-                                  width: width * 0.2 + 19,
-                                  height: height * 0.04 + 7,
+                                  width: screenWidth * 0.2 + 19,
+                                  height: screenHeight * 0.04 + 7,
                                   decoration: BoxDecoration(
                                       color: Colors.white,
                                       border:
