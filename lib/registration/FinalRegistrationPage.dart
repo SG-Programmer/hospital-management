@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hospital_management/receptionist/HomPage.dart';
+import 'package:hospital_management/receptionist/DashBord.dart';
 
 class FinalRegistrationPage extends StatefulWidget {
   @override
@@ -50,11 +50,8 @@ class _FinalRegistrationPageState extends State<FinalRegistrationPage> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0)),
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => HomePage(),
-                    ));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DashBord()));
               },
               child: Text("Complite"),
             ),

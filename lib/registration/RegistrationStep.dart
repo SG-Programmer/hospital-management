@@ -12,6 +12,7 @@ class RegistrationStep extends StatefulWidget {
 class _RegistrationStepState extends State<RegistrationStep>
     with TickerProviderStateMixin {
   TabController controller;
+
   @override
   void initState() {
     super.initState();

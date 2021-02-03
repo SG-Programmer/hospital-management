@@ -8,6 +8,15 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
+  DateTime date = DateTime.now();
+  selectDate(BuildContext context) async {
+    date = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1990),
+        lastDate: DateTime(2022));
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -15,13 +24,18 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
 /*     TextEditingController name = TextEditingController(); */
 
-    textfield(String hintName, [Icon iconname]) {
+    textfield(String hintName, String labeltext, [Icon iconname]) {
       return Padding(
         padding: EdgeInsets.only(top: height * 0.01),
         child: Container(
           child: TextField(
-            decoration:
-                InputDecoration(hintText: hintName, prefixIcon: iconname),
+            obscureText: true,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: hintName,
+              labelText: labeltext,
+              prefixIcon: iconname,
+            ),
           ),
         ),
       );
@@ -43,23 +57,55 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 width: width / 8,
                 child: textfield(
                   "Mr",
+                  "Mr",
                 ),
               ),
               Container(
                 width: width / 2.6,
-                child: textfield("Last Name"),
+                child: textfield("Last Name", "First Name"),
               ),
               Container(
                 width: width / 2.6,
-                child: textfield("Last Name"),
+                child: textfield("Last Name", "Last Name"),
               ),
             ],
           ),
-          textfield("BirthDay", Icon(Icons.photo_camera_back)),
-          textfield("Mobile no", Icon(Icons.confirmation_number)),
-          textfield("City", Icon(Icons.location_city)),
-          textfield("PinCode", Icon(Icons.code)),
-          textfield("Address", Icon(Icons.location_city)),
+          SizedBox(
+            height: height * 0.01,
+          ),
+          Container(
+            height: height * 0.09,
+            padding: EdgeInsets.only(left: width * 0.03),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4.0), border: Border.all()),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.calendar_today),
+                    SizedBox(
+                      width: width * 0.02,
+                    ),
+                    Text(date.day.toString() +
+                        "/" +
+                        date.month.toString() +
+                        "/" +
+                        date.year.toString())
+                  ],
+                ),
+                TextButton(
+                    onPressed: () {
+                      selectDate(context);
+                    },
+                    child: Text("Select Date"))
+              ],
+            ),
+          ),
+          textfield("Mobile no", "Number", Icon(Icons.confirmation_number)),
+          textfield("City", "City", Icon(Icons.location_city)),
+          textfield("PinCode", "PinCode", Icon(Icons.code)),
+          textfield("Address", "Address", Icon(Icons.location_city)),
           SizedBox(
             height: height * 0.05,
           ),
