@@ -70,6 +70,10 @@ class _ReceptionistDoctorState extends State<ReceptionistDoctor> {
                     itemBuilder: (BuildContext context, int index) {
                       return Container(
                         decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: NetworkImage(
+                                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5KVsWtDwcdLRc9q1P9N8leBy_zz9gfKZK1Q&usqp=CAU'),
+                                fit: BoxFit.fill),
                             borderRadius: BorderRadius.circular(20.0),
                             color: Colors.white,
                             boxShadow: [
@@ -120,6 +124,10 @@ class _ReceptionistDoctorState extends State<ReceptionistDoctor> {
                                 height: screenHeight * 0.09,
                                 width: screenWidth * 0.2 - 5,
                                 decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: NetworkImage(
+                                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5KVsWtDwcdLRc9q1P9N8leBy_zz9gfKZK1Q&usqp=CAU'),
+                                      fit: BoxFit.fill),
                                   color: Colors.black,
                                   borderRadius: BorderRadius.circular(12),
                                 ),
