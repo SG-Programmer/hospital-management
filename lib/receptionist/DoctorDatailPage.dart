@@ -118,80 +118,85 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                      left: screenWidth * 0.05, bottom: screenHeight * 0.02),
+                      left: screenWidth * 0.05, bottom: screenHeight * 0.01),
                   child: Text(
                     "Upcoming Schedules",
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
                   ),
                 ),
-                Container(
-                  height: screenHeight * 0.2,
-                  child: ListView.builder(
-                    itemCount: 3,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        decoration: BoxDecoration(
-                            color: Colors.green[100],
-                            borderRadius: BorderRadius.circular(11)),
-                        height: screenHeight * 0.09 + 14,
-                        margin: EdgeInsets.only(
-                            left: screenWidth * 0.05,
-                            right: screenWidth * 0.05,
-                            bottom: screenHeight * 0.01),
-                        child: Padding(
-                          padding: EdgeInsets.only(left: screenWidth * 0.03),
-                          child: Row(
-                            children: [
-                              Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.green[200],
-                                      borderRadius: BorderRadius.circular(11)),
-                                  alignment: Alignment.center,
-                                  height: screenHeight * 0.07,
-                                  width: screenWidth * 0.1 + 8,
+                Expanded(
+                  child: Container(
+                    height: screenHeight * 0.2,
+                    child: ListView.builder(
+                      itemCount: 3,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          decoration: BoxDecoration(
+                              color: Colors.green[100],
+                              borderRadius: BorderRadius.circular(11)),
+                          height: screenHeight * 0.09 + 14,
+                          margin: EdgeInsets.only(
+                              left: screenWidth * 0.05,
+                              right: screenWidth * 0.05,
+                              bottom: screenHeight * 0.01),
+                          child: Padding(
+                            padding: EdgeInsets.only(left: screenWidth * 0.03),
+                            child: Row(
+                              children: [
+                                Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.green[200],
+                                        borderRadius:
+                                            BorderRadius.circular(11)),
+                                    alignment: Alignment.center,
+                                    height: screenHeight * 0.07,
+                                    width: screenWidth * 0.1 + 8,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "2",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18,
+                                              color: Colors.green[700]),
+                                        ),
+                                        Text(
+                                          "Jan",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 10,
+                                              color: Colors.green[700]),
+                                        ),
+                                      ],
+                                    )),
+                                Padding(
+                                  padding:
+                                      EdgeInsets.only(left: screenWidth * 0.04),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        "2",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18,
-                                            color: Colors.green[700]),
-                                      ),
-                                      Text(
-                                        "Jan",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 10,
-                                            color: Colors.green[700]),
-                                      ),
+                                      Text("Consultation",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w800)),
+                                      Text("Sunday .  9am-11am",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.black54,
+                                              fontWeight: FontWeight.w400))
                                     ],
-                                  )),
-                              Padding(
-                                padding:
-                                    EdgeInsets.only(left: screenWidth * 0.04),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Consultation",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w800)),
-                                    Text("Sunday .  9am-11am",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.black54,
-                                            fontWeight: FontWeight.w400))
-                                  ],
-                                ),
-                              )
-                            ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                 )
               ],

@@ -52,7 +52,7 @@ class _ChatPageState extends State<ChatPage> {
                           onPressed: null),
                       Container(
                         height: screenHeight * 0.05,
-                        width: screenWidth * 0.7 + 15,
+                        width: double.infinity,
                         child: TextField(
                           decoration: InputDecoration(
                               contentPadding: EdgeInsets.only(
