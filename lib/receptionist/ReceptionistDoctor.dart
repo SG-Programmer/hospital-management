@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hospital_management/receptionist/DoctorDatailPage.dart';
 import 'package:hospital_management/utils/size.dart';
 
 class ReceptionistDoctor extends StatefulWidget {
@@ -103,88 +104,98 @@ class _ReceptionistDoctorState extends State<ReceptionistDoctor> {
                     child: ListView.builder(
                       itemCount: 5,
                       itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          margin: EdgeInsets.only(
-                              left: screenWidth * 0.09,
-                              bottom: screenHeight * 0.02,
-                              right: screenWidth * 0.07),
-                          height: screenHeight * 0.09 + 10,
-                          decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                    blurRadius: 7,
-                                    color: Colors.black26,
-                                    offset: Offset(0, 0))
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DoctorDatailPage(),
+                                ));
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(
+                                left: screenWidth * 0.09,
+                                bottom: screenHeight * 0.02,
+                                right: screenWidth * 0.07),
+                            height: screenHeight * 0.09 + 10,
+                            decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                      blurRadius: 7,
+                                      color: Colors.black26,
+                                      offset: Offset(0, 0))
+                                ],
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(14)),
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: screenHeight * 0.09,
+                                  width: screenWidth * 0.2 - 5,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5KVsWtDwcdLRc9q1P9N8leBy_zz9gfKZK1Q&usqp=CAU'),
+                                        fit: BoxFit.fill),
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: screenWidth * 0.02,
+                                      top: screenHeight * 0.02 - 5),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Dr. Parth Patel",
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                      SizedBox(
+                                        height: screenHeight * 0.01 - 5,
+                                      ),
+                                      Text(
+                                        "Cough & Cold",
+                                        style: TextStyle(
+                                            color: Colors.black38,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      SizedBox(
+                                        height: screenHeight * 0.01,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.star,
+                                            size: 15,
+                                            color: Colors.yellow[600],
+                                          ),
+                                          Text(" 5.0"),
+                                          SizedBox(width: screenWidth * 0.01),
+                                          Icon(
+                                            Icons.circle,
+                                            color: Colors.blue[500],
+                                            size: 11,
+                                          ),
+                                          SizedBox(width: screenWidth * 0.01),
+                                          Text("10:04 AM - 3:30 PM",
+                                              style: TextStyle(
+                                                color: Colors.black54,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 12,
+                                              ))
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
                               ],
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(14)),
-                          child: Row(
-                            children: [
-                              Container(
-                                height: screenHeight * 0.09,
-                                width: screenWidth * 0.2 - 5,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                      image: NetworkImage(
-                                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5KVsWtDwcdLRc9q1P9N8leBy_zz9gfKZK1Q&usqp=CAU'),
-                                      fit: BoxFit.fill),
-                                  color: Colors.black,
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    left: screenWidth * 0.02,
-                                    top: screenHeight * 0.02 - 5),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Dr. Parth Patel",
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                    SizedBox(
-                                      height: screenHeight * 0.01 - 5,
-                                    ),
-                                    Text(
-                                      "Cough & Cold",
-                                      style: TextStyle(
-                                          color: Colors.black38,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    SizedBox(
-                                      height: screenHeight * 0.01,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.star,
-                                          size: 15,
-                                          color: Colors.yellow[600],
-                                        ),
-                                        Text(" 5.0"),
-                                        SizedBox(width: screenWidth * 0.01),
-                                        Icon(
-                                          Icons.circle,
-                                          color: Colors.blue[500],
-                                          size: 11,
-                                        ),
-                                        SizedBox(width: screenWidth * 0.01),
-                                        Text("10:04 AM - 3:30 PM",
-                                            style: TextStyle(
-                                              color: Colors.black54,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 12,
-                                            ))
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
                         );
                       },
