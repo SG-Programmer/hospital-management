@@ -11,6 +11,7 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  TextEditingController msgTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,8 +53,9 @@ class _ChatPageState extends State<ChatPage> {
                           onPressed: null),
                       Container(
                         height: screenHeight * 0.05,
-                        width: double.infinity,
+                        width: screenWidth * 0.7 + 10,
                         child: TextField(
+                          controller: msgTextController,
                           decoration: InputDecoration(
                               contentPadding: EdgeInsets.only(
                                   top: screenHeight * 0.01,
@@ -65,7 +67,15 @@ class _ChatPageState extends State<ChatPage> {
                       ),
                       IconButton(
                           icon: Icon(Icons.double_arrow_rounded),
-                          onPressed: null)
+                          onPressed: () {
+                            setState(() {
+                              messages.add(ChatMessage(
+                                messageContent: msgTextController.text,
+                                messageType: "sender",
+                              ));
+                              msgTextController.text = "";
+                            });
+                          })
                     ],
                   )),
             ),

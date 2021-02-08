@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ReceptionistAppointment(),
               ReceptionistChat(),
               ReceptionistDoctor(),
-              ReceptionistPatient()
+              ReceptionistPatient(),
             ],
             physics: NeverScrollableScrollPhysics(),
           ),
