@@ -34,7 +34,7 @@ class _ReceptionistAppointmentState extends State<ReceptionistAppointment>
                 children: [
                   Container(
                     margin: EdgeInsets.only(
-                        bottom: screenHeight * 0.03,
+                        bottom: screenHeight * 0.01,
                         left: screenWidth * 0.03,
                         right: screenWidth * 0.03),
                     height: screenHeight * 0.1 + 40,

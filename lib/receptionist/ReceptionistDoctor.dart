@@ -18,6 +18,18 @@ class _ReceptionistDoctorState extends State<ReceptionistDoctor> {
         ),
         Padding(
           padding: EdgeInsets.only(
+              left: screenWidth * 0.02, top: screenHeight * 0.02),
+          child: IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+        ),
+        Padding(
+          padding: EdgeInsets.only(
               left: screenWidth * 0.09, top: screenHeight * 0.1 + 20),
           child: Row(
             children: [

@@ -52,6 +52,18 @@ class _ReceptionistChatState extends State<ReceptionistChat> {
         ),
         Padding(
           padding: EdgeInsets.only(
+              left: screenWidth * 0.02, top: screenHeight * 0.02),
+          child: IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+        ),
+        Padding(
+          padding: EdgeInsets.only(
               left: screenWidth * 0.05, top: screenHeight * 0.09),
           child: Text(
             "Chats",
