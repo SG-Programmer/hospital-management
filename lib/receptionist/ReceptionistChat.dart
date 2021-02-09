@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hospital_management/ChatList.dart';
+import 'package:hospital_management/common/ChatList.dart';
 
 class ReceptionistChat extends StatefulWidget {
   @override

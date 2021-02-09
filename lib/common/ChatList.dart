@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hospital_management/utils/size.dart';
 import 'ChatPage.dart';
-import 'utils/size.dart';
+import '../utils/size.dart';
 
 class ChatList extends StatefulWidget {
   @override

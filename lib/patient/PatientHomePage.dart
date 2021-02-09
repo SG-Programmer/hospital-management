@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hospital_management/patient/PatientChat.dart';
+import 'package:hospital_management/utils/size.dart';
 
 class PatientHomePage extends StatefulWidget {
   @override
@@ -24,7 +25,13 @@ class _PatientHomePageState extends State<PatientHomePage>
         ),
         bottomNavigationBar: TabBar(
           controller: controller,
-          tabs: [Icon(Icons.verified_user)],
+          tabs: [
+            Icon(
+              Icons.message,
+              color: Colors.blue,
+              size: screenHeight * 0.05,
+            )
+          ],
         ));
   }
 }

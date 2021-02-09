@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hospital_management/utils/size.dart';
-import 'package:hospital_management/ChatPage.dart';
+import 'package:hospital_management/common/ChatPage.dart';
 
 class PatientList extends StatefulWidget {
   TabController controller;
