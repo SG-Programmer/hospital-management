@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hospital_management/utils/size.dart';
 
-class DoctorDatailPage extends StatefulWidget {
+class DoctorList extends StatefulWidget {
   @override
-  _DoctorDatailPageState createState() => _DoctorDatailPageState();
+  _DoctorListState createState() => _DoctorListState();
 }
 
-class _DoctorDatailPageState extends State<DoctorDatailPage> {
+class _DoctorListState extends State<DoctorList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
