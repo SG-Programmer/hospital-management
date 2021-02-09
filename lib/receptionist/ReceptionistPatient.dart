@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hospital_management/receptionist/PatientDatails.dart';
 import 'package:hospital_management/receptionist/PatientList.dart';
-import 'package:hospital_management/utils/size.dart';
 
 class ReceptionistPatient extends StatefulWidget {
   @override
