@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:hospital_management/patient/PatientHomePage.dart';
 import 'package:hospital_management/receptionist/DashBord.dart';
 import 'package:hospital_management/registration/RegistrationStep.dart';
 import 'package:hospital_management/utils/size.dart';
@@ -10,6 +11,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     ScreenSize.setSize(context);
@@ -79,6 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                         height: screenHeight * 0.06,
                       ),
                       TextField(
+                        controller: emailController,
                         decoration: InputDecoration(
                             hintText: "E-mail Address",
                             prefixIcon: Icon(Icons.email)),
@@ -87,6 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                         height: screenHeight * 0.03,
                       ),
                       TextField(
+                        controller: passController,
                         decoration: InputDecoration(
                             hintText: "Password", prefixIcon: Icon(Icons.lock)),
                       ),
@@ -114,11 +119,17 @@ class _LoginPageState extends State<LoginPage> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12.0)),
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => DashBord(),
-                                ));
+                            emailController.text == "admin"
+                                ? Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => DashBord(),
+                                    ))
+                                : Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => PatientHomePage(),
+                                    ));
                           },
                           child: Text(
                             "Login",

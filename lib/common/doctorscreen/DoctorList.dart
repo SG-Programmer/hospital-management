@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hospital_management/utils/size.dart';
 
+import 'DoctorDatailPage.dart';
+
 class DoctorList extends StatefulWidget {
   @override
   _DoctorListState createState() => _DoctorListState();
@@ -9,188 +11,202 @@ class DoctorList extends StatefulWidget {
 class _DoctorListState extends State<DoctorList> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Stack(
+    return Stack(
       children: [
         Container(
-          height: screenHeight * 0.3 + 50,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('images/doctorProfile.png'),
-                  fit: BoxFit.fill)),
+          height: screenHeight * 0.3,
+          color: Colors.blue[500],
         ),
         Padding(
           padding: EdgeInsets.only(
-            top: screenHeight * 0.03,
-          ),
+              left: screenWidth * 0.02, top: screenHeight * 0.02),
           child: IconButton(
               icon: Icon(
-                Icons.arrow_back_ios_rounded,
+                Icons.arrow_back,
                 color: Colors.white,
               ),
-              onPressed: () => Navigator.pop(context)),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
         ),
         Padding(
-          padding: EdgeInsets.only(top: screenHeight * 0.3 + 10),
+          padding: EdgeInsets.only(
+              left: screenWidth * 0.09, top: screenHeight * 0.1 + 20),
+          child: Row(
+            children: [
+              Text("Top doctors",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 28,
+                      fontWeight: FontWeight.w600)),
+              Icon(
+                Icons.star,
+                color: Colors.yellow[600],
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: screenHeight * 0.2),
           child: Container(
-            height: screenHeight * 0.7,
-            width: double.infinity,
+            padding: EdgeInsets.only(top: screenHeight * 0.06),
+            height: screenHeight * 0.9,
             decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(45.0),
-                    topRight: Radius.circular(45.0))),
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(50))),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Padding(
                   padding: EdgeInsets.only(
-                      bottom: screenHeight * 0.04, left: screenWidth * 0.05),
+                      left: screenWidth * 0.09, right: screenWidth * 0.09),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CircleAvatar(
-                        radius: 34.0,
-                        backgroundImage: NetworkImage(
-                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5KVsWtDwcdLRc9q1P9N8leBy_zz9gfKZK1Q&usqp=CAU'),
+                      Text(
+                        "Categories",
+                        style: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: screenHeight * 0.03,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: screenWidth * 0.03),
-                            child: Text("Dr.Parth Patel",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w900,
-                                )),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: screenWidth * 0.03),
-                            child: Text("Heart Surgeon-Flower Hospitel's",
-                                style: TextStyle(
-                                    color: Colors.black45,
-                                    fontWeight: FontWeight.w600)),
-                          ),
-                          Row(
-                            children: [
-                              IconButton(
-                                icon: Icon(Icons.call),
-                                onPressed: null,
-                                color: Colors.blue[800],
-                                disabledColor: Colors.blue[800],
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.message),
-                                onPressed: null,
-                                color: Colors.orange[400],
-                                disabledColor: Colors.orange[400],
-                              )
-                            ],
-                          ),
-                        ],
+                      GestureDetector(
+                        child: Text("See all"),
                       )
                     ],
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: screenWidth * 0.05, bottom: screenHeight * 0.02),
-                  child: Text(
-                    "About Doctor",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
+                SizedBox(height: screenHeight * 0.02),
+                Container(
+                  height: screenHeight * 0.1 + 25,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 5,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: NetworkImage(
+                                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5KVsWtDwcdLRc9q1P9N8leBy_zz9gfKZK1Q&usqp=CAU'),
+                                fit: BoxFit.fill),
+                            borderRadius: BorderRadius.circular(20.0),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                  blurRadius: 7,
+                                  color: Colors.black26,
+                                  offset: Offset(0, 0))
+                            ]),
+                        margin: EdgeInsets.only(
+                            left: index == 0
+                                ? screenWidth * 0.09
+                                : screenWidth * 0.04,
+                            top: screenHeight * 0.01,
+                            bottom: screenHeight * 0.01),
+                        height: screenHeight * 0.03,
+                        width: screenWidth * 0.2,
+                      );
+                    },
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: screenWidth * 0.05,
-                      bottom: screenHeight * 0.02 - 4),
-                  child: Text(
-                    "Doctors That Work Within a Community They are the frontline and first point of contact in a patient's health care. They diagnose and treat their patients for all sorts of ailments, and also refer their patients to the appropriate specialist doctor when needed for specific medical opinions and advice.",
-                    style: TextStyle(
-                        color: Colors.black45,
-                        fontWeight: FontWeight.w400,
-                        height: 1.4),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: screenWidth * 0.05, bottom: screenHeight * 0.01),
-                  child: Text(
-                    "Upcoming Schedules",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
-                  ),
+                SizedBox(
+                  height: screenHeight * 0.01,
                 ),
                 Expanded(
                   child: Container(
-                    height: screenHeight * 0.2,
+                    height: screenHeight * 0.5,
                     child: ListView.builder(
-                      itemCount: 3,
+                      itemCount: 5,
                       itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          decoration: BoxDecoration(
-                              color: Colors.green[100],
-                              borderRadius: BorderRadius.circular(11)),
-                          height: screenHeight * 0.09 + 14,
-                          margin: EdgeInsets.only(
-                              left: screenWidth * 0.05,
-                              right: screenWidth * 0.05,
-                              bottom: screenHeight * 0.01),
-                          child: Padding(
-                            padding: EdgeInsets.only(left: screenWidth * 0.03),
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DoctorDatailPage(),
+                                ));
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(
+                                left: screenWidth * 0.09,
+                                bottom: screenHeight * 0.02,
+                                right: screenWidth * 0.07),
+                            height: screenHeight * 0.09 + 10,
+                            decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                      blurRadius: 7,
+                                      color: Colors.black26,
+                                      offset: Offset(0, 0))
+                                ],
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(14)),
                             child: Row(
                               children: [
                                 Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.green[200],
-                                        borderRadius:
-                                            BorderRadius.circular(11)),
-                                    alignment: Alignment.center,
-                                    height: screenHeight * 0.07,
-                                    width: screenWidth * 0.1 + 8,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "2",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 18,
-                                              color: Colors.green[700]),
-                                        ),
-                                        Text(
-                                          "Jan",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 10,
-                                              color: Colors.green[700]),
-                                        ),
-                                      ],
-                                    )),
+                                  height: screenHeight * 0.09,
+                                  width: screenWidth * 0.2 - 5,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5KVsWtDwcdLRc9q1P9N8leBy_zz9gfKZK1Q&usqp=CAU'),
+                                        fit: BoxFit.fill),
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
                                 Padding(
-                                  padding:
-                                      EdgeInsets.only(left: screenWidth * 0.04),
+                                  padding: EdgeInsets.only(
+                                      left: screenWidth * 0.02,
+                                      top: screenHeight * 0.02 - 5),
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text("Consultation",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w800)),
-                                      Text("Sunday .  9am-11am",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              color: Colors.black54,
-                                              fontWeight: FontWeight.w400))
+                                      Text(
+                                        "Dr. Parth Patel",
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                      SizedBox(
+                                        height: screenHeight * 0.01 - 5,
+                                      ),
+                                      Text(
+                                        "Cough & Cold",
+                                        style: TextStyle(
+                                            color: Colors.black38,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      SizedBox(
+                                        height: screenHeight * 0.01,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.star,
+                                            size: 15,
+                                            color: Colors.yellow[600],
+                                          ),
+                                          Text(" 5.0"),
+                                          SizedBox(width: screenWidth * 0.01),
+                                          Icon(
+                                            Icons.circle,
+                                            color: Colors.blue[500],
+                                            size: 11,
+                                          ),
+                                          SizedBox(width: screenWidth * 0.01),
+                                          Text("10:04 AM - 3:30 PM",
+                                              style: TextStyle(
+                                                color: Colors.black54,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 12,
+                                              ))
+                                        ],
+                                      )
                                     ],
                                   ),
-                                )
+                                ),
                               ],
                             ),
                           ),
@@ -202,8 +218,8 @@ class _DoctorListState extends State<DoctorList> {
               ],
             ),
           ),
-        )
+        ),
       ],
-    ));
+    );
   }
 }

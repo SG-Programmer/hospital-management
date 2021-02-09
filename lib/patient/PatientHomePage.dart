@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hospital_management/patient/PatientChat.dart';
+import 'package:hospital_management/patient/PatientDoctor.dart';
 import 'package:hospital_management/utils/size.dart';
 
 class PatientHomePage extends StatefulWidget {
@@ -12,7 +13,7 @@ class _PatientHomePageState extends State<PatientHomePage>
   TabController controller;
   @override
   void initState() {
-    controller = TabController(length: 1, vsync: this);
+    controller = TabController(length: 2, vsync: this);
     super.initState();
   }
 
@@ -21,13 +22,18 @@ class _PatientHomePageState extends State<PatientHomePage>
     return Scaffold(
         body: TabBarView(
           controller: controller,
-          children: [PatientChat()],
+          children: [PatientChat(), PatientDoctor()],
         ),
         bottomNavigationBar: TabBar(
           controller: controller,
           tabs: [
             Icon(
               Icons.message,
+              color: Colors.blue,
+              size: screenHeight * 0.05,
+            ),
+            Icon(
+              Icons.local_hospital_rounded,
               color: Colors.blue,
               size: screenHeight * 0.05,
             )
