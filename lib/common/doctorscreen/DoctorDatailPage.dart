@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hospital_management/common/chatscreen/ChatPage.dart';
 
 import 'package:hospital_management/utils/size.dart';
 
@@ -86,7 +87,15 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
                               ),
                               IconButton(
                                 icon: Icon(Icons.message),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ChatPage(
+                                            widget.nameOfDoctor,
+                                            widget.doctorPhoto),
+                                      ));
+                                },
                                 color: Colors.orange[400],
                                 disabledColor: Colors.orange[400],
                               )
