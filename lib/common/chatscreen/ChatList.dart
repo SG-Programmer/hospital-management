@@ -116,9 +116,17 @@ class _ChatListState extends State<ChatList> {
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
                         padding: EdgeInsets.only(left: screenWidth * 0.02),
-                        child: CircleAvatar(
-                          radius: 31,
-                          backgroundImage: profilePhoto[index],
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ChatPage(
+                                  "Dr.Jatin Patel", profilePhoto[index]),
+                            ));
+                          },
+                          child: CircleAvatar(
+                            radius: 31,
+                            backgroundImage: profilePhoto[index],
+                          ),
                         ),
                       );
                     },

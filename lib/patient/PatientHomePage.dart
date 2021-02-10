@@ -23,6 +23,7 @@ class _PatientHomePageState extends State<PatientHomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       body: TabBarView(
+        physics: NeverScrollableScrollPhysics(),
         controller: controller,
         children: [PatientChat(), PatientDoctor()],
       ),

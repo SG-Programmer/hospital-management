@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+
 import 'package:hospital_management/utils/size.dart';
 
 class DoctorDatailPage extends StatefulWidget {
+  String nameOfDoctor;
+  NetworkImage doctorPhoto;
+  DoctorDatailPage({this.doctorPhoto, this.nameOfDoctor});
   @override
   _DoctorDatailPageState createState() => _DoctorDatailPageState();
 }
@@ -50,10 +54,7 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
                   child: Row(
                     children: [
                       CircleAvatar(
-                        radius: 34.0,
-                        backgroundImage: NetworkImage(
-                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5KVsWtDwcdLRc9q1P9N8leBy_zz9gfKZK1Q&usqp=CAU'),
-                      ),
+                          radius: 34.0, backgroundImage: widget.doctorPhoto),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -62,7 +63,7 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(left: screenWidth * 0.03),
-                            child: Text("Dr.Parth Patel",
+                            child: Text(widget.nameOfDoctor,
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w900,
@@ -85,7 +86,7 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
                               ),
                               IconButton(
                                 icon: Icon(Icons.message),
-                                onPressed: null,
+                                onPressed: () {},
                                 color: Colors.orange[400],
                                 disabledColor: Colors.orange[400],
                               )

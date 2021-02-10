@@ -9,6 +9,34 @@ class DoctorList extends StatefulWidget {
 }
 
 class _DoctorListState extends State<DoctorList> {
+  List<NetworkImage> profilePhoto = [
+    NetworkImage(
+        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&w=1000&q=80'),
+    NetworkImage(
+        'https://sm.askmen.com/askmen_in/article/f/facebook-p/facebook-profile-picture-affects-chances-of-gettin_gstt.jpg'),
+    NetworkImage(
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU53EcOIyxE7pOZJBvGHJGbDk39EYxvOhbdw&usqp=CAU'),
+    NetworkImage(
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5KVsWtDwcdLRc9q1P9N8leBy_zz9gfKZK1Q&usqp=CAU'),
+    NetworkImage(
+        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&w=1000&q=80'),
+    NetworkImage(
+        'https://sm.askmen.com/askmen_in/article/f/facebook-p/facebook-profile-picture-affects-chances-of-gettin_gstt.jpg'),
+    NetworkImage(
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU53EcOIyxE7pOZJBvGHJGbDk39EYxvOhbdw&usqp=CAU'),
+    NetworkImage(
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5KVsWtDwcdLRc9q1P9N8leBy_zz9gfKZK1Q&usqp=CAU')
+  ];
+  List<String> nameOfDoctor = [
+    "parth",
+    "smit",
+    "darshan",
+    "druti",
+    "priya",
+    "harsh",
+    "purv",
+    "kenil"
+  ];
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -80,14 +108,12 @@ class _DoctorListState extends State<DoctorList> {
                   height: screenHeight * 0.1 + 25,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: 5,
+                    itemCount: profilePhoto.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Container(
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: NetworkImage(
-                                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5KVsWtDwcdLRc9q1P9N8leBy_zz9gfKZK1Q&usqp=CAU'),
-                                fit: BoxFit.fill),
+                                image: profilePhoto[index], fit: BoxFit.fill),
                             borderRadius: BorderRadius.circular(20.0),
                             color: Colors.white,
                             boxShadow: [
@@ -122,7 +148,9 @@ class _DoctorListState extends State<DoctorList> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => DoctorDatailPage(),
+                                  builder: (context) => DoctorDatailPage(
+                                      nameOfDoctor: nameOfDoctor[index],
+                                      doctorPhoto: profilePhoto[index]),
                                 ));
                           },
                           child: Container(
@@ -147,8 +175,7 @@ class _DoctorListState extends State<DoctorList> {
                                   width: screenWidth * 0.2 - 5,
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
-                                        image: NetworkImage(
-                                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5KVsWtDwcdLRc9q1P9N8leBy_zz9gfKZK1Q&usqp=CAU'),
+                                        image: profilePhoto[index],
                                         fit: BoxFit.fill),
                                     color: Colors.black,
                                     borderRadius: BorderRadius.circular(12),
@@ -163,7 +190,7 @@ class _DoctorListState extends State<DoctorList> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Dr. Parth Patel",
+                                        nameOfDoctor[index],
                                         style: TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w700),
