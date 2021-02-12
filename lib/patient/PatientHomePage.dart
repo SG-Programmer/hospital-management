@@ -23,6 +23,7 @@ class _PatientHomePageState extends State<PatientHomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       body: TabBarView(
         physics: NeverScrollableScrollPhysics(),
         controller: controller,
