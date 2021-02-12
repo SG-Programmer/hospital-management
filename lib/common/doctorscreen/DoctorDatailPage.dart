@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hospital_management/common/chatscreen/ChatPage.dart';
+import 'package:hospital_management/patient/AppointmentPage.dart';
 
 import 'package:hospital_management/utils/size.dart';
 
@@ -98,7 +99,20 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
                                 },
                                 color: Colors.orange[400],
                                 disabledColor: Colors.orange[400],
-                              )
+                              ),
+                              IconButton(
+                                icon: Icon(Icons.calendar_today_rounded),
+                                onPressed: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => AppointmentPage(
+                                        doctorPhoto: widget.doctorPhoto,
+                                        doctorName: widget.nameOfDoctor,
+                                      ),
+                                    )),
+                                color: Colors.blue[800],
+                                disabledColor: Colors.blue[800],
+                              ),
                             ],
                           ),
                         ],
