@@ -31,6 +31,7 @@ dependencies:
   custom_navigation_bar: 0.7.1
   curved_navigation_bar: 0.3.7
   dots_indicator: 1.2.0
+  progress_indicators: 0.1.5
 
 dev_dependencies:
   flutter_test:

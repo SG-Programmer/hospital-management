@@ -14,6 +14,7 @@ class _PatientAppointmentState extends State<PatientAppointment> {
   double screenPaddingSide = screenWidth * 0.04;
   double pageInd = 0;
   bool seeAds = true;
+  TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -64,6 +65,7 @@ class _PatientAppointmentState extends State<PatientAppointment> {
             height: screenHeight * 0.06,
             width: screenWidth * 0.9,
             child: TextField(
+              controller: searchController,
               onSubmitted: (val) {
                 Navigator.push(
                     context,
@@ -81,9 +83,19 @@ class _PatientAppointmentState extends State<PatientAppointment> {
                         color: Colors.black,
                       ),
                       onPressed: null),
-                  suffixIcon: Icon(
-                    Icons.filter_list_outlined,
-                    color: Colors.blue,
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      color: Colors.blue,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                SearchPage(searchController.text),
+                          ));
+                    },
                   ),
                   border: OutlineInputBorder(borderSide: BorderSide.none)),
             ),

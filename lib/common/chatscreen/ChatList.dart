@@ -40,6 +40,7 @@ class _ChatListState extends State<ChatList> {
   bool allButtonColor = true;
   bool doctorButtonColor = false;
   bool patientButoonColor = false;
+
   @override
   Widget build(BuildContext context) {
     ScreenSize.setSize(context);

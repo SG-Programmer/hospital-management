@@ -3,6 +3,7 @@ import 'package:hospital_management/patient/PatientAppointment.dart';
 import 'package:hospital_management/patient/PatientChat.dart';
 import 'package:hospital_management/patient/PatientDoctor.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:hospital_management/patient/PatientProfilePage.dart';
 
 class PatientHomePage extends StatefulWidget {
   @override
@@ -14,7 +15,7 @@ class _PatientHomePageState extends State<PatientHomePage>
   TabController controller;
   @override
   void initState() {
-    controller = TabController(length: 3, vsync: this);
+    controller = TabController(length: 4, vsync: this);
     super.initState();
   }
 
@@ -31,6 +32,7 @@ class _PatientHomePageState extends State<PatientHomePage>
           PatientAppointment(),
           PatientDoctor(),
           PatientChat(),
+          PatientProfilePage()
         ],
       ),
       bottomNavigationBar: CurvedNavigationBar(
@@ -41,6 +43,7 @@ class _PatientHomePageState extends State<PatientHomePage>
           Icon(Icons.calendar_today_outlined),
           Icon(Icons.perm_identity, size: 30),
           Icon(Icons.message, size: 30),
+          Icon(Icons.supervised_user_circle_outlined, size: 30),
         ],
         color: Colors.white,
         buttonBackgroundColor: Colors.white,
