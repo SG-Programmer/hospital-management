@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:hospital_management/patient/PatientDashbord.dart';
 import 'package:hospital_management/patient/PatientHomePage.dart';
 import 'package:hospital_management/receptionist/DashBord.dart';
 import 'package:hospital_management/registration/RegistrationStep.dart';
@@ -128,7 +129,10 @@ class _LoginPageState extends State<LoginPage> {
                                 : Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => PatientHomePage(),
+                                      builder: (context) => Scaffold(
+                                        resizeToAvoidBottomPadding: false,
+                                        body: PatientDashbord(),
+                                      ),
                                     ));
                           },
                           child: Text(

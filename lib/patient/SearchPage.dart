@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hospital_management/common/doctorscreen/DoctorDatailPage.dart';
 import 'package:hospital_management/utils/size.dart';
-import 'package:hospital_management/common/doctorDatailsList.dart';
+import 'package:hospital_management/common/doctorscreen/doctorDatailsList.dart';
 
 class SearchPage extends StatefulWidget {
   String searchWord;

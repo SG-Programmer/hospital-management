@@ -51,7 +51,6 @@ class _PatientHomePageState extends State<PatientHomePage>
         animationCurve: Curves.easeInToLinear,
         animationDuration: Duration(milliseconds: 400),
         onTap: (index) {
-          print(index);
           setState(() {
             controller.index = index;
           });

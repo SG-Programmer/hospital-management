@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hospital_management/utils/size.dart';
 
-import '../doctorDatailsList.dart';
+import 'doctorDatailsList.dart';
 import 'DoctorDatailPage.dart';
 
 class DoctorList extends StatefulWidget {
