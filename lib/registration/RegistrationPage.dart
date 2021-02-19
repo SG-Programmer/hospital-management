@@ -193,23 +193,21 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12.0)),
                           onPressed: () {
-                            if (_formKey.currentState.validate()) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => FinalRegistrationPage(
-                                        sexController: sexController,
-                                        firstNameController:
-                                            firstNameController,
-                                        lastNameController: lastNameController,
-                                        date: date,
-                                        numberController: numberController,
-                                        cityController: cityController,
-                                        pinCodeController: pinCodeController,
-                                        addressController: addressController,
-                                        sex: sex),
-                                  ));
-                            }
+                            // if (_formKey.currentState.validate()) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FinalRegistrationPage(
+                                      sexController: sexController,
+                                      firstNameController: firstNameController,
+                                      lastNameController: lastNameController,
+                                      date: date,
+                                      numberController: numberController,
+                                      cityController: cityController,
+                                      pinCodeController: pinCodeController,
+                                      addressController: addressController,
+                                      sex: sex),
+                                ));
                           },
                           child: Text("Continue"),
                         ),
