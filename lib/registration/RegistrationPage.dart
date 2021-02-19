@@ -5,26 +5,27 @@ import 'package:hospital_management/registration/FinalRegistrationPage.dart';
 import 'package:hospital_management/utils/size.dart';
 
 class RegistrationPage extends StatefulWidget {
-  TabController controller;
-  RegistrationPage({this.controller});
   @override
   _RegistrationPageState createState() => _RegistrationPageState();
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
-  DateTime date = DateTime.now();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  //TextField Controller
   TextEditingController sexController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
-  TextEditingController dateController = TextEditingController();
   TextEditingController numberController = TextEditingController();
   TextEditingController cityController = TextEditingController();
   TextEditingController pinCodeController = TextEditingController();
   TextEditingController addressController = TextEditingController();
-  String sex = "Mr";
 
+  //variable
+  String sex = "Mr";
+  DateTime date = DateTime.now();
+
+  //List And Map
   List<String> sexList = ["Mr", "Mis", "Other"];
 
   selectDate(BuildContext context) async {
@@ -48,6 +49,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         padding: EdgeInsets.only(top: screenHeight * 0.01),
         child: Container(
           child: TextFormField(
+            controller: fieldController,
             validator: v,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
@@ -195,8 +197,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        FinalRegistrationPage(),
+                                    builder: (context) => FinalRegistrationPage(
+                                        sexController: sexController,
+                                        firstNameController:
+                                            firstNameController,
+                                        lastNameController: lastNameController,
+                                        date: date,
+                                        numberController: numberController,
+                                        cityController: cityController,
+                                        pinCodeController: pinCodeController,
+                                        addressController: addressController,
+                                        sex: sex),
                                   ));
                             }
                           },
