@@ -1,9 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:hospital_management/patient/PatientDashbord.dart';
-import 'package:hospital_management/patient/PatientHomePage.dart';
+
 import 'package:hospital_management/receptionist/DashBord.dart';
-import 'package:hospital_management/registration/RegistrationStep.dart';
+import 'package:hospital_management/registration/RegistrationPage.dart';
+
 import 'package:hospital_management/utils/size.dart';
 
 class LoginPage extends StatefulWidget {
@@ -156,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                               onTap: () => Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => RegistrationStep(),
+                                      builder: (context) => RegistrationPage(),
                                     ),
                                   ))
                         ],

@@ -102,8 +102,8 @@ class _RegistrationStepState extends State<RegistrationStep>
                     physics: NeverScrollableScrollPhysics(),
                     children: [
                       RegistrationPage(
-                        controller: controller,
-                      ),
+                          // controller: controller,
+                          ),
                       FinalRegistrationPage(),
                     ],
                   ),

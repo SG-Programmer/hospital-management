@@ -28,10 +28,18 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
+  #navigation bar
   custom_navigation_bar: 0.7.1
   curved_navigation_bar: 0.3.7
+  #dots indicator
   dots_indicator: 1.2.0
+  #proses wait indicator
   progress_indicators: 0.1.5
+  #firebase
+  firebase_database: 6.0.0
+  firebase_core: 0.7.0
+  #form field validator
+  form_validator: ^0.1.7
 
 dev_dependencies:
   flutter_test:

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+import 'package:form_validator/form_validator.dart';
+import 'package:hospital_management/registration/FinalRegistrationPage.dart';
 import 'package:hospital_management/utils/size.dart';
 
 class RegistrationPage extends StatefulWidget {
@@ -10,6 +13,20 @@ class RegistrationPage extends StatefulWidget {
 
 class _RegistrationPageState extends State<RegistrationPage> {
   DateTime date = DateTime.now();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  TextEditingController sexController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
+  TextEditingController numberController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+  TextEditingController pinCodeController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  String sex = "Mr";
+
+  List<String> sexList = ["Mr", "Mis", "Other"];
+
   selectDate(BuildContext context) async {
     date = await showDatePicker(
         context: context,
@@ -24,12 +41,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
 /*     TextEditingController name = TextEditingController(); */
 
-    textfield(String hintName, String labeltext, [Icon iconname]) {
+    textfield(String hintName, String labeltext,
+        TextEditingController fieldController, String Function(String) v,
+        [Icon iconname]) {
       return Padding(
         padding: EdgeInsets.only(top: screenHeight * 0.01),
         child: Container(
-          child: TextField(
-            obscureText: true,
+          child: TextFormField(
+            validator: v,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               hintText: hintName,
@@ -41,96 +60,156 @@ class _RegistrationPageState extends State<RegistrationPage> {
       );
     }
 
-    return Padding(
-      padding: EdgeInsets.all(10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Basic information",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                width: screenWidth / 8,
-                child: textfield(
-                  "Mr",
-                  "Mr",
-                ),
-              ),
-              Container(
-                width: screenWidth / 2.6,
-                child: textfield("Last Name", "First Name"),
-              ),
-              Container(
-                width: screenWidth / 2.6,
-                child: textfield("Last Name", "Last Name"),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: screenHeight * 0.01,
-          ),
-          Container(
-            height: screenHeight * 0.09,
-            padding: EdgeInsets.only(left: screenWidth * 0.03),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4.0), border: Border.all()),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Icon(Icons.calendar_today),
-                    SizedBox(
-                      width: screenWidth * 0.02,
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Basic information",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          width: screenWidth / 6,
+                          height: screenHeight * 0.09,
+                          alignment: Alignment.center,
+                          child: DropdownButton(
+                              isExpanded: true,
+                              value: sex,
+                              onChanged: (value) {
+                                print(value);
+                                setState(() {
+                                  sex = value;
+                                });
+                              },
+                              items: sexList.map((e) {
+                                return DropdownMenuItem(
+                                  child: Text(e),
+                                  value: e,
+                                );
+                              }).toList())),
+                      Container(
+                        width: screenWidth / 2.6,
+                        child: textfield(
+                            "Last Name",
+                            "First Name",
+                            firstNameController,
+                            ValidationBuilder().minLength(1).build()),
+                      ),
+                      Container(
+                        width: screenWidth / 2.6,
+                        child: textfield(
+                            "Last Name",
+                            "Last Name",
+                            lastNameController,
+                            ValidationBuilder().minLength(1).build()),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: screenHeight * 0.01,
+                  ),
+                  Container(
+                    height: screenHeight * 0.09,
+                    padding: EdgeInsets.only(left: screenWidth * 0.03),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4.0),
+                        border: Border.all()),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(Icons.calendar_today),
+                            SizedBox(
+                              width: screenWidth * 0.02,
+                            ),
+                            Text(date.day.toString() +
+                                "/" +
+                                date.month.toString() +
+                                "/" +
+                                date.year.toString())
+                          ],
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              selectDate(context);
+                            },
+                            child: Text("Select Date"))
+                      ],
                     ),
-                    Text(date.day.toString() +
-                        "/" +
-                        date.month.toString() +
-                        "/" +
-                        date.year.toString())
-                  ],
-                ),
-                TextButton(
-                    onPressed: () {
-                      selectDate(context);
-                    },
-                    child: Text("Select Date"))
-              ],
+                  ),
+                  textfield(
+                    "Mobile no",
+                    "Number",
+                    numberController,
+                    ValidationBuilder().phone().build(),
+                    Icon(Icons.confirmation_number),
+                  ),
+                  textfield(
+                      "City",
+                      "City",
+                      cityController,
+                      ValidationBuilder().minLength(1).build(),
+                      Icon(Icons.location_city)),
+                  textfield(
+                    "PinCode",
+                    "PinCode",
+                    pinCodeController,
+                    ValidationBuilder().minLength(6).build(),
+                    Icon(Icons.code),
+                  ),
+                  textfield(
+                    "Address",
+                    "Address",
+                    addressController,
+                    ValidationBuilder().minLength(10).build(),
+                    Icon(Icons.location_city),
+                  ),
+                  SizedBox(
+                    height: screenHeight * 0.05,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.0),
+                          color: Colors.yellow,
+                        ),
+                        height: screenHeight * 0.07,
+                        width: screenWidth * 0.4,
+                        child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0)),
+                          onPressed: () {
+                            if (_formKey.currentState.validate()) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        FinalRegistrationPage(),
+                                  ));
+                            }
+                          },
+                          child: Text("Continue"),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-          textfield("Mobile no", "Number", Icon(Icons.confirmation_number)),
-          textfield("City", "City", Icon(Icons.location_city)),
-          textfield("PinCode", "PinCode", Icon(Icons.code)),
-          textfield("Address", "Address", Icon(Icons.location_city)),
-          SizedBox(
-            height: screenHeight * 0.05,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12.0),
-                  color: Colors.yellow,
-                ),
-                height: screenHeight * 0.07,
-                width: screenWidth * 0.4,
-                child: RaisedButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0)),
-                  onPressed: () {
-                    widget.controller.index = 1;
-                  },
-                  child: Text("Continue"),
-                ),
-              ),
-            ],
-          ),
-        ],
+        ),
       ),
     );
   }
