@@ -1,10 +1,11 @@
 import 'dart:ui';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:hospital_management/patient/PatientDashbord.dart';
-
 import 'package:hospital_management/receptionist/DashBord.dart';
 import 'package:hospital_management/registration/RegistrationPage.dart';
-
 import 'package:hospital_management/utils/size.dart';
 
 class LoginPage extends StatefulWidget {
@@ -13,8 +14,15 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  //global key
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  //Controller
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
+
+  //firebase
+  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     ScreenSize.setSize(context);
@@ -77,92 +85,108 @@ class _LoginPageState extends State<LoginPage> {
                 child: Padding(
                   padding: EdgeInsets.only(
                       left: screenWidth * 0.04, right: screenWidth * 0.04),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      SizedBox(
-                        height: screenHeight * 0.06,
-                      ),
-                      TextField(
-                        controller: emailController,
-                        decoration: InputDecoration(
-                            hintText: "E-mail Address",
-                            prefixIcon: Icon(Icons.email)),
-                      ),
-                      SizedBox(
-                        height: screenHeight * 0.03,
-                      ),
-                      TextField(
-                        controller: passController,
-                        decoration: InputDecoration(
-                            hintText: "Password", prefixIcon: Icon(Icons.lock)),
-                      ),
-                      SizedBox(
-                        height: screenHeight * 0.02,
-                      ),
-                      Text(
-                        "Forgot Password ?",
-                        style: TextStyle(
-                            color: Color(0xff272549),
-                            fontWeight: FontWeight.w600),
-                      ),
-                      SizedBox(
-                        height: screenHeight * 0.04,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.pink[900],
-                            borderRadius: BorderRadius.circular(12.0)),
-                        height: screenHeight * 0.06,
-                        width: double.infinity,
-                        child: RaisedButton(
-                          disabledColor: Color(0xff1B34B6),
-                          color: Color(0xff1B34B6),
-                          shape: RoundedRectangleBorder(
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          height: screenHeight * 0.06,
+                        ),
+                        TextFormField(
+                          validator: ValidationBuilder().email().build(),
+                          controller: emailController,
+                          decoration: InputDecoration(
+                              hintText: "E-mail Address",
+                              prefixIcon: Icon(Icons.email)),
+                        ),
+                        SizedBox(
+                          height: screenHeight * 0.03,
+                        ),
+                        TextFormField(
+                          validator: ValidationBuilder().minLength(8).build(),
+                          controller: passController,
+                          decoration: InputDecoration(
+                              hintText: "Password",
+                              prefixIcon: Icon(Icons.lock)),
+                        ),
+                        SizedBox(
+                          height: screenHeight * 0.02,
+                        ),
+                        Text(
+                          "Forgot Password ?",
+                          style: TextStyle(
+                              color: Color(0xff272549),
+                              fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(
+                          height: screenHeight * 0.04,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.pink[900],
                               borderRadius: BorderRadius.circular(12.0)),
-                          onPressed: () {
-                            emailController.text == "admin"
-                                ? Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => DashBord(),
-                                    ))
-                                : Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => Scaffold(
-                                        resizeToAvoidBottomPadding: false,
-                                        body: PatientDashbord(),
-                                      ),
-                                    ));
-                          },
-                          child: Text(
-                            "Login",
-                            style: TextStyle(color: Colors.white),
+                          height: screenHeight * 0.06,
+                          width: double.infinity,
+                          child: RaisedButton(
+                            disabledColor: Color(0xff1B34B6),
+                            color: Color(0xff1B34B6),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0)),
+                            onPressed: () {
+                              // if (_formKey.currentState.validate()) {
+                              //   emailController.text == "admin"
+                              //       ? Navigator.push(
+                              //           context,
+                              //           MaterialPageRoute(
+                              //             builder: (context) => DashBord(),
+                              //           ))
+                              //       : Navigator.push(
+                              //           context,
+                              //           MaterialPageRoute(
+                              //             builder: (context) => Scaffold(
+                              //               resizeToAvoidBottomPadding: false,
+                              //               body: PatientDashbord(),
+                              //             ),
+                              //           ));
+                              // }.
+                              print(emailController.text);
+                              print(passController.text);
+                              _firebaseAuth
+                                  .createUserWithEmailAndPassword(
+                                      email: emailController.text,
+                                      password: passController.text)
+                                  .then((value) => print(value));
+                            },
+                            child: Text(
+                              "Login",
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: screenHeight * 0.05,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Don't have an Account ?"),
-                          GestureDetector(
-                              child: Text("Register",
-                                  style: TextStyle(
-                                      color: Color(0xffFF7f2D),
-                                      fontWeight: FontWeight.w600)),
-                              onTap: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => RegistrationPage(),
-                                    ),
-                                  ))
-                        ],
-                      )
-                    ],
+                        SizedBox(
+                          height: screenHeight * 0.05,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Don't have an Account ?"),
+                            GestureDetector(
+                                child: Text("Register",
+                                    style: TextStyle(
+                                        color: Color(0xffFF7f2D),
+                                        fontWeight: FontWeight.w600)),
+                                onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            RegistrationPage(),
+                                      ),
+                                    ))
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),

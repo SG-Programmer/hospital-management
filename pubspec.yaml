@@ -38,8 +38,9 @@ dependencies:
   #firebase
   firebase_database: 6.0.0
   firebase_core: 0.7.0
+  firebase_auth: 0.20.1
   #form field validator
-  form_validator: ^0.1.7
+  form_validator: 0.1.7
 
 dev_dependencies:
   flutter_test:
