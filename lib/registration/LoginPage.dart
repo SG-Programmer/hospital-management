@@ -39,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
                 image: DecorationImage(
                     fit: BoxFit.fitWidth,
                     image: AssetImage('images/LoginBackground.jpg'))),
-            height: screenHeight * 0.7,
+            height: screenHeight * 0.7 - 15,
             width: double.infinity,
             child: Padding(
               padding: EdgeInsets.only(
@@ -135,11 +135,27 @@ class _LoginPageState extends State<LoginPage> {
                                 borderRadius: BorderRadius.circular(12.0)),
                             onPressed: () {
                               if (_formKey.currentState.validate()) {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return Container(
+                                          padding: EdgeInsets.only(
+                                              top: screenHeight * 0.5,
+                                              bottom: screenHeight * 0.4,
+                                              left: screenWidth * 0.4 + 7,
+                                              right: screenWidth * 0.4 + 7),
+                                          height: 30,
+                                          width: 30,
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 3.2,
+                                          ));
+                                    });
                                 _firebaseAuth
                                     .signInWithEmailAndPassword(
                                         email: emailController.text,
                                         password: passController.text)
                                     .then((value) {
+                                  Navigator.pop(context);
                                   emailController.text == "admin"
                                       ? Navigator.push(
                                           context,
@@ -154,6 +170,8 @@ class _LoginPageState extends State<LoginPage> {
                                               body: PatientDashbord(),
                                             ),
                                           ));
+                                  emailController.text = "";
+                                  passController.text = "";
                                 }).catchError((e) {
                                   print(e);
                                 });
