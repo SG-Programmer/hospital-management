@@ -155,7 +155,6 @@ class _LoginPageState extends State<LoginPage> {
                                         email: emailController.text,
                                         password: passController.text)
                                     .then((value) {
-                                  Navigator.pop(context);
                                   emailController.text == "admin"
                                       ? Navigator.push(
                                           context,
@@ -170,10 +169,41 @@ class _LoginPageState extends State<LoginPage> {
                                               body: PatientDashbord(),
                                             ),
                                           ));
+
                                   emailController.text = "";
                                   passController.text = "";
                                 }).catchError((e) {
-                                  print(e);
+                                  Navigator.pop(context);
+                                  showDialog(
+                                    context: context,
+                                    child: AlertDialog(
+                                        elevation: 5.5,
+                                        actionsPadding: EdgeInsets.all(12),
+                                        actions: [
+                                          GestureDetector(
+                                            child: Text(
+                                              "cancel",
+                                              style: TextStyle(fontSize: 16),
+                                            ),
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                          SizedBox(width: screenWidth * 0.01),
+                                          GestureDetector(
+                                            child: Text("ok",
+                                                style: TextStyle(fontSize: 16)),
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                              emailController.text = "";
+                                              passController.text = "";
+                                            },
+                                          )
+                                        ],
+                                        title: Text("Failed"),
+                                        content: Text(
+                                            "Wrong Email_id and Password plz try again..!")),
+                                  );
                                 });
                               }
                             },

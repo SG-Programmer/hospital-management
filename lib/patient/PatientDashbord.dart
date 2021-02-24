@@ -32,13 +32,19 @@ class _PatientDashbordState extends State<PatientDashbord> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(FirebaseAuth.instance.currentUser.email),
-                IconButton(
-                    icon: Icon(Icons.logout),
-                    onPressed: () {
-                      FirebaseAuth.instance.signOut();
-                      Navigator.pop(context);
-                    }),
+                Row(
+                  children: [
+                    IconButton(
+                        color: Colors.red,
+                        icon: Icon(Icons.logout),
+                        onPressed: () {
+                          FirebaseAuth.instance.signOut();
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                        }),
+                    Text(FirebaseAuth.instance.currentUser.email),
+                  ],
+                ),
                 IconButton(
                     icon: Icon(Icons.notifications),
                     onPressed: () {
