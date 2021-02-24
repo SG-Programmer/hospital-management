@@ -1,5 +1,6 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_management/patient/NotificationPage.dart';
 import 'package:hospital_management/patient/PatientHomePage.dart';
@@ -31,6 +32,7 @@ class _PatientDashbordState extends State<PatientDashbord> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Text(FirebaseAuth.instance.currentUser.email),
                 IconButton(
                     icon: Icon(Icons.logout),
                     onPressed: () {
