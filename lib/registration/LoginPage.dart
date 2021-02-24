@@ -134,29 +134,30 @@ class _LoginPageState extends State<LoginPage> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12.0)),
                             onPressed: () {
-                              // if (_formKey.currentState.validate()) {
-                              //   emailController.text == "admin"
-                              //       ? Navigator.push(
-                              //           context,
-                              //           MaterialPageRoute(
-                              //             builder: (context) => DashBord(),
-                              //           ))
-                              //       : Navigator.push(
-                              //           context,
-                              //           MaterialPageRoute(
-                              //             builder: (context) => Scaffold(
-                              //               resizeToAvoidBottomPadding: false,
-                              //               body: PatientDashbord(),
-                              //             ),
-                              //           ));
-                              // }.
-                              print(emailController.text);
-                              print(passController.text);
-                              _firebaseAuth
-                                  .createUserWithEmailAndPassword(
-                                      email: emailController.text,
-                                      password: passController.text)
-                                  .then((value) => print(value));
+                              if (_formKey.currentState.validate()) {
+                                _firebaseAuth
+                                    .signInWithEmailAndPassword(
+                                        email: emailController.text,
+                                        password: passController.text)
+                                    .then((value) {
+                                  emailController.text == "admin"
+                                      ? Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => DashBord(),
+                                          ))
+                                      : Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => Scaffold(
+                                              resizeToAvoidBottomPadding: false,
+                                              body: PatientDashbord(),
+                                            ),
+                                          ));
+                                }).catchError((e) {
+                                  print(e);
+                                });
+                              }
                             },
                             child: Text(
                               "Login",

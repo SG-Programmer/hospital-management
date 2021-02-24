@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hospital_management/Registration/FinalRegistrationPage.dart';
+
 import 'package:hospital_management/registration/LoginPage.dart';
 
 import 'package:hospital_management/registration/RegistrationPage.dart';
 import 'package:hospital_management/utils/size.dart';
+
+import 'FinalRegistrationPage.dart';
 
 class RegistrationStep extends StatefulWidget {
   @override
