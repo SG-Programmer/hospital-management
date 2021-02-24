@@ -1,4 +1,5 @@
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_management/patient/NotificationPage.dart';
 import 'package:hospital_management/patient/PatientHomePage.dart';
@@ -30,7 +31,12 @@ class _PatientDashbordState extends State<PatientDashbord> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(Icons.menu),
+                IconButton(
+                    icon: Icon(Icons.logout),
+                    onPressed: () {
+                      FirebaseAuth.instance.signOut();
+                      Navigator.pop(context);
+                    }),
                 IconButton(
                     icon: Icon(Icons.notifications),
                     onPressed: () {
@@ -190,7 +196,7 @@ class _PatientDashbordState extends State<PatientDashbord> {
                 ),
               ),
               Container(
-                  height: screenHeight * 0.3,
+                  height: screenHeight * 0.3 - 10,
                   width: screenWidth * 0.9,
                   child: PageView.builder(
                       scrollDirection: Axis.vertical,
