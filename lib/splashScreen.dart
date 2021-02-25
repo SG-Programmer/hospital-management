@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hospital_management/receptionist/DashBord.dart';
 import 'package:hospital_management/registration/LoginPage.dart';
 import 'package:hospital_management/utils/size.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _loadScreen() {
-    var _duraion = Duration(seconds: 7);
+    var _duraion = Duration(seconds: 5);
     return Timer(_duraion, navigatScreen);
   }
 
@@ -38,12 +39,19 @@ class _SplashScreenState extends State<SplashScreen> {
             (route) => false)
         : _firebaseAuth
             .signInWithEmailAndPassword(email: name[0], password: name[1])
-            .then((value) => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PatientDashbord(),
-                  ),
-                ));
+            .then((value) => name[0] == "admin@mecare.com"
+                ? Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DashBord(),
+                    ),
+                    (route) => false)
+                : Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PatientDashbord(),
+                    ),
+                    (route) => false));
   }
 
   _sharepreference() async {

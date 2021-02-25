@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hospital_management/receptionist/HomPage.dart';
 import 'package:hospital_management/registration/LoginPage.dart';
 import 'package:hospital_management/utils/size.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DashBord extends StatefulWidget {
   @override
@@ -21,6 +22,11 @@ class _DashBordState extends State<DashBord> {
       Icons.supervised_user_circle,
       Icons.star
     ];
+
+    _sharedPreferences() async {
+      SharedPreferences _preferences = await SharedPreferences.getInstance();
+      _preferences.remove("auth");
+    }
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -45,6 +51,7 @@ class _DashBordState extends State<DashBord> {
                         child: IconButton(
                             icon: Icon(Icons.logout),
                             onPressed: () {
+                              _sharedPreferences();
                               Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
