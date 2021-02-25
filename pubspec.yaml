@@ -39,8 +39,13 @@ dependencies:
   firebase_database: 6.0.0
   firebase_core: 0.7.0
   firebase_auth: 0.20.1
+
   #form field validator
   form_validator: 0.1.7
+  #Internet check On Or Off
+  connectivity: 2.0.2
+  #shared_preferences 
+  shared_preferences: 0.5.12+4
 
 dev_dependencies:
   flutter_test:

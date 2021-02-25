@@ -1,11 +1,11 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_management/patient/NotificationPage.dart';
 import 'package:hospital_management/patient/PatientHomePage.dart';
 import 'package:hospital_management/registration/LoginPage.dart';
 import 'package:hospital_management/utils/size.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'SearchPage.dart';
 
@@ -19,9 +19,16 @@ class _PatientDashbordState extends State<PatientDashbord> {
   double pageInd = 0;
   bool seeAds = true;
   TextEditingController searchController = TextEditingController();
+
+  _sharedPreferences() async {
+    SharedPreferences _preferences = await SharedPreferences.getInstance();
+    _preferences.remove("auth");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -41,6 +48,7 @@ class _PatientDashbordState extends State<PatientDashbord> {
                               color: Colors.red,
                               icon: Icon(Icons.logout),
                               onPressed: () {
+                                _sharedPreferences();
                                 FirebaseAuth.instance.signOut().then((value) {
                                   Navigator.pushAndRemoveUntil(
                                       context,

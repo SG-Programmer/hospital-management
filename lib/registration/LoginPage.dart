@@ -1,12 +1,14 @@
 import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:hospital_management/patient/PatientDashbord.dart';
 import 'package:hospital_management/receptionist/DashBord.dart';
 import 'package:hospital_management/registration/RegistrationPage.dart';
 import 'package:hospital_management/utils/size.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -23,6 +25,21 @@ class _LoginPageState extends State<LoginPage> {
 
   //firebase
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  interNetCheck() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile) {
+      print("dfdf");
+    } else if (connectivityResult == ConnectivityResult.wifi) {
+      print("dfdfdddddd");
+    }
+  }
+
+  //shared_preferences
+  _sharedPreferences(String email, String password) async {
+    SharedPreferences _preferences = await SharedPreferences.getInstance();
+    _preferences.setStringList("auth", [email, password]);
+  }
+
   @override
   Widget build(BuildContext context) {
     ScreenSize.setSize(context);
@@ -106,6 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                         TextFormField(
                           validator: ValidationBuilder().minLength(8).build(),
                           controller: passController,
+                          obscureText: true,
                           decoration: InputDecoration(
                               hintText: "Password",
                               prefixIcon: Icon(Icons.lock)),
@@ -155,7 +173,9 @@ class _LoginPageState extends State<LoginPage> {
                                         email: emailController.text,
                                         password: passController.text)
                                     .then((value) {
-                                  emailController.text == value.user.email
+                                  _sharedPreferences(emailController.text,
+                                      passController.text);
+                                  emailController.text == "admin@mecare.com"
                                       ? Navigator.push(
                                           context,
                                           MaterialPageRoute(
