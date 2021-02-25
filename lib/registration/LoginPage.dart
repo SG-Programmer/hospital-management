@@ -155,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                                         email: emailController.text,
                                         password: passController.text)
                                     .then((value) {
-                                  emailController.text == "admin"
+                                  emailController.text == value.user.email
                                       ? Navigator.push(
                                           context,
                                           MaterialPageRoute(

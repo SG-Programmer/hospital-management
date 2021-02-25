@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hospital_management/receptionist/HomPage.dart';
+import 'package:hospital_management/registration/LoginPage.dart';
 import 'package:hospital_management/utils/size.dart';
 
 class DashBord extends StatefulWidget {
@@ -40,10 +41,16 @@ class _DashBordState extends State<DashBord> {
                           "https://www.shareicon.net/data/2016/09/15/829473_man_512x512.png"),
                     ),
                     CircleAvatar(
-                      backgroundColor: Colors.white,
-                      child: Image.network(
-                          "https://cdn.onlinewebfonts.com/svg/img_75779.png"),
-                    ),
+                        backgroundColor: Colors.white,
+                        child: IconButton(
+                            icon: Icon(Icons.logout),
+                            onPressed: () {
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginPage()),
+                                  (route) => false);
+                            })),
                   ],
                 ),
               ),

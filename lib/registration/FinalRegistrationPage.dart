@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
@@ -44,6 +45,7 @@ class _FinalRegistrationPageState extends State<FinalRegistrationPage> {
   //firebase
   final DatabaseReference _registrationReference =
       FirebaseDatabase.instance.reference().child("registration");
+  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   //variable
   bool userIndatabse;
@@ -174,11 +176,40 @@ class _FinalRegistrationPageState extends State<FinalRegistrationPage> {
                             userIndatabse == false &&
                             emailIndatabase == false &&
                             passwordCheck == true) {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Container(
+                                    padding: EdgeInsets.only(
+                                        top: screenHeight * 0.5,
+                                        bottom: screenHeight * 0.4,
+                                        left: screenWidth * 0.4 + 7,
+                                        right: screenWidth * 0.4 + 7),
+                                    height: 30,
+                                    width: 30,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 3.2,
+                                    ));
+                              });
                           _registration();
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => PatientDashbord()));
+                          _firebaseAuth
+                              .createUserWithEmailAndPassword(
+                                  email: emailIdController.text,
+                                  password: passwordController.text)
+                              .then((value) {
+                            print(value);
+                          });
+                          _firebaseAuth
+                              .signInWithEmailAndPassword(
+                                  email: emailIdController.text,
+                                  password: passwordController.text)
+                              .then((value) {
+                            Navigator.pop(context);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => PatientDashbord()));
+                          });
                         }
                       },
                       child: Text("Complite"),

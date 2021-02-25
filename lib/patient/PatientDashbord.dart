@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_management/patient/NotificationPage.dart';
 import 'package:hospital_management/patient/PatientHomePage.dart';
+import 'package:hospital_management/registration/LoginPage.dart';
 import 'package:hospital_management/utils/size.dart';
 
 import 'SearchPage.dart';
@@ -32,19 +33,26 @@ class _PatientDashbordState extends State<PatientDashbord> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    IconButton(
-                        color: Colors.red,
-                        icon: Icon(Icons.logout),
-                        onPressed: () {
-                          FirebaseAuth.instance.signOut();
-                          Navigator.pop(context);
-                          Navigator.pop(context);
-                        }),
-                    Text(FirebaseAuth.instance.currentUser.email),
-                  ],
-                ),
+                FirebaseAuth.instance.currentUser.email == null
+                    ? "dd"
+                    : Row(
+                        children: [
+                          IconButton(
+                              color: Colors.red,
+                              icon: Icon(Icons.logout),
+                              onPressed: () {
+                                FirebaseAuth.instance.signOut().then((value) {
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => LoginPage(),
+                                      ),
+                                      (route) => false);
+                                });
+                              }),
+                          Text(FirebaseAuth.instance.currentUser.email),
+                        ],
+                      ),
                 IconButton(
                     icon: Icon(Icons.notifications),
                     onPressed: () {
