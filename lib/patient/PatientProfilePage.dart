@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
+import 'package:hospital_management/patient/pataientDetails.dart';
 import 'package:hospital_management/utils/size.dart';
 
 class PatientProfilePage extends StatefulWidget {
@@ -7,7 +9,30 @@ class PatientProfilePage extends StatefulWidget {
 }
 
 class _PatientProfilePageState extends State<PatientProfilePage> {
-  containerOfDatails() {
+  TextEditingController sexController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController numberController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+  TextEditingController pinCodeController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+
+  double setContainerHeight;
+
+  @override
+  void initState() {
+    sexController.text = pGender;
+    firstNameController.text = pFirstName;
+    lastNameController.text = pLastName;
+    numberController.text = pNumber;
+    cityController.text = pCity;
+    pinCodeController.text = pPinCode;
+    addressController.text = pAddress;
+    super.initState();
+  }
+
+  containerOfDatails(String labelName, TextEditingController _controller,
+      String Function(String) check) {
     return Container(
       margin: EdgeInsets.only(
           top: screenHeight * 0.01,
@@ -28,7 +53,7 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Email"),
+          Text(labelName),
           Container(
             margin: EdgeInsets.only(top: screenHeight * 0.01),
             width: double.infinity,
@@ -40,7 +65,9 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                   blurRadius: 15,
                   spreadRadius: 0.1),
             ], color: Colors.white, borderRadius: BorderRadius.circular(7)),
-            child: TextField(
+            child: TextFormField(
+              validator: check,
+              controller: _controller,
               decoration: InputDecoration(
                   prefixIcon: Icon(Icons.email),
                   border: InputBorder.none,
@@ -76,11 +103,15 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "  Profile",
-                      style: TextStyle(
-                          fontSize: 19.8, fontWeight: FontWeight.w600),
-                    ),
+                    IconButton(
+                        icon: Icon(
+                          Icons.arrow_back,
+                          size: 26.5,
+                          color: Colors.black,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        }),
                     IconButton(
                         icon: Icon(
                           Icons.edit_location_outlined,
@@ -105,10 +136,10 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                 SizedBox(
                   height: screenHeight * 0.02,
                 ),
-                Text("Smit Patel",
+                Text(pUserName,
                     style:
                         TextStyle(fontWeight: FontWeight.w800, fontSize: 19)),
-                Text("User Interface Designer",
+                Text(pFirstName + " " + pLastName,
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 12,
@@ -120,12 +151,20 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
             child: Container(
               child: ListView(
                 children: [
-                  containerOfDatails(),
-                  containerOfDatails(),
-                  containerOfDatails(),
-                  containerOfDatails(),
-                  containerOfDatails(),
-                  containerOfDatails(),
+                  containerOfDatails("First Name", firstNameController,
+                      ValidationBuilder().minLength(1).build()),
+                  containerOfDatails("Last Name", lastNameController,
+                      ValidationBuilder().minLength(1).build()),
+                  containerOfDatails("Mobile Number", numberController,
+                      ValidationBuilder().minLength(10).maxLength(10).build()),
+                  containerOfDatails("City", cityController,
+                      ValidationBuilder().minLength(1).build()),
+                  containerOfDatails("Address", addressController,
+                      ValidationBuilder().minLength(10).build()),
+                  containerOfDatails("Pin Code", pinCodeController,
+                      ValidationBuilder().minLength(6).maxLength(6).build()),
+                  containerOfDatails("Gender", sexController,
+                      ValidationBuilder().minLength(1).build()),
                 ],
               ),
             ),

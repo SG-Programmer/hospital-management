@@ -1,8 +1,10 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_management/patient/NotificationPage.dart';
 import 'package:hospital_management/patient/PatientHomePage.dart';
+import 'package:hospital_management/patient/pataientDetails.dart';
 import 'package:hospital_management/registration/LoginPage.dart';
 import 'package:hospital_management/utils/size.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,9 +22,25 @@ class _PatientDashbordState extends State<PatientDashbord> {
   bool seeAds = true;
   TextEditingController searchController = TextEditingController();
 
+  List<IconData> iconlist = [
+    Icons.calendar_today,
+    Icons.local_hospital_outlined,
+    Icons.message,
+    Icons.supervised_user_circle_outlined
+  ];
+
+  DatabaseReference _databasereference =
+      FirebaseDatabase.instance.reference().child("registration");
+
   _sharedPreferences() async {
     SharedPreferences _preferences = await SharedPreferences.getInstance();
     _preferences.remove("auth");
+  }
+
+  @override
+  void initState() {
+    PataientDetails().setUserDetails(_databasereference);
+    super.initState();
   }
 
   @override
@@ -146,7 +164,7 @@ class _PatientDashbordState extends State<PatientDashbord> {
             height: screenHeight * 0.1 + 44,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 5,
+              itemCount: iconlist.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                     margin: EdgeInsets.only(
@@ -169,15 +187,13 @@ class _PatientDashbordState extends State<PatientDashbord> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         IconButton(
-                            icon: Icon(
-                              Icons.supervised_user_circle_outlined,
-                              color: Colors.blue,
-                            ),
+                            icon: Icon(iconlist[index]),
                             onPressed: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => PatientHomePage()));
+                                      builder: (context) => PatientHomePage(
+                                          controllerIndex: index)));
                             }),
                         Text(
                           "Home visit",

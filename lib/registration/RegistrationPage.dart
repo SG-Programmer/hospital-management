@@ -166,7 +166,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     "PinCode",
                     "PinCode",
                     pinCodeController,
-                    ValidationBuilder().minLength(6).build(),
+                    ValidationBuilder().minLength(6).maxLength(6).build(),
                     Icon(Icons.code),
                   ),
                   textfield(
