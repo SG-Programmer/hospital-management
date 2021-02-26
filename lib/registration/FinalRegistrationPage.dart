@@ -191,24 +191,24 @@ class _FinalRegistrationPageState extends State<FinalRegistrationPage> {
                                       strokeWidth: 3.2,
                                     ));
                               });
-                          _registration();
+
                           _firebaseAuth
                               .createUserWithEmailAndPassword(
                                   email: emailIdController.text,
                                   password: passwordController.text)
                               .then((value) {
-                            print(value);
-                          });
-                          _firebaseAuth
-                              .signInWithEmailAndPassword(
-                                  email: emailIdController.text,
-                                  password: passwordController.text)
-                              .then((value) {
-                            Navigator.pop(context);
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => PatientDashbord()));
+                            _firebaseAuth
+                                .signInWithEmailAndPassword(
+                                    email: emailIdController.text,
+                                    password: passwordController.text)
+                                .then((value) {
+                              _registration(value.user.uid);
+                              Navigator.pop(context);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => PatientDashbord()));
+                            });
                           });
                         }
                       },
@@ -224,11 +224,10 @@ class _FinalRegistrationPageState extends State<FinalRegistrationPage> {
     );
   }
 
-  _registration() {
-    _registrationReference.child(userNameController.text).set({
+  _registration(String userid) {
+    _registrationReference.child(userid).set({
       "user_name": userNameController.text,
       "email_id": emailIdController.text,
-      "password": passwordController.text,
       "first_name": widget.firstNameController.text,
       "last_name": widget.lastNameController.text,
       "sex": widget.sex,
@@ -241,7 +240,11 @@ class _FinalRegistrationPageState extends State<FinalRegistrationPage> {
   }
 
   _checkUserInDatabse(String value) {
-    _registrationReference.child(value).once().then((value) {
+    _registrationReference
+        .orderByChild('user_name')
+        .equalTo(value)
+        .once()
+        .then((value) {
       setState(() {
         value.value == null ? userIndatabse = false : userIndatabse = true;
       });

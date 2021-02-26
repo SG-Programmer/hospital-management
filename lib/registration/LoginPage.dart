@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
@@ -170,8 +169,9 @@ class _LoginPageState extends State<LoginPage> {
                                     });
                                 _firebaseAuth
                                     .signInWithEmailAndPassword(
-                                        email: emailController.text,
-                                        password: passController.text)
+                                  email: emailController.text,
+                                  password: passController.text,
+                                )
                                     .then((value) {
                                   _sharedPreferences(emailController.text,
                                       passController.text);
