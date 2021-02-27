@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:hospital_management/receptionist/PatientDatails.dart';
 import 'package:hospital_management/utils/size.dart';
 import 'chatDetailPage.dart';
 
 class ChatPage extends StatefulWidget {
   NetworkImage profilePhoto;
-  String name;
-  ChatPage(this.name, this.profilePhoto);
+  var datails;
+  ChatPage(this.datails, this.profilePhoto);
   @override
   _ChatPageState createState() => _ChatPageState();
 }
@@ -17,11 +18,22 @@ class _ChatPageState extends State<ChatPage> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text(widget.name),
+          title: Text(widget.datails.userNameP),
           actions: [
-            CircleAvatar(
-              radius: 22,
-              backgroundImage: widget.profilePhoto,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PatientDatails(
+                        datails: widget.datails,
+                      ),
+                    ));
+              },
+              child: CircleAvatar(
+                radius: 22,
+                backgroundImage: widget.profilePhoto,
+              ),
             ),
             SizedBox(
               width: screenWidth * 0.04,

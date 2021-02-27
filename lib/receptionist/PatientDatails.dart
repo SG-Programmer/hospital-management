@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hospital_management/utils/size.dart';
 
 class PatientDatails extends StatefulWidget {
-  TabController controller;
-  PatientDatails({this.controller});
+  var datails;
+  PatientDatails({this.datails});
   @override
   _PatientDatailsState createState() => _PatientDatailsState();
 }
@@ -39,7 +39,7 @@ class _PatientDatailsState extends State<PatientDatails> {
         leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-              widget.controller.index = 0;
+              Navigator.pop(context);
             }),
       ),
       body: Column(
@@ -65,7 +65,7 @@ class _PatientDatailsState extends State<PatientDatails> {
                   height: screenHeight * 0.02,
                 ),
                 Text(
-                  "Harsh Patel",
+                  widget.datails.userNameP,
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14.0),
                 ),
                 Text("28 year's young")
@@ -82,18 +82,17 @@ class _PatientDatailsState extends State<PatientDatails> {
                 children: [
                   Row(
                     children: [
-                      datailsLable("First Name", "Parth"),
+                      datailsLable("First Name", widget.datails.firstNameP),
                       SizedBox(
                         width: screenWidth * 0.3,
                       ),
-                      datailsLable("First Name", "Kevadiya"),
+                      datailsLable("First Name", widget.datails.lastNameP),
                     ],
                   ),
-                  datailsLable("email", "Parth123@gmail.com"),
-                  datailsLable("Mobile", "1234567899"),
-                  datailsLable("Date of Brith", "26 Dec 1999"),
-                  datailsLable("Address",
-                      "Katar gam , haridarshan khada,govigji holl near,SMC garden,Surat-364411"),
+                  datailsLable("email", widget.datails.emailP),
+                  datailsLable("Mobile", widget.datails.numberP),
+                  datailsLable("Date of Brith", widget.datails.brithDateP),
+                  datailsLable("Address", widget.datails.addressP),
                 ],
               ),
             ),

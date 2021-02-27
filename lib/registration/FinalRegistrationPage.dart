@@ -227,6 +227,7 @@ class _FinalRegistrationPageState extends State<FinalRegistrationPage> {
   _registration(String userid) {
     _registrationReference.child(userid).set({
       "user_name": userNameController.text,
+      "user_id": userid,
       "email_id": emailIdController.text,
       "first_name": widget.firstNameController.text,
       "last_name": widget.lastNameController.text,

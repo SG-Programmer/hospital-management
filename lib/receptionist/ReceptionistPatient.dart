@@ -7,24 +7,9 @@ class ReceptionistPatient extends StatefulWidget {
   _ReceptionistPatientState createState() => _ReceptionistPatientState();
 }
 
-class _ReceptionistPatientState extends State<ReceptionistPatient>
-    with TickerProviderStateMixin {
-  TabController controller;
-  @override
-  void initState() {
-    controller = TabController(length: 2, vsync: this);
-    super.initState();
-  }
-
+class _ReceptionistPatientState extends State<ReceptionistPatient> {
   @override
   Widget build(BuildContext context) {
-    return TabBarView(
-      physics: NeverScrollableScrollPhysics(),
-      controller: controller,
-      children: [
-        PatientList(controller: controller),
-        PatientDatails(controller: controller)
-      ],
-    );
+    return PatientList();
   }
 }

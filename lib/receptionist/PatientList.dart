@@ -1,5 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_management/common/chatscreen/ChatPage.dart';
+import 'package:hospital_management/receptionist/PatientDatails.dart';
+import 'package:hospital_management/receptionist/PatientListData.dart';
 import 'package:hospital_management/utils/size.dart';
 
 class PatientList extends StatefulWidget {
@@ -66,6 +70,35 @@ class _PatientListState extends State<PatientList> {
     "ravi"
   ];
 
+  List<PatientListData> patientData = [];
+
+  DatabaseReference _databaseReference =
+      FirebaseDatabase.instance.reference().child('registration');
+
+  @override
+  void initState() {
+    super.initState();
+    _databaseReference.once().then((DataSnapshot snapshot) {
+      var _key = snapshot.value.keys;
+      var _data = snapshot.value;
+      patientData.clear();
+      for (var _getOneKey in _key) {
+        PatientListData patientListData = new PatientListData(
+            _data[_getOneKey]['first_name'],
+            _data[_getOneKey]['last_name'],
+            _data[_getOneKey]['user_name'],
+            _data[_getOneKey]['email_id'],
+            _data[_getOneKey]['number'],
+            _data[_getOneKey]['address'],
+            _data[_getOneKey]['date']);
+        patientData.add(patientListData);
+      }
+      setState(() {
+        print(patientData.length);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +109,7 @@ class _PatientListState extends State<PatientList> {
       body: Container(
         width: double.infinity,
         child: ListView.builder(
-          itemCount: profilePhoto.length,
+          itemCount: patientData.length,
           itemBuilder: (BuildContext context, int index) {
             return Container(
               margin: EdgeInsets.only(
@@ -92,16 +125,24 @@ class _PatientListState extends State<PatientList> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      widget.controller.index = 1;
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PatientDatails(
+                              datails: patientData[index],
+                            ),
+                          ));
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Parth Kevadiya",
+                          patientData[index].firstNameP +
+                              " " +
+                              patientData[index].lastNameP,
                           style: TextStyle(fontWeight: FontWeight.w700),
                         ),
-                        Text("9926558844",
+                        Text(patientData[index].userNameP,
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 color: Colors.black38))
@@ -124,8 +165,8 @@ class _PatientListState extends State<PatientList> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  ChatPage(name[index], profilePhoto[index]),
+                              builder: (context) => ChatPage(
+                                  patientData[index], profilePhoto[index]),
                             ));
                       })
                 ],
