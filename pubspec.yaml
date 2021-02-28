@@ -46,6 +46,8 @@ dependencies:
   connectivity: 2.0.2
   #shared_preferences 
   shared_preferences: 0.5.12+4
+  #calender
+  syncfusion_flutter_calendar: 18.4.44
 
 dev_dependencies:
   flutter_test:

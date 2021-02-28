@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_management/common/chatscreen/ChatPage.dart';
+import 'package:hospital_management/common/doctorscreen/doctorDatailData.dart';
 import 'package:hospital_management/patient/AppointmentPage.dart';
 
 import 'package:hospital_management/utils/size.dart';
@@ -13,6 +16,27 @@ class DoctorDatailPage extends StatefulWidget {
 }
 
 class _DoctorDatailPageState extends State<DoctorDatailPage> {
+  List<DoctorDatailData> doctorDatailList = [];
+  DatabaseReference _doctorreference =
+      FirebaseDatabase.instance.reference().child("doctor_datail");
+  String doctroFirstName = "";
+  String doctroLastName = "";
+  @override
+  void initState() {
+    super.initState();
+    _doctorreference.once().then((DataSnapshot snap) {
+      DoctorDatailData doctorDatailData = new DoctorDatailData(
+          snap.value['user_name'],
+          snap.value['first_name'],
+          snap.value['last_name']);
+      doctorDatailList.add(doctorDatailData);
+      setState(() {
+        doctroFirstName = doctorDatailList[0].firstNameP;
+        doctroLastName = doctorDatailList[0].lastNameP;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +89,7 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(left: screenWidth * 0.03),
-                            child: Text(widget.nameOfDoctor,
+                            child: Text(doctroFirstName + " " + doctroLastName,
                                 style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w900,
@@ -93,26 +117,36 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => ChatPage(
-                                            widget.nameOfDoctor,
+                                            doctorDatailList[0],
                                             widget.doctorPhoto),
                                       ));
                                 },
                                 color: Colors.orange[400],
                                 disabledColor: Colors.orange[400],
                               ),
-                              IconButton(
-                                icon: Icon(Icons.calendar_today_rounded),
-                                onPressed: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => AppointmentPage(
-                                        doctorPhoto: widget.doctorPhoto,
-                                        doctorName: widget.nameOfDoctor,
-                                      ),
-                                    )),
-                                color: Colors.blue[800],
-                                disabledColor: Colors.blue[800],
-                              ),
+                              FirebaseAuth.instance.currentUser.email ==
+                                      "admin@mecare.com"
+                                  ? IconButton(
+                                      icon: Icon(Icons
+                                          .supervised_user_circle_outlined),
+                                      onPressed: () {},
+                                      color: Colors.orange[400],
+                                      disabledColor: Colors.orange[400],
+                                    )
+                                  : IconButton(
+                                      icon: Icon(Icons.calendar_today_rounded),
+                                      onPressed: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                AppointmentPage(
+                                              doctorPhoto: widget.doctorPhoto,
+                                              doctorName: widget.nameOfDoctor,
+                                            ),
+                                          )),
+                                      color: Colors.blue[800],
+                                      disabledColor: Colors.blue[800],
+                                    ),
                             ],
                           ),
                         ],
