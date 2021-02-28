@@ -1,4 +1,6 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:hospital_management/receptionist/appointment/appoinmentData.dart';
 import 'package:hospital_management/utils/size.dart';
 
 class Online extends StatefulWidget {
@@ -7,6 +9,60 @@ class Online extends StatefulWidget {
 }
 
 class _OnlineState extends State<Online> {
+  //firebase
+  DatabaseReference waitingAppoinment =
+      FirebaseDatabase.instance.reference().child("appointment");
+
+  DatabaseReference _registration =
+      FirebaseDatabase.instance.reference().child("registration");
+
+  @override
+  void initState() {
+    super.initState();
+    _appoinmentList.clear();
+    _appoinmentUserDatail.clear();
+    getAppoinmentList();
+  }
+
+  getAppoinmentList() {
+    waitingAppoinment
+        .orderByChild("status")
+        .equalTo("waiting")
+        .once()
+        .then((DataSnapshot snap) {
+      var _key = snap.value.keys;
+      var data = snap.value;
+      for (var item in _key) {
+        AppoinmentData appoinmentData = new AppoinmentData(
+            data[item]['user_id'],
+            data[item]['date'],
+            data[item]['time'],
+            data[item]['token_no']);
+        _appoinmentList.add(appoinmentData);
+      }
+
+      _registration.once().then((DataSnapshot snap) {
+        var _key = snap.value.keys;
+        var _data = snap.value;
+        for (var i = 0; i < _appoinmentList.length; i++) {
+          for (var item in _key) {
+            if (_appoinmentList[i].userId == item) {
+              AppoinmentUserDatail appoinmentUserDatail =
+                  new AppoinmentUserDatail(_data[item]['first_name'],
+                      _data[item]['last_name'], _data[item]['number']);
+              _appoinmentUserDatail.add(appoinmentUserDatail);
+            }
+          }
+        }
+      });
+
+      setState(() {});
+    });
+  }
+
+  List<AppoinmentData> _appoinmentList = [];
+  List<AppoinmentUserDatail> _appoinmentUserDatail = [];
+
   @override
   Widget build(BuildContext context) {
     ScreenSize.setSize(context);
@@ -17,7 +73,7 @@ class _OnlineState extends State<Online> {
           )
         : Container(
             child: ListView.builder(
-                itemCount: 4,
+                itemCount: _appoinmentList.length,
                 itemBuilder: (context, index) {
                   return Container(
                     decoration: BoxDecoration(
@@ -37,77 +93,93 @@ class _OnlineState extends State<Online> {
                     child: Padding(
                       padding: EdgeInsets.only(
                           top: screenHeight * 0.02, left: screenWidth * 0.03),
-                      child: Column(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Icon(
-                                Icons.supervised_user_circle,
-                                size: screenHeight * 0.05,
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.supervised_user_circle,
+                                    size: screenHeight * 0.05,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        left: screenWidth * 0.03),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          _appoinmentUserDatail[index]
+                                                  .firstName +
+                                              " " +
+                                              _appoinmentUserDatail[index]
+                                                  .lastName,
+                                          style: TextStyle(
+                                              fontSize: 15.0,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        SizedBox(
+                                            height: screenHeight * 0.01 - 5),
+                                        Text(
+                                          _appoinmentUserDatail[index].number,
+                                          style:
+                                              TextStyle(color: Colors.black54),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Padding(
-                                padding:
-                                    EdgeInsets.only(left: screenWidth * 0.03),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "Harsh Shekhadiya",
-                                      style: TextStyle(
-                                          fontSize: 15.0,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    SizedBox(height: screenHeight * 0.01 - 5),
-                                    Text(
-                                      "+91992266448574",
-                                      style: TextStyle(color: Colors.black54),
-                                    ),
-                                  ],
+                              Text("Token Number:-" +
+                                  _appoinmentList[index].tokeNumber.toString()),
+                              Text("Time:-" + _appoinmentList[index].time)
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                margin:
+                                    EdgeInsets.only(right: screenWidth * 0.03),
+                                width: screenWidth * 0.2 + 19,
+                                height: screenHeight * 0.04 + 7,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(color: Colors.blue[800]),
+                                    borderRadius: BorderRadius.circular(20.0)),
+                                child: TextButton(
+                                  onPressed: () {},
+                                  child: Text("Accept"),
+                                ),
+                              ),
+                              SizedBox(
+                                height: screenHeight * 0.01,
+                              ),
+                              Container(
+                                margin:
+                                    EdgeInsets.only(right: screenWidth * 0.03),
+                                width: screenWidth * 0.2 + 19,
+                                height: screenHeight * 0.04 + 7,
+                                decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    border: Border.all(color: Colors.red[800]),
+                                    borderRadius: BorderRadius.circular(20.0)),
+                                child: TextButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                    "Delete",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 ),
                               ),
                             ],
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                top: screenHeight * 0.01,
-                                left: screenWidth * 0.1 + 10),
-                            child: Row(
-                              children: [
-                                Container(
-                                  margin: EdgeInsets.only(
-                                      right: screenWidth * 0.03),
-                                  width: screenWidth * 0.2 + 19,
-                                  height: screenHeight * 0.04 + 7,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      border:
-                                          Border.all(color: Colors.blue[800]),
-                                      borderRadius:
-                                          BorderRadius.circular(20.0)),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text("Accept"),
-                                  ),
-                                ),
-                                Container(
-                                  width: screenWidth * 0.2 + 19,
-                                  height: screenHeight * 0.04 + 7,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      border:
-                                          Border.all(color: Colors.red[800]),
-                                      borderRadius:
-                                          BorderRadius.circular(20.0)),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "Decline",
-                                      style: TextStyle(color: Colors.red),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
                         ],
                       ),
                     ),

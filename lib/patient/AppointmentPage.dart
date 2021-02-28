@@ -52,7 +52,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
   int selectionDateColor = 0;
   bool booked = true;
   bool panding = true;
-  int indexOfSloat = 0;
+  int indexOfSloat;
   String time = "";
 
   List<int> bookedList = [];
@@ -322,7 +322,9 @@ class _AppointmentPageState extends State<AppointmentPage> {
                   "time": time,
                   "status": "waiting"
                 }).then((value) {
+                  indexOfSloat = null;
                   appointmentStatus();
+
                   Navigator.pop(context);
                 });
               },
