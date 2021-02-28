@@ -3,7 +3,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:hospital_management/patient/pataientDetails.dart';
-import 'package:hospital_management/receptionist/PatientDatails.dart';
 import 'package:hospital_management/utils/size.dart';
 
 class PatientProfilePage extends StatefulWidget {

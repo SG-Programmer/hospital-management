@@ -19,12 +19,13 @@ class _OnlineState extends State<Online> {
   @override
   void initState() {
     super.initState();
-    _appoinmentList.clear();
-    _appoinmentUserDatail.clear();
+
     getAppoinmentList();
   }
 
   getAppoinmentList() {
+    _appoinmentList.clear();
+    _appoinmentUserDatail.clear();
     waitingAppoinment
         .orderByChild("status")
         .equalTo("waiting")
@@ -54,6 +55,7 @@ class _OnlineState extends State<Online> {
             }
           }
         }
+        setState(() {});
       });
 
       setState(() {});
@@ -154,7 +156,14 @@ class _OnlineState extends State<Online> {
                                     border: Border.all(color: Colors.blue[800]),
                                     borderRadius: BorderRadius.circular(20.0)),
                                 child: TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    waitingAppoinment
+                                        .child(_appoinmentList[index]
+                                            .tokeNumber
+                                            .toString())
+                                        .update({'status': "book"}).then(
+                                            (value) => getAppoinmentList());
+                                  },
                                   child: Text("Accept"),
                                 ),
                               ),
@@ -171,7 +180,14 @@ class _OnlineState extends State<Online> {
                                     border: Border.all(color: Colors.red[800]),
                                     borderRadius: BorderRadius.circular(20.0)),
                                 child: TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    waitingAppoinment
+                                        .child(_appoinmentList[index]
+                                            .tokeNumber
+                                            .toString())
+                                        .remove()
+                                        .then((value) => getAppoinmentList());
+                                  },
                                   child: Text(
                                     "Delete",
                                     style: TextStyle(color: Colors.white),

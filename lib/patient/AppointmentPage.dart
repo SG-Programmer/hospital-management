@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_management/utils/size.dart';
 import 'package:progress_indicators/progress_indicators.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class AppointmentPage extends StatefulWidget {
   NetworkImage doctorPhoto;
@@ -239,62 +238,159 @@ class _AppointmentPageState extends State<AppointmentPage> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Text("Approx 08:00 to 09:00"),
+                    Text("Approx 10:00 to 11:00"),
                     Row(
                       children: [
-                        slotTime("08:00 to 09:00", 0),
-                        slotTime("08:00 to 09:00", 1),
-                        slotTime("08:00 to 09:00", 2),
-                        slotTime("08:00 to 09:00", 3)
+                        slotTime("10:00 to 11:00", 1),
+                        slotTime("10:00 to 11:00", 2),
+                        slotTime("10:00 to 11:00", 3),
+                        slotTime("10:00 to 11:00", 4)
                       ],
                     ),
                     Row(
                       children: [
-                        slotTime("08:00 to 09:00", 4),
                         slotTime("08:00 to 09:00", 5),
                         slotTime("08:00 to 09:00", 6),
-                        slotTime("08:00 to 09:00", 7)
+                        slotTime("08:00 to 09:00", 7),
+                        slotTime("08:00 to 09:00", 8)
+                      ],
+                    ),
+                    Text("Approx 11:00 to 12:00"),
+                    Row(
+                      children: [
+                        slotTime("11:00 to 12:00", 9),
+                        slotTime("11:00 to 12:00", 10),
+                        slotTime("11:00 to 12:00", 11),
+                        slotTime("11:00 to 12:00", 12)
                       ],
                     ),
                     Row(
                       children: [
-                        slotTime("08:00 to 09:00", 8),
-                        slotTime("08:00 to 09:00", 9),
-                        slotTime("09:00 to 10:00", 10),
-                        slotTime("09:00 to 10:00", 11)
+                        slotTime("11:00 to 12:00", 13),
+                        slotTime("11:00 to 12:00", 14),
+                        slotTime("11:00 to 12:00", 15),
+                        slotTime("11:00 to 12:00", 16)
+                      ],
+                    ),
+                    Text("Approx 12:00 to 01:00"),
+                    Row(
+                      children: [
+                        slotTime("12:00 to 01:00", 17),
+                        slotTime("12:00 to 01:00", 18),
+                        slotTime("12:00 to 01:00", 19),
+                        slotTime("12:00 to 01:00", 20)
                       ],
                     ),
                     Row(
                       children: [
-                        slotTime("09:00 to 10:00", 12),
-                        slotTime("09:00 to 10:00", 13),
-                        slotTime("09:00 to 10:00", 14),
-                        slotTime("09:00 to 10:00", 15)
+                        slotTime("12:00 to 01:00", 21),
+                        slotTime("12:00 to 01:00", 22),
+                        slotTime("12:00 to 01:00", 23),
+                        slotTime("12:00 to 01:00", 24)
+                      ],
+                    ),
+                    Text("Approx 02:00 to 03:00"),
+                    Row(
+                      children: [
+                        slotTime("02:00 to 03:00", 25),
+                        slotTime("02:00 to 03:00", 26),
+                        slotTime("02:00 to 03:00", 27),
+                        slotTime("02:00 to 03:00", 28)
                       ],
                     ),
                     Row(
                       children: [
-                        slotTime("09:00 to 10:00", 16),
-                        slotTime("09:00 to 10:00", 17),
-                        slotTime("09:00 to 10:00", 18),
-                        slotTime("09:00 to 10:00", 19)
+                        slotTime("02:00 to 03:00", 29),
+                        slotTime("02:00 to 03:00", 30),
+                        slotTime("02:00 to 03:00", 31),
+                        slotTime("02:00 to 03:00", 32)
+                      ],
+                    ),
+                    Text("Approx 03:00 to 04:00"),
+                    Row(
+                      children: [
+                        slotTime("03:00 to 04:00", 33),
+                        slotTime("03:00 to 04:00", 34),
+                        slotTime("03:00 to 04:00", 35),
+                        slotTime("03:00 to 04:00", 36)
                       ],
                     ),
                     Row(
                       children: [
-                        slotTime("06:00 PM", 20),
-                        slotTime("06:30 PM", 21),
-                        slotTime("07:00 PM", 22),
-                        slotTime("07:30 PM", 23)
+                        slotTime("03:00 to 04:00", 37),
+                        slotTime("03:00 to 04:00", 38),
+                        slotTime("03:00 to 04:00", 39),
+                        slotTime("03:00 to 04:00", 40)
+                      ],
+                    ),
+                    Text("Approx 04:00 to 05:00"),
+                    Row(
+                      children: [
+                        slotTime("04:00 to 05:00", 41),
+                        slotTime("04:00 to 05:00", 42),
+                        slotTime("04:00 to 05:00", 43),
+                        slotTime("04:00 to 05:00", 44)
                       ],
                     ),
                     Row(
                       children: [
-                        slotTime("08:00 PM", 24),
-                        slotTime("08:30 PM", 25),
-                        slotTime("09:00 PM", 26)
+                        slotTime("04:00 to 05:00", 45),
+                        slotTime("04:00 to 05:00", 46),
+                        slotTime("04:00 to 05:00", 47),
+                        slotTime("04:00 to 05:00", 48)
                       ],
-                    )
+                    ),
+                    Text("Approx 05:00 to 06:00"),
+                    Row(
+                      children: [
+                        slotTime("05:00 to 06:00", 49),
+                        slotTime("05:00 to 06:00", 50),
+                        slotTime("05:00 to 06:00", 51),
+                        slotTime("05:00 to 06:00", 52)
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        slotTime("05:00 to 06:00", 53),
+                        slotTime("05:00 to 06:00", 54),
+                        slotTime("05:00 to 06:00", 55),
+                        slotTime("05:00 to 06:00", 56)
+                      ],
+                    ),
+                    Text("Approx 06:00 to 07:00"),
+                    Row(
+                      children: [
+                        slotTime("06:00 to 07:00", 57),
+                        slotTime("06:00 to 07:00", 58),
+                        slotTime("06:00 to 07:00", 59),
+                        slotTime("06:00 to 07:00", 60)
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        slotTime("06:00 to 07:00", 61),
+                        slotTime("06:00 to 07:00", 62),
+                        slotTime("06:00 to 07:00", 63),
+                        slotTime("06:00 to 07:00", 64)
+                      ],
+                    ),
+                    Text("Approx 07:00 to 08:00"),
+                    Row(
+                      children: [
+                        slotTime("07:00 to 08:00", 65),
+                        slotTime("07:00 to 08:00", 66),
+                        slotTime("07:00 to 08:00", 67),
+                        slotTime("07:00 to 08:00", 68)
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        slotTime("07:00 to 08:00", 69),
+                        slotTime("07:00 to 08:00", 60),
+                        slotTime("07:00 to 08:00", 61),
+                        slotTime("07:00 to 08:00", 62)
+                      ],
+                    ),
                   ],
                 ),
               ),

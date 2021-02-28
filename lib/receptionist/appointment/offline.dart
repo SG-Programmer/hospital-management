@@ -30,6 +30,6 @@ class _OfflineState extends State<Offline> {
           },
           child: Icon(Icons.add),
         ),
-        body: listOfCard(screenHeight, screenWidth));
+        body: Text("Process"));
   }
 }

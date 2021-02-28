@@ -141,7 +141,9 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
                                             builder: (context) =>
                                                 AppointmentPage(
                                               doctorPhoto: widget.doctorPhoto,
-                                              doctorName: widget.nameOfDoctor,
+                                              doctorName: doctroFirstName +
+                                                  " " +
+                                                  doctroLastName,
                                             ),
                                           )),
                                       color: Colors.blue[800],

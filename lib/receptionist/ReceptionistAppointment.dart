@@ -19,7 +19,7 @@ class _ReceptionistAppointmentState extends State<ReceptionistAppointment>
   @override
   Widget build(BuildContext context) {
     ScreenSize.setSize(context);
-    controller = TabController(length: 4, vsync: this);
+    controller = TabController(length: 3, vsync: this);
     List<AssetImage> imageList = [
       AssetImage('images/ra1.png'),
       AssetImage('images/ra2.png'),
@@ -92,8 +92,7 @@ class _ReceptionistAppointmentState extends State<ReceptionistAppointment>
                         tabs: [
                           Text("online"),
                           Text("Offline"),
-                          Text("Upcoming"),
-                          Text("Complited")
+                          Text("waiting"),
                         ]),
                   ),
                 ],
@@ -102,7 +101,7 @@ class _ReceptionistAppointmentState extends State<ReceptionistAppointment>
         body: TabBarView(
           controller: controller,
           physics: NeverScrollableScrollPhysics(),
-          children: [Online(), Offline(), Upcomming(), Complite()],
+          children: [Online(), Offline(), Complite()],
         ));
   }
 }
