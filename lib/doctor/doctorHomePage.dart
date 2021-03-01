@@ -1,5 +1,6 @@
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:flutter/material.dart';
+import 'package:hospital_management/doctor/doctorChat.dart';
 import 'package:hospital_management/doctor/doctorProfile.dart';
 
 class DoctorHomePage extends StatefulWidget {
@@ -26,7 +27,7 @@ class _DoctorHomePageState extends State<DoctorHomePage>
               physics: NeverScrollableScrollPhysics(),
               children: [
                 DoctorProfile(),
-                DoctorProfile(),
+                DoctorChat(),
                 DoctorProfile(),
                 DoctorProfile()
               ]),
@@ -37,7 +38,7 @@ class _DoctorHomePageState extends State<DoctorHomePage>
                 title: "Home",
               ),
               TabData(
-                iconData: Icons.search,
+                iconData: Icons.message_outlined,
                 title: "Search",
               ),
               TabData(iconData: Icons.shopping_cart, title: "Basket"),

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_management/utils/size.dart';
 import 'ChatPage.dart';
@@ -53,14 +54,16 @@ class _ChatListState extends State<ChatList> {
         Padding(
           padding: EdgeInsets.only(
               left: screenWidth * 0.02, top: screenHeight * 0.02),
-          child: IconButton(
-              icon: Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              }),
+          child: FirebaseAuth.instance.currentUser.email == "doctor@mecare.com"
+              ? null
+              : IconButton(
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
         ),
         Padding(
           padding: EdgeInsets.only(

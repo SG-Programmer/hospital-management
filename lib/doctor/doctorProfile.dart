@@ -11,7 +11,7 @@ class DoctorProfile extends StatefulWidget {
 
 class _DoctorProfileState extends State<DoctorProfile> {
   //Firebase reference
-  DatabaseReference _doctor_datail =
+  DatabaseReference _doctordatail =
       FirebaseDatabase.instance.reference().child('doctor_detail');
 
   //Text Controller
@@ -92,7 +92,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
   }
 
   _getData() {
-    _doctor_datail.once().then((value) {
+    _doctordatail.once().then((value) {
       setState(() {
         firstNameController.text = value.value['first_name'];
         lastNameController.text = value.value['last_name'];
@@ -121,15 +121,26 @@ class _DoctorProfileState extends State<DoctorProfile> {
           child: Column(
             children: [
               CircleAvatar(
-                radius: screenHeight * 0.05 + 5,
+                radius: screenHeight * 0.06 + 5,
                 child: Icon(Icons.supervised_user_circle_outlined),
               ),
               SizedBox(
-                height: screenHeight * 0.01,
+                height: screenHeight * 0.01 + 6,
               ),
-              Text("Change Profile"),
+              GestureDetector(
+                child: Text(
+                  "Change Profile",
+                  style: TextStyle(
+                      fontSize: 15.3,
+                      color: Colors.blue,
+                      fontWeight: FontWeight.w500),
+                ),
+                onTap: () {
+                  print('Change profile');
+                },
+              ),
               SizedBox(
-                height: screenHeight * 0.05,
+                height: screenHeight * 0.03,
               ),
               Align(
                   alignment: Alignment.centerRight,
@@ -155,7 +166,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                               if (_formKey.currentState.validate()) {
                                 submitButtonShow = false;
                                 shoTextField = false;
-                                _doctor_datail.update({
+                                _doctordatail.update({
                                   'first_name': firstNameController.text,
                                   'last_name': lastNameController.text,
                                   'status': statusController.text,
