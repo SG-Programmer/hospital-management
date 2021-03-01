@@ -25,7 +25,10 @@ class _DoctorHomePageState extends State<DoctorHomePage>
           iconData: Icons.home,
           title: "Home",
         ),
-        TabData(iconData: Icons.search, title: "Search"),
+        TabData(
+          iconData: Icons.search,
+          title: "Search",
+        ),
         TabData(iconData: Icons.shopping_cart, title: "Basket")
       ],
       onTabChangedListener: (position) {
