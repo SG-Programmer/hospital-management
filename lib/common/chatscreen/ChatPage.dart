@@ -5,7 +5,7 @@ import 'chatDetailPage.dart';
 
 class ChatPage extends StatefulWidget {
   NetworkImage profilePhoto;
-  var datails;
+  String datails;
   ChatPage(this.datails, this.profilePhoto);
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -18,7 +18,7 @@ class _ChatPageState extends State<ChatPage> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text(widget.datails.userNameP),
+          title: Text(widget.datails),
           actions: [
             GestureDetector(
               onTap: () {

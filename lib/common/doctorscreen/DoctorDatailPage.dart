@@ -89,10 +89,10 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(left: screenWidth * 0.03),
-                            child: Text(doctroFirstName + " " + doctroLastName,
+                            child: Text("Jatin" + " " + "Patel",
                                 style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w900,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w700,
                                 )),
                           ),
                           Padding(
@@ -117,7 +117,7 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => ChatPage(
-                                            doctorDatailList[0],
+                                            doctorDatailList[0].userNameP,
                                             widget.doctorPhoto),
                                       ));
                                 },

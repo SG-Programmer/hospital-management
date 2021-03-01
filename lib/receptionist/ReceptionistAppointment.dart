@@ -4,7 +4,6 @@ import 'package:hospital_management/utils/size.dart';
 import 'appointment/complite.dart';
 import 'appointment/offline.dart';
 import 'appointment/online.dart';
-import 'appointment/upcomming.dart';
 
 class ReceptionistAppointment extends StatefulWidget {
   @override

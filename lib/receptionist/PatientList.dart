@@ -165,7 +165,8 @@ class _PatientListState extends State<PatientList> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => ChatPage(
-                                  patientData[index], profilePhoto[index]),
+                                  patientData[index].userNameP,
+                                  profilePhoto[index]),
                             ));
                       })
                 ],

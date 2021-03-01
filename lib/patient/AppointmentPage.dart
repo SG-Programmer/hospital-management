@@ -126,8 +126,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
                     width: screenWidth * 0.2 + 20,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(7),
-                      image: DecorationImage(
-                          image: widget.doctorPhoto, fit: BoxFit.fill),
+                      // image: DecorationImage(
+                      //     image: widget.doctorPhoto, fit: BoxFit.fill),
                     )),
                 SizedBox(
                   width: screenWidth * 0.05,
