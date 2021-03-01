@@ -49,6 +49,8 @@ dependencies:
   shared_preferences: 0.5.12+4
   #calender
   syncfusion_flutter_calendar: 18.4.44
+  #slider 
+  flutter_slidable: 0.5.5
 
 dev_dependencies:
   flutter_test:

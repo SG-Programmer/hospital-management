@@ -1,5 +1,6 @@
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:flutter/material.dart';
+import 'package:hospital_management/doctor/doctorProfile.dart';
 
 class DoctorHomePage extends StatefulWidget {
   @override
@@ -18,24 +19,38 @@ class _DoctorHomePageState extends State<DoctorHomePage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        bottomNavigationBar: FancyBottomNavigation(
-      tabs: [
-        TabData(
-          iconData: Icons.home,
-          title: "Home",
-        ),
-        TabData(
-          iconData: Icons.search,
-          title: "Search",
-        ),
-        TabData(iconData: Icons.shopping_cart, title: "Basket")
-      ],
-      onTabChangedListener: (position) {
-        setState(() {
-          _tabController.index = position;
-        });
-      },
-    ));
+    return SafeArea(
+      child: Scaffold(
+          body: TabBarView(
+              controller: _tabController,
+              physics: NeverScrollableScrollPhysics(),
+              children: [
+                DoctorProfile(),
+                DoctorProfile(),
+                DoctorProfile(),
+                DoctorProfile()
+              ]),
+          bottomNavigationBar: FancyBottomNavigation(
+            tabs: [
+              TabData(
+                iconData: Icons.home,
+                title: "Home",
+              ),
+              TabData(
+                iconData: Icons.search,
+                title: "Search",
+              ),
+              TabData(iconData: Icons.shopping_cart, title: "Basket"),
+              TabData(
+                  iconData: Icons.supervised_user_circle_outlined,
+                  title: "Account")
+            ],
+            onTabChangedListener: (position) {
+              setState(() {
+                _tabController.index = position;
+              });
+            },
+          )),
+    );
   }
 }

@@ -7,6 +7,9 @@ import 'package:hospital_management/patient/AppointmentPage.dart';
 
 import 'package:hospital_management/utils/size.dart';
 
+import '../../utils/size.dart';
+import 'doctorDatailData.dart';
+
 class DoctorDatailPage extends StatefulWidget {
   String nameOfDoctor;
   NetworkImage doctorPhoto;
@@ -17,22 +20,30 @@ class DoctorDatailPage extends StatefulWidget {
 
 class _DoctorDatailPageState extends State<DoctorDatailPage> {
   List<DoctorDatailData> doctorDatailList = [];
+
   DatabaseReference _doctorreference =
-      FirebaseDatabase.instance.reference().child("doctor_datail");
+      FirebaseDatabase.instance.reference().child("doctor_detail");
   String doctroFirstName = "";
   String doctroLastName = "";
+  String doctorStstus = "";
+  String doctorabout = "";
   @override
   void initState() {
     super.initState();
+    doctorDatailList.clear();
     _doctorreference.once().then((DataSnapshot snap) {
       DoctorDatailData doctorDatailData = new DoctorDatailData(
           snap.value['user_name'],
           snap.value['first_name'],
-          snap.value['last_name']);
+          snap.value['last_name'],
+          snap.value['status'],
+          snap.value['about']);
       doctorDatailList.add(doctorDatailData);
       setState(() {
         doctroFirstName = doctorDatailList[0].firstNameP;
         doctroLastName = doctorDatailList[0].lastNameP;
+        doctorStstus = doctorDatailList[0].ststusP;
+        doctorabout = doctorDatailList[0].aboutP;
       });
     });
   }
@@ -89,7 +100,7 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(left: screenWidth * 0.03),
-                            child: Text("Jatin" + " " + "Patel",
+                            child: Text(doctroFirstName + " " + doctroLastName,
                                 style: TextStyle(
                                   fontSize: 17,
                                   fontWeight: FontWeight.w700,
@@ -97,7 +108,7 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(left: screenWidth * 0.03),
-                            child: Text("Heart Surgeon-Flower Hospitel's",
+                            child: Text(doctorStstus,
                                 style: TextStyle(
                                     color: Colors.black45,
                                     fontWeight: FontWeight.w600)),
@@ -169,7 +180,7 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
                       left: screenWidth * 0.05,
                       bottom: screenHeight * 0.02 - 4),
                   child: Text(
-                    "Doctors That Work Within a Community They are the frontline and first point of contact in a patient's health care. They diagnose and treat their patients for all sorts of ailments, and also refer their patients to the appropriate specialist doctor when needed for specific medical opinions and advice.",
+                    doctorabout,
                     style: TextStyle(
                         color: Colors.black45,
                         fontWeight: FontWeight.w400,
@@ -180,7 +191,7 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
                   padding: EdgeInsets.only(
                       left: screenWidth * 0.05, bottom: screenHeight * 0.01),
                   child: Text(
-                    "Upcoming Schedules",
+                    "Notes",
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
                   ),
                 ),
@@ -200,57 +211,15 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
                               right: screenWidth * 0.05,
                               bottom: screenHeight * 0.01),
                           child: Padding(
-                            padding: EdgeInsets.only(left: screenWidth * 0.03),
-                            child: Row(
+                            padding: EdgeInsets.only(
+                                left: screenWidth * 0.04,
+                                right: screenWidth * 0.04,
+                                top: screenHeight * 0.02,
+                                bottom: screenHeight * 0.02),
+                            child: Column(
                               children: [
-                                Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.green[200],
-                                        borderRadius:
-                                            BorderRadius.circular(11)),
-                                    alignment: Alignment.center,
-                                    height: screenHeight * 0.07,
-                                    width: screenWidth * 0.1 + 8,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "2",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 18,
-                                              color: Colors.green[700]),
-                                        ),
-                                        Text(
-                                          "Jan",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 10,
-                                              color: Colors.green[700]),
-                                        ),
-                                      ],
-                                    )),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(left: screenWidth * 0.04),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text("Consultation",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w800)),
-                                      Text("Sunday .  9am-11am",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              color: Colors.black54,
-                                              fontWeight: FontWeight.w400))
-                                    ],
-                                  ),
-                                )
+                                Text(
+                                    "sjkdjskdsdsdskjsjdksjdksjdksjdskdjdjsdjsdksdjskdjskdsjdklsdfdsjh")
                               ],
                             ),
                           ),
