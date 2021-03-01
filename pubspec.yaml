@@ -31,6 +31,7 @@ dependencies:
   #navigation bar
   custom_navigation_bar: 0.7.1
   curved_navigation_bar: 0.3.7
+  fancy_bottom_navigation: 0.3.2
   #dots indicator
   dots_indicator: 1.2.0
   #proses wait indicator

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
+import 'package:hospital_management/doctor/doctorHomePage.dart';
 import 'package:hospital_management/patient/PatientDashbord.dart';
 import 'package:hospital_management/receptionist/DashBord.dart';
 import 'package:hospital_management/registration/RegistrationPage.dart';
@@ -181,14 +182,26 @@ class _LoginPageState extends State<LoginPage> {
                                           MaterialPageRoute(
                                             builder: (context) => DashBord(),
                                           ))
-                                      : Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => Scaffold(
-                                              resizeToAvoidBottomPadding: false,
-                                              body: PatientDashbord(),
-                                            ),
-                                          ));
+                                      : emailController.text ==
+                                              "doctor@mecare.com"
+                                          ? Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => Scaffold(
+                                                  resizeToAvoidBottomPadding:
+                                                      false,
+                                                  body: DoctorHomePage(),
+                                                ),
+                                              ))
+                                          : Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => Scaffold(
+                                                  resizeToAvoidBottomPadding:
+                                                      false,
+                                                  body: PatientDashbord(),
+                                                ),
+                                              ));
 
                                   emailController.text = "";
                                   passController.text = "";

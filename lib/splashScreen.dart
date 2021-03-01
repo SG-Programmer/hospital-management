@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hospital_management/doctor/doctorHomePage.dart';
 import 'package:hospital_management/receptionist/DashBord.dart';
 import 'package:hospital_management/registration/LoginPage.dart';
 import 'package:hospital_management/utils/size.dart';
@@ -46,12 +47,19 @@ class _SplashScreenState extends State<SplashScreen> {
                       builder: (context) => DashBord(),
                     ),
                     (route) => false)
-                : Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PatientDashbord(),
-                    ),
-                    (route) => false));
+                : name[0] == "doctor@mecare.com"
+                    ? Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DoctorHomePage(),
+                        ),
+                        (route) => false)
+                    : Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PatientDashbord(),
+                        ),
+                        (route) => false));
   }
 
   _sharepreference() async {
