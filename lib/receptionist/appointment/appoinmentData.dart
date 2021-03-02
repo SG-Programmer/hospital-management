@@ -1,8 +1,9 @@
 class AppoinmentData {
-  String userId, date, time;
+  String userId, date, time, tokenId;
   int tokeNumber;
 
-  AppoinmentData(this.userId, this.date, this.time, this.tokeNumber);
+  AppoinmentData(
+      this.userId, this.date, this.time, this.tokeNumber, this.tokenId);
 }
 
 class AppoinmentUserDatail {

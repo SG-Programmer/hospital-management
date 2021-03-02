@@ -8,7 +8,8 @@ import 'package:progress_indicators/progress_indicators.dart';
 class AppointmentPage extends StatefulWidget {
   NetworkImage doctorPhoto;
   String doctorName;
-  AppointmentPage({this.doctorPhoto, this.doctorName});
+  String offlineUserId;
+  AppointmentPage({this.doctorPhoto, this.doctorName, this.offlineUserId});
   @override
   _AppointmentPageState createState() => _AppointmentPageState();
 }
@@ -17,45 +18,14 @@ class _AppointmentPageState extends State<AppointmentPage> {
   DatabaseReference _appointment =
       FirebaseDatabase.instance.reference().child('appointment');
 
-  @override
-  void initState() {
-    super.initState();
-    appointmentStatus();
-  }
-
-  appointmentStatus() {
-    waitingList.clear();
-    bookedList.clear();
-    _appointment
-        .orderByChild('status')
-        .equalTo('waiting')
-        .once()
-        .then((DataSnapshot snap) {
-      for (var item in snap.value.keys) {
-        waitingList.add(int.parse(item));
-      }
-    });
-    _appointment
-        .orderByChild('status')
-        .equalTo('book')
-        .once()
-        .then((DataSnapshot snap) {
-      for (var item in snap.value.keys) {
-        bookedList.add(int.parse(item));
-      }
-      setState(() {});
-    });
-  }
-
   double screenPaddingSide = screenWidth * 0.04;
   int selectionDateColor = 0;
   bool booked = true;
   bool panding = true;
   int indexOfSloat;
+  List<int> bookedList = [1, 2, 3];
+  List<int> waitingList = [5, 6, 7];
   String time = "";
-
-  List<int> bookedList = [];
-  List<int> waitingList = [];
 
   Color colorSet(int index) {
     Color colorName;
@@ -67,6 +37,22 @@ class _AppointmentPageState extends State<AppointmentPage> {
       colorName = Colors.white;
     }
     return colorName;
+  }
+
+  appointmentStatus() {
+    waitingList.clear();
+    bookedList.clear();
+    _appointment.once().then((DataSnapshot snapshotslot) {
+      for (var itemslot in snapshotslot.value.keys) {
+        if (snapshotslot.value[itemslot]['status'] == "book") {
+          bookedList.add(snapshotslot.value[itemslot]['token_no']);
+        }
+        if (snapshotslot.value[itemslot]['status'] == "waiting") {
+          waitingList.add(snapshotslot.value[itemslot]['token_no']);
+        }
+      }
+      setState(() {});
+    });
   }
 
   slotTime(String timeOfBooking, int index) {
@@ -98,6 +84,12 @@ class _AppointmentPageState extends State<AppointmentPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    appointmentStatus();
+    super.initState();
   }
 
   @override
@@ -402,6 +394,16 @@ class _AppointmentPageState extends State<AppointmentPage> {
             color: Colors.indigoAccent[700],
             child: TextButton(
               onPressed: () {
+                String statusto;
+                String userID;
+                statusto = FirebaseAuth.instance.currentUser.email ==
+                        "admin@mecare.com"
+                    ? "book"
+                    : "waiting";
+                userID = FirebaseAuth.instance.currentUser.email ==
+                        "admin@mecare.com"
+                    ? widget.offlineUserId
+                    : FirebaseAuth.instance.currentUser.uid;
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -411,12 +413,12 @@ class _AppointmentPageState extends State<AppointmentPage> {
                           endScale: 2.2,
                           child: Icon(Icons.favorite, color: Colors.red));
                     });
-                _appointment.child("$indexOfSloat").set({
-                  "user_id": FirebaseAuth.instance.currentUser.uid,
+                _appointment.push().set({
+                  "user_id": userID,
                   "token_no": indexOfSloat,
                   "date": "12/12/2020",
                   "time": time,
-                  "status": "waiting"
+                  "status": statusto
                 }).then((value) {
                   indexOfSloat = null;
                   appointmentStatus();

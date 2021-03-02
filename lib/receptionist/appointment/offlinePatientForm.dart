@@ -196,8 +196,24 @@ class _OfflinePatientFormState extends State<OfflinePatientForm> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12.0)),
                           onPressed: () {
+                            String _offlineUserKey = _offlinePatient.push().key;
                             if (_formKey.currentState.validate()) {
-                              _offlinePatient.push().set({
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Container(
+                                        padding: EdgeInsets.only(
+                                            top: screenHeight * 0.5,
+                                            bottom: screenHeight * 0.4,
+                                            left: screenWidth * 0.4 + 7,
+                                            right: screenWidth * 0.4 + 7),
+                                        height: 30,
+                                        width: 30,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 3.2,
+                                        ));
+                                  });
+                              _offlinePatient.child(_offlineUserKey).set({
                                 'sex': sex,
                                 'first_name': firstNameController.text,
                                 'last_name': lastNameController.text,
@@ -205,14 +221,20 @@ class _OfflinePatientFormState extends State<OfflinePatientForm> {
                                 'number': numberController.text,
                                 'city': cityController.text,
                                 'pin_conde': pinCodeController.text,
-                                'address': addressController.text
-                              }).then((value) => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AppointmentPage(
-                                      doctorName: "jatin Patel",
-                                    ),
-                                  )));
+                                'address': addressController.text,
+                                'user_id': _offlineUserKey
+                              }).then((value) {
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => AppointmentPage(
+                                        doctorName: "jatin Patel",
+                                        offlineUserId: _offlineUserKey,
+                                      ),
+                                    ));
+                              });
                             }
                           },
                           child: Text("Continue"),

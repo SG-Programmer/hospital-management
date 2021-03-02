@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
+import 'package:hospital_management/patient/AppointmentPage.dart';
 import 'package:hospital_management/receptionist/appointment/offlinePatientForm.dart';
 import 'package:hospital_management/utils/size.dart';
 
@@ -15,16 +16,77 @@ class _OfflineState extends State<Offline> {
   @override
   void initState() {
     _query = FirebaseDatabase.instance.reference().child('offlinePatient');
-
     super.initState();
   }
 
-  List _name = ['smit007', 'priya05', 'nitin12', 'priya05', 'smit007'];
-
   Widget _datalist(Map _data) {
-    return _name.contains(_data['first_name'])
-        ? null
-        : Text(_data['first_name']);
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AppointmentPage(
+                doctorName: "Dr.Jatina patel",
+                offlineUserId: _data['user_id'],
+              ),
+            ));
+      },
+      child: Padding(
+        padding: EdgeInsets.only(
+            left: screenWidth * 0.04,
+            right: screenWidth * 0.04,
+            top: screenHeight * 0.02),
+        child: Container(
+          height: screenHeight * 0.09 + 14,
+          width: double.infinity,
+          padding: EdgeInsets.all(4),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(7.6),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                    blurRadius: 2,
+                    offset: Offset(0, 3),
+                    color: Colors.black26,
+                    spreadRadius: 3.1)
+              ]),
+          child: Row(
+            children: [
+              SizedBox(
+                width: screenWidth * 0.03,
+              ),
+              CircleAvatar(
+                child: Icon(Icons.supervised_user_circle_outlined),
+                radius: 33,
+              ),
+              SizedBox(
+                width: screenWidth * 0.03,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    _data['first_name'] + " " + _data['last_name'],
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
+                  ),
+                  SizedBox(
+                    height: screenHeight * 0.01 - 5,
+                  ),
+                  Text(
+                    _data['number'],
+                    style: TextStyle(
+                        fontSize: 15.2,
+                        color: Colors.black54,
+                        fontWeight: FontWeight.w400),
+                  )
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -32,14 +94,42 @@ class _OfflineState extends State<Offline> {
     ScreenSize.setSize(context);
 
     return Scaffold(
-      body: FirebaseAnimatedList(
-          query: _query,
-          itemBuilder: (BuildContext context, DataSnapshot snap,
-              Animation<double> animation, int index) {
-            Map _data = snap.value;
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(
+                left: screenWidth * 0.04,
+                right: screenWidth * 0.04,
+                top: screenHeight * 0.01),
+            child: Container(
+              height: screenHeight * 0.06,
+              width: double.infinity,
+              child: TextField(
+                onChanged: (value) {},
+                decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                        icon: Icon(
+                          Icons.search,
+                          size: 31,
+                        ),
+                        onPressed: () {})),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              child: FirebaseAnimatedList(
+                  query: _query,
+                  itemBuilder: (BuildContext context, DataSnapshot snap,
+                      Animation<double> animation, int index) {
+                    Map _data = snap.value;
 
-            return _datalist(_data);
-          }),
+                    return _datalist(_data);
+                  }),
+            ),
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(

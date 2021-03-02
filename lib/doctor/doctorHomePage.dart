@@ -22,6 +22,7 @@ class _DoctorHomePageState extends State<DoctorHomePage>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+          resizeToAvoidBottomInset: false,
           body: TabBarView(
               controller: _tabController,
               physics: NeverScrollableScrollPhysics(),

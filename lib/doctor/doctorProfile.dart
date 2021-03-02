@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:hospital_management/doctor/noteDetails.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../registration/LoginPage.dart';
 import '../utils/size.dart';
 
 class DoctorProfile extends StatefulWidget {
@@ -102,6 +105,11 @@ class _DoctorProfileState extends State<DoctorProfile> {
     });
   }
 
+  _sharedPreferences() async {
+    SharedPreferences _preferences = await SharedPreferences.getInstance();
+    _preferences.remove("auth");
+  }
+
   @override
   void initState() {
     _getData();
@@ -113,13 +121,33 @@ class _DoctorProfileState extends State<DoctorProfile> {
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.only(
-            left: screenWidth * 0.04,
-            right: screenWidth * 0.04,
-            top: screenHeight * 0.08),
+          left: screenWidth * 0.04,
+          right: screenWidth * 0.04,
+        ),
         child: Form(
           key: _formKey,
           child: Column(
             children: [
+              Align(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                    color: Colors.red,
+                    icon: Icon(Icons.logout),
+                    onPressed: () {
+                      _sharedPreferences();
+                      FirebaseAuth.instance.signOut().then((value) {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginPage(),
+                            ),
+                            (route) => false);
+                      });
+                    }),
+              ),
+              SizedBox(
+                height: screenHeight * 0.05,
+              ),
               CircleAvatar(
                 radius: screenHeight * 0.06 + 5,
                 child: Icon(Icons.supervised_user_circle_outlined),

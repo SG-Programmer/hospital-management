@@ -16,6 +16,9 @@ class _OnlineState extends State<Online> {
   DatabaseReference _registration =
       FirebaseDatabase.instance.reference().child("registration");
 
+  List<AppoinmentData> _appoinmentList = [];
+  List<AppoinmentUserDatail> _appoinmentUserDatail = [];
+
   @override
   void initState() {
     super.initState();
@@ -38,7 +41,8 @@ class _OnlineState extends State<Online> {
             data[item]['user_id'],
             data[item]['date'],
             data[item]['time'],
-            data[item]['token_no']);
+            data[item]['token_no'],
+            item);
         _appoinmentList.add(appoinmentData);
       }
 
@@ -61,9 +65,6 @@ class _OnlineState extends State<Online> {
       setState(() {});
     });
   }
-
-  List<AppoinmentData> _appoinmentList = [];
-  List<AppoinmentUserDatail> _appoinmentUserDatail = [];
 
   @override
   Widget build(BuildContext context) {
@@ -158,9 +159,7 @@ class _OnlineState extends State<Online> {
                                 child: TextButton(
                                   onPressed: () {
                                     waitingAppoinment
-                                        .child(_appoinmentList[index]
-                                            .tokeNumber
-                                            .toString())
+                                        .child(_appoinmentList[index].tokenId)
                                         .update({'status': "book"}).then(
                                             (value) => getAppoinmentList());
                                   },

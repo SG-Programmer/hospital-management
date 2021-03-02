@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_management/common/chatscreen/ChatPage.dart';
 import 'package:hospital_management/common/doctorscreen/doctorDatailData.dart';
@@ -21,8 +22,11 @@ class DoctorDatailPage extends StatefulWidget {
 class _DoctorDatailPageState extends State<DoctorDatailPage> {
   List<DoctorDatailData> doctorDatailList = [];
 
+  //firebase
   DatabaseReference _doctorreference =
       FirebaseDatabase.instance.reference().child("doctor_detail");
+  DatabaseReference _notes =
+      FirebaseDatabase.instance.reference().child("notes");
   String doctroFirstName = "";
   String doctroLastName = "";
   String doctorStstus = "";
@@ -46,6 +50,28 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
         doctorabout = doctorDatailList[0].aboutP;
       });
     });
+  }
+
+  Widget _notesdata(var data) {
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.green[100], borderRadius: BorderRadius.circular(11)),
+      margin: EdgeInsets.only(
+          left: screenWidth * 0.05,
+          right: screenWidth * 0.05,
+          bottom: screenHeight * 0.01),
+      child: Padding(
+        padding: EdgeInsets.only(
+            left: screenWidth * 0.04,
+            right: screenWidth * 0.04,
+            top: screenHeight * 0.02,
+            bottom: screenHeight * 0.02),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [Text(data['note'])],
+        ),
+      ),
+    );
   }
 
   @override
@@ -197,36 +223,16 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
                 ),
                 Expanded(
                   child: Container(
-                    height: screenHeight * 0.2,
-                    child: ListView.builder(
-                      itemCount: 3,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          decoration: BoxDecoration(
-                              color: Colors.green[100],
-                              borderRadius: BorderRadius.circular(11)),
-                          height: screenHeight * 0.09 + 14,
-                          margin: EdgeInsets.only(
-                              left: screenWidth * 0.05,
-                              right: screenWidth * 0.05,
-                              bottom: screenHeight * 0.01),
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                                left: screenWidth * 0.04,
-                                right: screenWidth * 0.04,
-                                top: screenHeight * 0.02,
-                                bottom: screenHeight * 0.02),
-                            child: Column(
-                              children: [
-                                Text(
-                                    "sjkdjskdsdsdskjsjdksjdksjdksjdskdjdjsdjsdksdjskdjskdsjdklsdfdsjh")
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                      height: screenHeight * 0.2,
+                      child: FirebaseAnimatedList(
+                        query: _notes,
+                        itemBuilder: (BuildContext context,
+                            DataSnapshot snapshot,
+                            Animation<double> animation,
+                            int index) {
+                          return _notesdata(snapshot.value);
+                        },
+                      )),
                 )
               ],
             ),

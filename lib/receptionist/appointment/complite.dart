@@ -18,6 +18,9 @@ class _CompliteState extends State<Complite> {
   DatabaseReference _registration =
       FirebaseDatabase.instance.reference().child("registration");
 
+  List<AppoinmentData> _appoinmentList2 = [];
+  List<AppoinmentUserDatail> _appoinmentUserDatail2 = [];
+
   @override
   void initState() {
     getAppoinmentList();
@@ -25,8 +28,8 @@ class _CompliteState extends State<Complite> {
   }
 
   getAppoinmentList() {
-    _appoinmentList.clear();
-    _appoinmentUserDatail.clear();
+    _appoinmentList2.clear();
+    _appoinmentUserDatail2.clear();
     waitingAppoinment
         .orderByChild("status")
         .equalTo("book")
@@ -35,24 +38,25 @@ class _CompliteState extends State<Complite> {
       var _key = snap.value.keys;
       var data = snap.value;
       for (var item in _key) {
-        AppoinmentData appoinmentData = new AppoinmentData(
+        AppoinmentData appoinmentData2 = new AppoinmentData(
             data[item]['user_id'],
             data[item]['date'],
             data[item]['time'],
-            data[item]['token_no']);
-        _appoinmentList.add(appoinmentData);
+            data[item]['token_no'],
+            item);
+        _appoinmentList2.add(appoinmentData2);
       }
 
       _registration.once().then((DataSnapshot snap) {
         var _key = snap.value.keys;
         var _data = snap.value;
-        for (var i = 0; i < _appoinmentList.length; i++) {
+        for (var i = 0; i < _appoinmentList2.length; i++) {
           for (var item in _key) {
-            if (_appoinmentList[i].userId == item) {
+            if (_appoinmentList2[i].userId == item) {
               AppoinmentUserDatail appoinmentUserDatail =
                   new AppoinmentUserDatail(_data[item]['first_name'],
                       _data[item]['last_name'], _data[item]['number']);
-              _appoinmentUserDatail.add(appoinmentUserDatail);
+              _appoinmentUserDatail2.add(appoinmentUserDatail);
             }
           }
         }
@@ -63,11 +67,9 @@ class _CompliteState extends State<Complite> {
     });
   }
 
-  List<AppoinmentData> _appoinmentList = [];
-  List<AppoinmentUserDatail> _appoinmentUserDatail = [];
   @override
   Widget build(BuildContext context) {
     ScreenSize.setSize(context);
-    return listOfCard(_appoinmentList, _appoinmentUserDatail);
+    return listOfCard(_appoinmentList2, _appoinmentUserDatail2);
   }
 }
