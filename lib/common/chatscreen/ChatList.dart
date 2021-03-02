@@ -101,7 +101,8 @@ class _ChatListState extends State<ChatList> {
                       "first_name": _data[item]['first_name'],
                       "last_name": _data[item]['last_name'],
                       "user_name": _data[item]['user_name'],
-                      "email_id": _data[item]['email_id']
+                      "email_id": _data[item]['email_id'],
+                      "user_id": _data[item]['user_id']
                     });
                   }
                   return ListView.builder(
@@ -113,8 +114,10 @@ class _ChatListState extends State<ChatList> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => ChatPage(
-                                    userDetails[index]['user_name'],
-                                    profilePhoto[index]),
+                                  userDetails[index]['user_name'],
+                                  userDetails[index]['user_id'],
+                                  profilePhoto[index],
+                                ),
                               ));
                         },
                         leading: CircleAvatar(
@@ -152,7 +155,7 @@ class _ChatListState extends State<ChatList> {
                   height: screenHeight * 0.1 + 25,
                   width: double.infinity,
                   child: ListView.builder(
-                    itemCount: profileList.length,
+                    itemCount: userKeys.length,
                     scrollDirection: Axis.horizontal,
                     padding: EdgeInsets.only(left: screenWidth * 0.04),
                     itemBuilder: (BuildContext context, int index) {
@@ -162,7 +165,10 @@ class _ChatListState extends State<ChatList> {
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => ChatPage(
-                                  "Dr.Jatin Patel", profilePhoto[index]),
+                                userDetails[index]['user_name'],
+                                userDetails[index]['user_id'],
+                                profilePhoto[index],
+                              ),
                             ));
                           },
                           child: CircleAvatar(

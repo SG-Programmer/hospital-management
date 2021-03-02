@@ -154,8 +154,10 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => ChatPage(
-                                            doctorDatailList[0].userNameP,
-                                            widget.doctorPhoto),
+                                          doctorDatailList[0].userNameP,
+                                          "sdf",
+                                          widget.doctorPhoto,
+                                        ),
                                       ));
                                 },
                                 color: Colors.orange[400],

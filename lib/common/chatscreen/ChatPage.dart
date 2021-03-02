@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_management/receptionist/PatientDatails.dart';
 import 'package:hospital_management/utils/size.dart';
@@ -5,20 +7,29 @@ import 'chatDetailPage.dart';
 
 class ChatPage extends StatefulWidget {
   NetworkImage profilePhoto;
-  String datails;
-  ChatPage(this.datails, this.profilePhoto);
+  String senderUserName;
+  String senderId;
+  ChatPage(
+    this.senderUserName,
+    this.senderId,
+    this.profilePhoto,
+  );
   @override
   _ChatPageState createState() => _ChatPageState();
 }
 
 class _ChatPageState extends State<ChatPage> {
   TextEditingController msgTextController = TextEditingController();
+
+  DatabaseReference _chatReference =
+      FirebaseDatabase.instance.reference().child('chat');
+  String currentUser = FirebaseAuth.instance.currentUser.uid;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text(widget.datails),
+          title: Text(widget.senderUserName),
           actions: [
             GestureDetector(
               onTap: () {
@@ -26,7 +37,7 @@ class _ChatPageState extends State<ChatPage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => PatientDatails(
-                        datails: widget.datails,
+                        datails: widget.senderUserName,
                       ),
                     ));
               },
@@ -85,6 +96,15 @@ class _ChatPageState extends State<ChatPage> {
                                 messageContent: msgTextController.text,
                                 messageType: "sender",
                               ));
+
+                              _chatReference
+                                  .child(widget.senderId + currentUser)
+                                  .push()
+                                  .set({
+                                'message': msgTextController.text,
+                                'author': currentUser,
+                              });
+
                               msgTextController.text = "";
                             });
                           })

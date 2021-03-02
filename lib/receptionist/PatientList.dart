@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_management/common/chatscreen/ChatPage.dart';
@@ -165,8 +166,10 @@ class _PatientListState extends State<PatientList> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => ChatPage(
-                                  patientData[index].userNameP,
-                                  profilePhoto[index]),
+                                patientData[index].userNameP,
+                                FirebaseAuth.instance.currentUser.uid,
+                                profilePhoto[index],
+                              ),
                             ));
                       })
                 ],
