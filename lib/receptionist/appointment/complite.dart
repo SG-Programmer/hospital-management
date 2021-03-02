@@ -18,6 +18,9 @@ class _CompliteState extends State<Complite> {
   DatabaseReference _registration =
       FirebaseDatabase.instance.reference().child("registration");
 
+  DatabaseReference _offlineUser =
+      FirebaseDatabase.instance.reference().child("offlinePatient");
+
   List<AppoinmentData> _appoinmentList2 = [];
   List<AppoinmentUserDatail> _appoinmentUserDatail2 = [];
 
@@ -50,17 +53,29 @@ class _CompliteState extends State<Complite> {
       _registration.once().then((DataSnapshot snap) {
         var _key = snap.value.keys;
         var _data = snap.value;
-        for (var i = 0; i < _appoinmentList2.length; i++) {
-          for (var item in _key) {
-            if (_appoinmentList2[i].userId == item) {
-              AppoinmentUserDatail appoinmentUserDatail =
-                  new AppoinmentUserDatail(_data[item]['first_name'],
-                      _data[item]['last_name'], _data[item]['number']);
-              _appoinmentUserDatail2.add(appoinmentUserDatail);
+        _offlineUser.once().then((DataSnapshot snap2) {
+          var _key2 = snap2.value.keys;
+          var _data2 = snap2.value;
+          for (var i = 0; i < _appoinmentList2.length; i++) {
+            for (var item in _key) {
+              if (_appoinmentList2[i].userId == item) {
+                AppoinmentUserDatail appoinmentUserDatail =
+                    new AppoinmentUserDatail(_data[item]['first_name'],
+                        _data[item]['last_name'], _data[item]['number']);
+                _appoinmentUserDatail2.add(appoinmentUserDatail);
+              }
+              for (var item2 in _key2) {
+                if (_appoinmentList2[i].userId == item2) {
+                  AppoinmentUserDatail appoinmentUserDatail2 =
+                      new AppoinmentUserDatail(_data2[item2]['first_name'],
+                          _data2[item2]['last_name'], _data2[item2]['number']);
+                  _appoinmentUserDatail2.add(appoinmentUserDatail2);
+                }
+              }
             }
           }
-        }
-        setState(() {});
+          setState(() {});
+        });
       });
 
       setState(() {});
