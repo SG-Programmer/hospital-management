@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_management/utils/size.dart';
 import 'ChatPage.dart';
@@ -9,6 +10,8 @@ class ChatList extends StatefulWidget {
 }
 
 class _ChatListState extends State<ChatList> {
+  var _userList = FirebaseDatabase.instance.reference().child('registration');
+
   List<IconData> profileList = [
     Icons.add_circle_outline,
     Icons.supervised_user_circle,
@@ -38,6 +41,9 @@ class _ChatListState extends State<ChatList> {
     NetworkImage(
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5KVsWtDwcdLRc9q1P9N8leBy_zz9gfKZK1Q&usqp=CAU')
   ];
+
+  List userKeys = [];
+  List<Map<String, dynamic>> userDetails = [{}];
   bool allButtonColor = true;
   bool doctorButtonColor = false;
   bool patientButoonColor = false;
@@ -77,28 +83,60 @@ class _ChatListState extends State<ChatList> {
         Padding(
           padding: EdgeInsets.only(top: screenHeight * 0.3),
           child: Container(
-            padding: EdgeInsets.only(
-                top: screenHeight * 0.05, left: screenWidth * 0.06),
-            height: screenHeight * 0.8,
-            width: double.infinity,
-            color: Color(0xfff5f6f1),
-            child: ListView.builder(
-              itemCount: profileList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              ChatPage("Dr.Jatin Patel", profilePhoto[index]),
-                        ));
-                  },
-                  child: chat(profilePhoto[index]),
-                );
-              },
-            ),
-          ),
+              padding: EdgeInsets.only(
+                  top: screenHeight * 0.05, left: screenWidth * 0.06),
+              height: screenHeight * 0.8,
+              width: double.infinity,
+              color: Color(0xfff5f6f1),
+              child: StreamBuilder(
+                stream: _userList.onValue,
+                builder: (context, snapshot) {
+                  var _keys = snapshot.data.snapshot.value.keys;
+                  var _data = snapshot.data.snapshot.value;
+                  userDetails.clear();
+                  userKeys.clear();
+                  for (var item in _keys) {
+                    userKeys.add(item);
+                    userDetails.add({
+                      "first_name": _data[item]['first_name'],
+                      "last_name": _data[item]['last_name'],
+                      "user_name": _data[item]['user_name'],
+                      "email_id": _data[item]['email_id']
+                    });
+                  }
+                  return ListView.builder(
+                    itemCount: userKeys.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ChatPage(
+                                    userDetails[index]['user_name'],
+                                    profilePhoto[index]),
+                              ));
+                        },
+                        leading: CircleAvatar(
+                          child: Icon(Icons.supervised_user_circle_outlined),
+                        ),
+                        title: Text(
+                          userDetails[index]['first_name'] +
+                              " " +
+                              userDetails[index]['last_name'],
+                          style: TextStyle(
+                              fontSize: 17.9, fontWeight: FontWeight.w600),
+                        ),
+                        subtitle: Text(userDetails[index]['user_name'],
+                            style: TextStyle(
+                                fontSize: 14.9,
+                                color: Colors.black38,
+                                fontWeight: FontWeight.w600)),
+                      );
+                    },
+                  );
+                },
+              )),
         ),
         Padding(
           padding: EdgeInsets.only(top: screenHeight * 0.2 - 27),
