@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_management/utils/size.dart';
 import 'chatDetailPage.dart';
@@ -22,9 +23,30 @@ class _ChatPageState extends State<ChatPage> {
 
   DatabaseReference _chatReference =
       FirebaseDatabase.instance.reference().child('chat');
+
   String currentUser = FirebaseAuth.instance.currentUser.uid;
+
   @override
   Widget build(BuildContext context) {
+    String userChild =
+        FirebaseAuth.instance.currentUser.email == "admin@mecare.com" ||
+                FirebaseAuth.instance.currentUser.email == "doctor@mecare.com"
+            ? widget.senderId
+            : FirebaseAuth.instance.currentUser.uid;
+
+    String mecareChild =
+        FirebaseAuth.instance.currentUser.email == "admin@mecare.com"
+            ? FirebaseAuth.instance.currentUser.uid
+            : FirebaseAuth.instance.currentUser.email == "doctor@mecare.com"
+                ? FirebaseAuth.instance.currentUser.uid
+                : widget.senderId;
+
+    Query _query = FirebaseDatabase.instance
+        .reference()
+        .child('chat')
+        .child(userChild)
+        .child(mecareChild);
+
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -53,16 +75,15 @@ class _ChatPageState extends State<ChatPage> {
         body: Stack(
           children: [
             Container(
-              color: Color(0xfff5f6f1),
-              height: screenHeight * 0.8,
-              child: ListView.builder(
-                itemCount: messages.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return sendMessage(messages[index].messageContent,
-                      messages[index].messageType);
-                },
-              ),
-            ),
+                height: screenHeight * 0.8,
+                color: Color(0xfff5f6f1),
+                child: FirebaseAnimatedList(
+                  query: _query,
+                  itemBuilder: (context, snapshot, animation, index) {
+                    return sendMessage(
+                        snapshot.value['message'], snapshot.value['author']);
+                  },
+                )),
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
@@ -97,7 +118,8 @@ class _ChatPageState extends State<ChatPage> {
                               ));
 
                               _chatReference
-                                  .child(currentUser + widget.senderId)
+                                  .child(userChild)
+                                  .child(mecareChild)
                                   .push()
                                   .set({
                                 'message': msgTextController.text,
@@ -114,7 +136,7 @@ class _ChatPageState extends State<ChatPage> {
         ));
   }
 
-  sendMessage(String msg, String msgType) {
+  sendMessage(String msg, String author) {
     return Container(
         padding: EdgeInsets.only(
             left: screenWidth * 0.04,
@@ -122,15 +144,15 @@ class _ChatPageState extends State<ChatPage> {
             top: screenHeight * 0.01,
             bottom: screenHeight * 0.01),
         child: Align(
-            alignment: (msgType == "receiver"
-                ? Alignment.topLeft
-                : Alignment.topRight),
+            alignment: (author == FirebaseAuth.instance.currentUser.uid
+                ? Alignment.topRight
+                : Alignment.topLeft),
             child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: (msgType == "receiver"
-                      ? Colors.white
-                      : Color(0xff465efc)),
+                  color: (author == FirebaseAuth.instance.currentUser.uid
+                      ? Color(0xff465efc)
+                      : Colors.white),
                 ),
                 padding: EdgeInsets.all(16),
                 child: Text(
@@ -138,9 +160,9 @@ class _ChatPageState extends State<ChatPage> {
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
-                    color: msgType == "receiver"
-                        ? Color(0xff465efc)
-                        : Colors.white,
+                    color: author == FirebaseAuth.instance.currentUser.uid
+                        ? Colors.white
+                        : Color(0xff465efc),
                   ),
                 ))));
   }

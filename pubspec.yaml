@@ -52,6 +52,7 @@ dependencies:
   #slider 
   flutter_slidable: 0.5.5
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
