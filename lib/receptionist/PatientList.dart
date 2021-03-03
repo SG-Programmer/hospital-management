@@ -129,7 +129,13 @@ class _PatientListState extends State<PatientList> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => PatientDatails(
-                              datails: patientData[index],
+                              userName: patientData[index].userNameP,
+                              firstName: patientData[index].firstNameP,
+                              lastName: patientData[index].lastNameP,
+                              email: patientData[index].emailP,
+                              number: patientData[index].numberP,
+                              date: patientData[index].brithDateP,
+                              address: patientData[index].addressP,
                             ),
                           ));
                     },

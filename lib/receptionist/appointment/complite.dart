@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_management/receptionist/List.dart';
+import 'package:hospital_management/receptionist/PatientListData.dart';
 import 'package:hospital_management/utils/size.dart';
 
 import 'appoinmentData.dart';
@@ -22,7 +23,7 @@ class _CompliteState extends State<Complite> {
       FirebaseDatabase.instance.reference().child("offlinePatient");
 
   List<AppoinmentData> _appoinmentList2 = [];
-  List<AppoinmentUserDatail> _appoinmentUserDatail2 = [];
+  List<PatientListData> _appoinmentUserDatail2 = [];
 
   @override
   void initState() {
@@ -59,16 +60,26 @@ class _CompliteState extends State<Complite> {
           for (var i = 0; i < _appoinmentList2.length; i++) {
             for (var item in _key) {
               if (_appoinmentList2[i].userId == item) {
-                AppoinmentUserDatail appoinmentUserDatail =
-                    new AppoinmentUserDatail(_data[item]['first_name'],
-                        _data[item]['last_name'], _data[item]['number']);
+                PatientListData appoinmentUserDatail = new PatientListData(
+                    _data[item]['first_name'],
+                    _data[item]['last_name'],
+                    _data[item]['user_name'],
+                    _data[item]['email_id'],
+                    _data[item]['number'],
+                    _data[item]['address'],
+                    _data[item]['date']);
                 _appoinmentUserDatail2.add(appoinmentUserDatail);
               }
               for (var item2 in _key2) {
                 if (_appoinmentList2[i].userId == item2) {
-                  AppoinmentUserDatail appoinmentUserDatail2 =
-                      new AppoinmentUserDatail(_data2[item2]['first_name'],
-                          _data2[item2]['last_name'], _data2[item2]['number']);
+                  PatientListData appoinmentUserDatail2 = new PatientListData(
+                      _data2[item2]['first_name'],
+                      _data2[item2]['last_name'],
+                      _data2[item2]['user_name'],
+                      _data2[item2]['email_id'],
+                      _data2[item2]['number'],
+                      _data2[item2]['address'],
+                      _data2[item2]['date']);
                   _appoinmentUserDatail2.add(appoinmentUserDatail2);
                 }
               }

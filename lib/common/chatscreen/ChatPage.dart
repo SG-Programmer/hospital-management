@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:hospital_management/receptionist/PatientDatails.dart';
 import 'package:hospital_management/utils/size.dart';
 import 'chatDetailPage.dart';
 
@@ -33,13 +32,13 @@ class _ChatPageState extends State<ChatPage> {
           actions: [
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => PatientDatails(
-                        datails: widget.senderUserName,
-                      ),
-                    ));
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //       builder: (context) => PatientDatails(
+                //         datails: widget.senderUserName,
+                //       ),
+                //     ));
               },
               child: CircleAvatar(
                 radius: 22,
@@ -98,7 +97,7 @@ class _ChatPageState extends State<ChatPage> {
                               ));
 
                               _chatReference
-                                  .child(widget.senderId + currentUser)
+                                  .child(currentUser + widget.senderId)
                                   .push()
                                   .set({
                                 'message': msgTextController.text,

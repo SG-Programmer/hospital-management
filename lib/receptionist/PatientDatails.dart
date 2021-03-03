@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:hospital_management/utils/size.dart';
 
 class PatientDatails extends StatefulWidget {
-  var datails;
-  PatientDatails({this.datails});
+  String userName, firstName, lastName, email, number, date, address;
+  PatientDatails(
+      {this.userName,
+      this.firstName,
+      this.lastName,
+      this.email,
+      this.number,
+      this.date,
+      this.address});
   @override
   _PatientDatailsState createState() => _PatientDatailsState();
 }
@@ -65,7 +72,7 @@ class _PatientDatailsState extends State<PatientDatails> {
                   height: screenHeight * 0.02,
                 ),
                 Text(
-                  widget.datails.userNameP,
+                  widget.userName,
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14.0),
                 ),
                 Text("28 year's young")
@@ -82,17 +89,17 @@ class _PatientDatailsState extends State<PatientDatails> {
                 children: [
                   Row(
                     children: [
-                      datailsLable("First Name", widget.datails.firstNameP),
+                      datailsLable("First Name", widget.firstName),
                       SizedBox(
                         width: screenWidth * 0.3,
                       ),
-                      datailsLable("First Name", widget.datails.lastNameP),
+                      datailsLable("First Name", widget.lastName),
                     ],
                   ),
-                  datailsLable("email", widget.datails.emailP),
-                  datailsLable("Mobile", widget.datails.numberP),
-                  datailsLable("Date of Brith", widget.datails.brithDateP),
-                  datailsLable("Address", widget.datails.addressP),
+                  datailsLable("email", widget.email),
+                  datailsLable("Mobile", widget.number),
+                  datailsLable("Date of Brith", widget.date),
+                  datailsLable("Address", widget.address),
                 ],
               ),
             ),
