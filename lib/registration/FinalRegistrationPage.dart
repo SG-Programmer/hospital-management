@@ -236,7 +236,8 @@ class _FinalRegistrationPageState extends State<FinalRegistrationPage> {
       "number": widget.numberController.text,
       "city": widget.cityController.text,
       "pin_code": widget.pinCodeController.text,
-      "address": widget.addressController.text
+      "address": widget.addressController.text,
+      "type": "patient"
     });
   }
 

@@ -1,8 +1,10 @@
+import 'dart:io';
+import 'dart:async';
 import 'package:flutter/material.dart';
-
 import 'package:form_validator/form_validator.dart';
 import 'package:hospital_management/registration/FinalRegistrationPage.dart';
 import 'package:hospital_management/utils/size.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -25,6 +27,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
   String sex = "Mr";
   DateTime date = DateTime.now();
 
+  //Image
+  File image;
   //List And Map
   List<String> sexList = ["Mr", "Mis", "Other"];
 
@@ -62,6 +66,18 @@ class _RegistrationPageState extends State<RegistrationPage> {
       );
     }
 
+    final picker = ImagePicker();
+    Future imagePicker() async {
+      final pickedFile = await picker.getImage(source: ImageSource.gallery);
+      setState(() {
+        if (pickedFile != null) {
+          image = File(pickedFile.path);
+        } else {
+          print("Image not select");
+        }
+      });
+    }
+
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -70,11 +86,22 @@ class _RegistrationPageState extends State<RegistrationPage> {
             child: Form(
               key: _formKey,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    "Basic information",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  CircleAvatar(
+                      radius: 58,
+                      backgroundImage: image == null
+                          ? NetworkImage(
+                              'https://atos.net/wp-content/uploads/2017/05/Profile_gray.png')
+                          : AssetImage(image.path)),
+                  TextButton(
+                    onPressed: () {
+                      imagePicker();
+                    },
+                    child: Text(
+                      "Chose Profile",
+                      style: TextStyle(fontSize: 15.6, color: Colors.blue),
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

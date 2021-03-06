@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_management/utils/size.dart';
+import 'package:shimmer/shimmer.dart';
 import 'ChatPage.dart';
 
 class ChatList extends StatefulWidget {
@@ -10,8 +11,6 @@ class ChatList extends StatefulWidget {
 }
 
 class _ChatListState extends State<ChatList> {
-  var _userList = FirebaseDatabase.instance.reference().child('registration');
-
   List<IconData> profileList = [
     Icons.add_circle_outline,
     Icons.supervised_user_circle,
@@ -47,6 +46,35 @@ class _ChatListState extends State<ChatList> {
   bool allButtonColor = true;
   bool doctorButtonColor = false;
   bool patientButoonColor = false;
+  bool receptionistButtonColor = false;
+  String filter = "";
+
+  var quety = FirebaseDatabase.instance.reference().child('registration');
+
+  chat(NetworkImage profilePhoto) {
+    return Padding(
+      padding: EdgeInsets.only(top: screenHeight * 0.02),
+      child: Row(
+        children: [
+          CircleAvatar(
+            backgroundImage: profilePhoto,
+          ),
+          SizedBox(
+            width: screenWidth * 0.03,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Dr.Jatin Radadiya",
+                  style:
+                      TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600)),
+              Text("Dr_JR_Patel")
+            ],
+          )
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,55 +117,87 @@ class _ChatListState extends State<ChatList> {
               width: double.infinity,
               color: Color(0xfff5f6f1),
               child: StreamBuilder(
-                stream: _userList.onValue,
+                stream: filter == ""
+                    ? quety.onValue
+                    : quety.orderByChild("type").equalTo(filter).onValue,
                 builder: (context, snapshot) {
-                  var _keys = snapshot.data.snapshot.value.keys;
-                  var _data = snapshot.data.snapshot.value;
                   userDetails.clear();
                   userKeys.clear();
-                  for (var item in _keys) {
-                    userKeys.add(item);
-                    userDetails.add({
-                      "first_name": _data[item]['first_name'],
-                      "last_name": _data[item]['last_name'],
-                      "user_name": _data[item]['user_name'],
-                      "email_id": _data[item]['email_id'],
-                      "user_id": _data[item]['user_id']
-                    });
-                  }
-                  return ListView.builder(
-                    itemCount: userKeys.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ChatPage(
-                                  userDetails[index]['user_name'],
-                                  userDetails[index]['user_id'],
-                                  profilePhoto[index],
-                                ),
-                              ));
-                        },
-                        leading: CircleAvatar(
-                          child: Icon(Icons.supervised_user_circle_outlined),
-                        ),
-                        title: Text(
-                          userDetails[index]['first_name'] +
-                              " " +
-                              userDetails[index]['last_name'],
-                          style: TextStyle(
-                              fontSize: 17.9, fontWeight: FontWeight.w600),
-                        ),
-                        subtitle: Text(userDetails[index]['user_name'],
+                  if (snapshot.data != null) {
+                    var _keys = snapshot.data.snapshot.value.keys;
+                    var _data = snapshot.data.snapshot.value;
+
+                    for (var item in _keys) {
+                      if (_data[item]['user_id'] !=
+                          FirebaseAuth.instance.currentUser.uid) {
+                        userKeys.add(item);
+                        userDetails.add({
+                          "first_name": _data[item]['first_name'],
+                          "last_name": _data[item]['last_name'],
+                          "user_name": _data[item]['user_name'],
+                          "email_id": _data[item]['email_id'],
+                          "user_id": _data[item]['user_id']
+                        });
+                      }
+                    }
+
+                    return ListView.builder(
+                      itemCount: userKeys.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ChatPage(
+                                    userDetails[index]['user_name'],
+                                    userDetails[index]['user_id'],
+                                    profilePhoto[index],
+                                  ),
+                                ));
+                          },
+                          leading: CircleAvatar(
+                            child: CircleAvatar(
+                              backgroundImage: profilePhoto[index],
+                            ),
+                          ),
+                          title: Text(
+                            userDetails[index]['first_name'] +
+                                " " +
+                                userDetails[index]['last_name'],
                             style: TextStyle(
-                                fontSize: 14.9,
-                                color: Colors.black38,
-                                fontWeight: FontWeight.w600)),
-                      );
-                    },
-                  );
+                                fontSize: 17.9, fontWeight: FontWeight.w600),
+                          ),
+                          subtitle: Text(userDetails[index]['user_name'],
+                              style: TextStyle(
+                                  fontSize: 14.9,
+                                  color: Colors.black38,
+                                  fontWeight: FontWeight.w600)),
+                        );
+                      },
+                    );
+                  } else {
+                    return Shimmer.fromColors(
+                        baseColor: Colors.grey,
+                        highlightColor: Colors.teal,
+                        child: ListView.builder(
+                          itemCount: 9,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              leading: Icon(
+                                Icons.image,
+                                size: 39,
+                              ),
+                              title: SizedBox(
+                                height: screenHeight * 0.03,
+                                child: Container(
+                                  color: Colors.green,
+                                ),
+                              ),
+                            );
+                          },
+                        ));
+                  }
                 },
               )),
         ),
@@ -191,6 +251,8 @@ class _ChatListState extends State<ChatList> {
                             allButtonColor = true;
                             doctorButtonColor = false;
                             patientButoonColor = false;
+                            receptionistButtonColor = false;
+                            filter = "";
                           });
                         },
                         child: Text(
@@ -205,39 +267,71 @@ class _ChatListState extends State<ChatList> {
                       SizedBox(
                         width: screenWidth * 0.04,
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            allButtonColor = false;
-                            doctorButtonColor = true;
-                            patientButoonColor = false;
-                          });
-                        },
-                        child: Text("Doctor",
-                            style: TextStyle(
-                                fontSize: 19.0,
-                                color: doctorButtonColor
-                                    ? Colors.blue
-                                    : Colors.black54)),
-                      ),
+                      if (FirebaseAuth.instance.currentUser.email !=
+                          "doctor@mecare.com")
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              allButtonColor = false;
+                              doctorButtonColor = true;
+                              patientButoonColor = false;
+                              receptionistButtonColor = false;
+                              filter = "doctor";
+                            });
+                          },
+                          child: Text("Doctor",
+                              style: TextStyle(
+                                  fontSize: 19.0,
+                                  color: doctorButtonColor
+                                      ? Colors.blue
+                                      : Colors.black54)),
+                        ),
                       SizedBox(
                         width: screenWidth * 0.04,
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            allButtonColor = false;
-                            doctorButtonColor = false;
-                            patientButoonColor = true;
-                          });
-                        },
-                        child: Text("Patient",
-                            style: TextStyle(
-                                fontSize: 19.0,
-                                color: patientButoonColor
-                                    ? Colors.blue
-                                    : Colors.black54)),
+                      if (FirebaseAuth.instance.currentUser.email ==
+                              "admin@mecare.com" ||
+                          FirebaseAuth.instance.currentUser.email ==
+                              "doctor@mecare.com")
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              allButtonColor = false;
+                              doctorButtonColor = false;
+                              patientButoonColor = true;
+                              receptionistButtonColor = false;
+                              filter = "patient";
+                            });
+                          },
+                          child: Text("Patient",
+                              style: TextStyle(
+                                  fontSize: 19.0,
+                                  color: patientButoonColor
+                                      ? Colors.blue
+                                      : Colors.black54)),
+                        ),
+                      SizedBox(
+                        width: screenWidth * 0.04,
                       ),
+                      if (FirebaseAuth.instance.currentUser.email !=
+                          "admin@mecare.com")
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              allButtonColor = false;
+                              doctorButtonColor = false;
+                              patientButoonColor = false;
+                              receptionistButtonColor = true;
+                              filter = "receptionist";
+                            });
+                          },
+                          child: Text("Receptionist",
+                              style: TextStyle(
+                                  fontSize: 19.0,
+                                  color: receptionistButtonColor
+                                      ? Colors.blue
+                                      : Colors.black54)),
+                        ),
                     ],
                   ),
                 )
@@ -246,31 +340,6 @@ class _ChatListState extends State<ChatList> {
           ),
         ),
       ],
-    );
-  }
-
-  chat(NetworkImage profilePhoto) {
-    return Padding(
-      padding: EdgeInsets.only(top: screenHeight * 0.02),
-      child: Row(
-        children: [
-          CircleAvatar(
-            backgroundImage: profilePhoto,
-          ),
-          SizedBox(
-            width: screenWidth * 0.03,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Dr.Jatin Radadiya",
-                  style:
-                      TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600)),
-              Text("Dr_JR_Patel")
-            ],
-          )
-        ],
-      ),
     );
   }
 }

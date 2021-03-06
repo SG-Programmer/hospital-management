@@ -31,14 +31,21 @@ class _ChatPageState extends State<ChatPage> {
     String userChild =
         FirebaseAuth.instance.currentUser.email == "admin@mecare.com" ||
                 FirebaseAuth.instance.currentUser.email == "doctor@mecare.com"
-            ? widget.senderId
+            ? widget.senderUserName == "admin@mecare" ||
+                    widget.senderUserName == "doctor@mecare"
+                ? "hopital"
+                : widget.senderId
             : FirebaseAuth.instance.currentUser.uid;
 
     String mecareChild =
         FirebaseAuth.instance.currentUser.email == "admin@mecare.com"
-            ? FirebaseAuth.instance.currentUser.uid
+            ? widget.senderUserName == "doctor@mecare"
+                ? "staf"
+                : FirebaseAuth.instance.currentUser.uid
             : FirebaseAuth.instance.currentUser.email == "doctor@mecare.com"
-                ? FirebaseAuth.instance.currentUser.uid
+                ? widget.senderUserName == "admin@mecare"
+                    ? "staf"
+                    : FirebaseAuth.instance.currentUser.uid
                 : widget.senderId;
 
     Query _query = FirebaseDatabase.instance

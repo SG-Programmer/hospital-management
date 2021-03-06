@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:hospital_management/patient/pataientDetails.dart';
 import 'package:hospital_management/utils/size.dart';
+import 'package:image_picker/image_picker.dart';
 
 class PatientProfilePage extends StatefulWidget {
   @override
@@ -31,6 +34,9 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
 
   //Key
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  //file
+  File image;
 
   @override
   void initState() {
@@ -96,10 +102,11 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
     return Column(
       children: [
         CircleAvatar(
-          radius: 55,
-          backgroundImage: NetworkImage(
-              'https://media.istockphoto.com/photos/portrait-of-a-doctor-picture-id92347287?k=6&m=92347287&s=612x612&w=0&h=URJcB3uKHzlWq42b5UjoA2bd8hPI8B1RLI8ZIpUMsRc='),
-        ),
+            radius: 55,
+            backgroundImage: image == null
+                ? NetworkImage(
+                    'https://media.istockphoto.com/photos/portrait-of-a-doctor-picture-id92347287?k=6&m=92347287&s=612x612&w=0&h=URJcB3uKHzlWq42b5UjoA2bd8hPI8B1RLI8ZIpUMsRc=')
+                : AssetImage(image.path)),
         Divider(
           color: Colors.black26,
           thickness: 2.3,
@@ -129,8 +136,13 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
         ),
         CircleAvatar(
           radius: 55,
-          backgroundImage: NetworkImage(
-              'https://media.istockphoto.com/photos/portrait-of-a-doctor-picture-id92347287?k=6&m=92347287&s=612x612&w=0&h=URJcB3uKHzlWq42b5UjoA2bd8hPI8B1RLI8ZIpUMsRc='),
+          child: GestureDetector(
+              onTap: () => _getImage(),
+              child: Icon(Icons.camera_alt_outlined, color: Colors.black)),
+          backgroundImage: image == null
+              ? NetworkImage(
+                  'https://media.istockphoto.com/photos/portrait-of-a-doctor-picture-id92347287?k=6&m=92347287&s=612x612&w=0&h=URJcB3uKHzlWq42b5UjoA2bd8hPI8B1RLI8ZIpUMsRc=')
+              : AssetImage(image.path),
         ),
         SizedBox(
           width: screenWidth * 0.1,
@@ -149,6 +161,17 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
         ),
       ],
     );
+  }
+
+  Future _getImage() async {
+    final pick = await ImagePicker().getImage(source: ImageSource.gallery);
+    setState(() {
+      if (pick != null) {
+        image = File(pick.path);
+      } else {
+        print('image not picked');
+      }
+    });
   }
 
   @override
