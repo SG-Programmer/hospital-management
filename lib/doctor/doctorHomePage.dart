@@ -42,7 +42,9 @@ class _DoctorHomePageState extends State<DoctorHomePage>
                 iconData: Icons.message_outlined,
                 title: "Search",
               ),
-              TabData(iconData: Icons.shopping_cart, title: "Basket"),
+              TabData(
+                  iconData: Icons.supervised_user_circle_rounded,
+                  title: "Patient"),
               TabData(
                   iconData: Icons.supervised_user_circle_outlined,
                   title: "Account")

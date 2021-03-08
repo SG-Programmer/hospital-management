@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hospital_management/common/doctorscreen/DoctorList.dart';
+import 'package:hospital_management/common/doctorscreen/DoctorDatailPage.dart';
 
 class ReceptionistDoctor extends StatefulWidget {
   @override
@@ -10,11 +10,11 @@ class _ReceptionistDoctorState extends State<ReceptionistDoctor> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: DoctorList(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.add),
-      ),
+      body: DoctorDatailPage(),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {},
+      //   child: Icon(Icons.add),
+      // ),
     );
   }
 }

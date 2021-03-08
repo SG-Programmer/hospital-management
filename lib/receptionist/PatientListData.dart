@@ -5,8 +5,9 @@ class PatientListData {
       emailP,
       numberP,
       addressP,
-      brithDateP;
+      brithDateP,
+      userIdP;
 
   PatientListData(this.firstNameP, this.lastNameP, this.userNameP, this.emailP,
-      this.numberP, this.addressP, this.brithDateP);
+      this.numberP, this.addressP, this.brithDateP, this.userIdP);
 }

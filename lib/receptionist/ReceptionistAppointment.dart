@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hospital_management/receptionist/DashBord.dart';
 import 'package:hospital_management/utils/size.dart';
 
 import 'appointment/complite.dart';
@@ -25,8 +26,22 @@ class _ReceptionistAppointmentState extends State<ReceptionistAppointment>
       AssetImage('images/ra3.png'),
       AssetImage('images/ra4.png')
     ];
+    List<String> nameOfList = [
+      'Pending Appointment',
+      'Offline Patient',
+      'Totel Patient',
+      'Chat'
+    ];
     return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios_rounded),
+              onPressed: () => Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DashBord(),
+                  ),
+                  (route) => false)),
           bottom: PreferredSize(
               preferredSize: Size(0, screenHeight * 0.2),
               child: Column(
@@ -69,7 +84,7 @@ class _ReceptionistAppointmentState extends State<ReceptionistAppointment>
                                               fontSize: 28,
                                               fontWeight: FontWeight.w500),
                                         ),
-                                        Text("Appointment Pending.")
+                                        Text(nameOfList[index])
                                       ],
                                     ),
                                   ],

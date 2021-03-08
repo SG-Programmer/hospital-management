@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hospital_management/common/chatscreen/ChatPage.dart';
 import 'package:hospital_management/common/doctorscreen/doctorDatailData.dart';
 import 'package:hospital_management/patient/AppointmentPage.dart';
+import 'package:hospital_management/receptionist/DashBord.dart';
 
 import 'package:hospital_management/utils/size.dart';
 
@@ -100,7 +101,19 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
                 Icons.arrow_back_ios_rounded,
                 color: Colors.white,
               ),
-              onPressed: () => Navigator.pop(context)),
+              onPressed: () {
+                if (FirebaseAuth.instance.currentUser.email ==
+                    "admin@mecare.com") {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DashBord(),
+                      ),
+                      (route) => false);
+                } else {
+                  Navigator.pop(context);
+                }
+              }),
         ),
         Padding(
           padding: EdgeInsets.only(top: screenHeight * 0.3 + 10),

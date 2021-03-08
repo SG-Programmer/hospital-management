@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_management/receptionist/HomPage.dart';
 import 'package:hospital_management/registration/LoginPage.dart';
@@ -10,23 +11,75 @@ class DashBord extends StatefulWidget {
 }
 
 class _DashBordState extends State<DashBord> {
+  List<String> menulist = ["Appoitment", "Chat", "Doctro", "User", "Five"];
+  List<IconData> iconlist = [
+    Icons.calendar_today,
+    Icons.message,
+    Icons.local_hospital,
+    Icons.supervised_user_circle,
+    Icons.star
+  ];
+
+  List<Map<String, dynamic>> _list = [{}];
+
+  DatabaseReference _appointment =
+      FirebaseDatabase.instance.reference().child('appointment');
+  DatabaseReference _registration =
+      FirebaseDatabase.instance.reference().child('registration');
+  DatabaseReference _offlinePatient =
+      FirebaseDatabase.instance.reference().child('offlinePatient');
+
+  _sharedPreferences() async {
+    SharedPreferences _preferences = await SharedPreferences.getInstance();
+    _preferences.remove("auth");
+  }
+
+  dynamic _getpatientDatails(var data) {
+    _registration.child(data['user_id']).once().then((DataSnapshot snap) {
+      if (snap.value != null) {
+        setState(() {
+          _list.add({
+            'token_no': data['token_no'],
+            'first_name': snap.value['first_name'],
+            'last_name': snap.value['last_name'],
+          });
+        });
+      }
+    });
+    _offlinePatient.child(data['user_id']).once().then((DataSnapshot snap) {
+      if (snap.value != null) {
+        setState(() {
+          _list.add({
+            'token_no': data['token_no'],
+            'first_name': snap.value['first_name'],
+            'last_name': snap.value['last_name'],
+          });
+        });
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    _list.clear();
+    _appointment
+        .orderByChild('status')
+        .equalTo('book')
+        .once()
+        .then((DataSnapshot snap) {
+      var _key = snap.value.keys;
+      var _data = snap.value;
+      for (var item in _key) {
+        var _patientdata = _getpatientDatails(_data[item]);
+      }
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     ScreenSize.setSize(context);
-
-    List<String> menulist = ["Appoitment", "Chat", "Doctro", "User", "Five"];
-    List<IconData> iconlist = [
-      Icons.calendar_today,
-      Icons.message,
-      Icons.local_hospital,
-      Icons.supervised_user_circle,
-      Icons.star
-    ];
-
-    _sharedPreferences() async {
-      SharedPreferences _preferences = await SharedPreferences.getInstance();
-      _preferences.remove("auth");
-    }
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -81,7 +134,7 @@ class _DashBordState extends State<DashBord> {
                         CircleAvatar(
                           backgroundColor: Colors.white,
                           child: Image.network(
-                              "https://pics.clipartpng.com/Green_and_White_Pills_Capsules_PNG_Clipart-3292.png"),
+                              "https://firebasestorage.googleapis.com/v0/b/hospital-management-108.appspot.com/o/medicens.png?alt=media&token=b5237c61-9591-4de1-a5ee-9ffdfe1cd4a4"),
                         )
                       ],
                     ),
@@ -166,12 +219,14 @@ class _DashBordState extends State<DashBord> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "19",
+                                      _list[index]['token_no'].toString(),
                                       style: TextStyle(
                                           fontSize: 22,
                                           fontWeight: FontWeight.w600),
                                     ),
-                                    Text("Pending Appointment")
+                                    Text(_list[index]['first_name'] +
+                                        " " +
+                                        _list[index]['last_name'])
                                   ],
                                 ),
                                 Icon(
@@ -183,7 +238,7 @@ class _DashBordState extends State<DashBord> {
                             ),
                           ));
                     },
-                    itemCount: menulist.length,
+                    itemCount: _list.length,
                     scrollDirection: Axis.horizontal,
                   ),
                 ),

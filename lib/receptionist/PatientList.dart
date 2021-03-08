@@ -1,10 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_management/common/chatscreen/ChatPage.dart';
 import 'package:hospital_management/receptionist/PatientDatails.dart';
 import 'package:hospital_management/receptionist/PatientListData.dart';
 import 'package:hospital_management/utils/size.dart';
+
+import 'DashBord.dart';
 
 class PatientList extends StatefulWidget {
   TabController controller;
@@ -49,27 +50,6 @@ class _PatientListState extends State<PatientList> {
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5KVsWtDwcdLRc9q1P9N8leBy_zz9gfKZK1Q&usqp=CAU')
   ];
 
-  List<String> name = [
-    "parth",
-    "smit",
-    "harsh",
-    "purv",
-    "darshan",
-    "ravi",
-    "parth",
-    "smit",
-    "harsh",
-    "purv",
-    "darshan",
-    "ravi",
-    "parth",
-    "smit",
-    "harsh",
-    "purv",
-    "darshan",
-    "ravi"
-  ];
-
   List<PatientListData> patientData = [];
 
   DatabaseReference _databaseReference =
@@ -83,15 +63,18 @@ class _PatientListState extends State<PatientList> {
       var _data = snapshot.value;
       patientData.clear();
       for (var _getOneKey in _key) {
-        PatientListData patientListData = new PatientListData(
-            _data[_getOneKey]['first_name'],
-            _data[_getOneKey]['last_name'],
-            _data[_getOneKey]['user_name'],
-            _data[_getOneKey]['email_id'],
-            _data[_getOneKey]['number'],
-            _data[_getOneKey]['address'],
-            _data[_getOneKey]['date']);
-        patientData.add(patientListData);
+        if (_data[_getOneKey]['email_id'] != "admin@mecare.com") {
+          PatientListData patientListData = new PatientListData(
+              _data[_getOneKey]['first_name'],
+              _data[_getOneKey]['last_name'],
+              _data[_getOneKey]['user_name'],
+              _data[_getOneKey]['email_id'],
+              _data[_getOneKey]['number'],
+              _data[_getOneKey]['address'],
+              _data[_getOneKey]['date'],
+              _data[_getOneKey]['user_id']);
+          patientData.add(patientListData);
+        }
       }
       setState(() {
         print(patientData.length);
@@ -103,7 +86,14 @@ class _PatientListState extends State<PatientList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: null,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_rounded),
+            onPressed: () => Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DashBord(),
+                ),
+                (route) => false)),
         title: Text("Patient List"),
       ),
       body: Container(
@@ -173,7 +163,7 @@ class _PatientListState extends State<PatientList> {
                             MaterialPageRoute(
                               builder: (context) => ChatPage(
                                 patientData[index].userNameP,
-                                FirebaseAuth.instance.currentUser.uid,
+                                patientData[index].userIdP,
                                 profilePhoto[index],
                               ),
                             ));

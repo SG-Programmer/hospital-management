@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:hospital_management/receptionist/DashBord.dart';
 import 'package:hospital_management/utils/size.dart';
 import 'package:shimmer/shimmer.dart';
 import 'ChatPage.dart';
@@ -96,7 +97,17 @@ class _ChatListState extends State<ChatList> {
                     color: Colors.white,
                   ),
                   onPressed: () {
-                    Navigator.pop(context);
+                    if (FirebaseAuth.instance.currentUser.email ==
+                        "admin@mecare.com") {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DashBord(),
+                          ),
+                          (route) => false);
+                    } else {
+                      Navigator.pop(context);
+                    }
                   }),
         ),
         Padding(

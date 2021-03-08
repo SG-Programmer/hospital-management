@@ -67,7 +67,8 @@ class _CompliteState extends State<Complite> {
                     _data[item]['email_id'],
                     _data[item]['number'],
                     _data[item]['address'],
-                    _data[item]['date']);
+                    _data[item]['date'],
+                    _data[item]['user_id']);
                 _appoinmentUserDatail2.add(appoinmentUserDatail);
               }
               for (var item2 in _key2) {
@@ -79,7 +80,8 @@ class _CompliteState extends State<Complite> {
                       _data2[item2]['email_id'],
                       _data2[item2]['number'],
                       _data2[item2]['address'],
-                      _data2[item2]['date']);
+                      _data2[item2]['date'],
+                      _data[item]['user_id']);
                   _appoinmentUserDatail2.add(appoinmentUserDatail2);
                 }
               }
