@@ -29,6 +29,8 @@ class _PatientDashbordState extends State<PatientDashbord> {
     Icons.supervised_user_circle_outlined
   ];
 
+  List<String> iconNameList = ['Home', 'Doctor/Appointment', 'Chat', 'Profile'];
+
   DatabaseReference _databasereference =
       FirebaseDatabase.instance.reference().child("registration");
 
@@ -196,7 +198,8 @@ class _PatientDashbordState extends State<PatientDashbord> {
                                           controllerIndex: index)));
                             }),
                         Text(
-                          "Home visit",
+                          iconNameList[index],
+                          textAlign: TextAlign.center,
                         )
                       ],
                     ));

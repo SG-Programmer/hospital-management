@@ -27,10 +27,12 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
       FirebaseDatabase.instance.reference().child("doctor_detail");
   DatabaseReference _notes =
       FirebaseDatabase.instance.reference().child("notes");
+  String doctorUserName = "";
   String doctroFirstName = "";
   String doctroLastName = "";
   String doctorStstus = "";
   String doctorabout = "";
+  String doctorUserId = "";
   @override
   void initState() {
     super.initState();
@@ -41,13 +43,16 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
           snap.value['first_name'],
           snap.value['last_name'],
           snap.value['status'],
-          snap.value['about']);
+          snap.value['about'],
+          snap.value['user_id']);
       doctorDatailList.add(doctorDatailData);
       setState(() {
+        doctorUserName = doctorDatailList[0].userNameP;
         doctroFirstName = doctorDatailList[0].firstNameP;
         doctroLastName = doctorDatailList[0].lastNameP;
         doctorStstus = doctorDatailList[0].ststusP;
         doctorabout = doctorDatailList[0].aboutP;
+        doctorUserId = doctorDatailList[0].userIdP;
       });
     });
   }
@@ -154,8 +159,8 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => ChatPage(
-                                          doctorDatailList[0].userNameP,
-                                          "sdf",
+                                          doctorUserName,
+                                          doctorUserId,
                                           widget.doctorPhoto,
                                         ),
                                       ));
