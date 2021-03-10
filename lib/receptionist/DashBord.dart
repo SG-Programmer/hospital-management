@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sparkline/flutter_sparkline.dart';
 import 'package:hospital_management/receptionist/HomPage.dart';
 import 'package:hospital_management/registration/LoginPage.dart';
 import 'package:hospital_management/utils/size.dart';
@@ -28,6 +29,8 @@ class _DashBordState extends State<DashBord> {
       FirebaseDatabase.instance.reference().child('registration');
   DatabaseReference _offlinePatient =
       FirebaseDatabase.instance.reference().child('offlinePatient');
+  DatabaseReference _dailyavg =
+      FirebaseDatabase.instance.reference().child('dailyavg');
 
   _sharedPreferences() async {
     SharedPreferences _preferences = await SharedPreferences.getInstance();
@@ -59,9 +62,26 @@ class _DashBordState extends State<DashBord> {
     });
   }
 
+  List<double> _monthList = [0.0, 0.0, 0.0, 0.0, 0.0];
+
   @override
   void initState() {
     _list.clear();
+
+    _dailyavg.orderByChild('avg').once().then((DataSnapshot snap) {
+      var _keys = snap.value.keys;
+      var _data = snap.value;
+      _monthList.clear();
+
+      List<double> _list = [];
+      _list.add(0.0);
+      for (var item in _keys) {
+        _list.add(double.parse(_data[item]['avg'].toString() + ".0"));
+      }
+      setState(() {
+        _monthList = _list;
+      });
+    });
     _appointment
         .orderByChild('status')
         .equalTo('book')
@@ -70,7 +90,7 @@ class _DashBordState extends State<DashBord> {
       var _key = snap.value.keys;
       var _data = snap.value;
       for (var item in _key) {
-        var _patientdata = _getpatientDatails(_data[item]);
+        _getpatientDatails(_data[item]);
       }
     });
 
@@ -147,32 +167,89 @@ class _DashBordState extends State<DashBord> {
                     right: screenWidth * 0.03,
                     top: screenHeight * 0.03),
                 child: Container(
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(360.0)),
-                  height: screenHeight * 0.2,
-                  child: PageView.builder(
-                    itemBuilder: (context, index) {
-                      return Container(
-                        margin: index == 0
-                            ? EdgeInsets.only(
-                                left: screenWidth * 0.04,
-                                right: screenWidth * 0.04)
-                            : EdgeInsets.only(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(360.0)),
+                    height: screenHeight * 0.2,
+                    child: PageView(
+                      children: [
+                        Container(
+                            padding: EdgeInsets.only(
+                                top: screenHeight * 0.01,
+                                left: screenWidth * 0.05,
+                                right: screenWidth * 0.05),
+                            margin: EdgeInsets.only(
                                 left: screenWidth * 0.04,
                                 right: screenWidth * 0.04),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            color: index % 2 == 0
-                                ? Colors.yellow[500]
-                                : Colors.red[300],
-                            borderRadius: BorderRadius.circular(30.0)),
-                        height: screenHeight * 0.2,
-                        child: Text(menulist[index]),
-                      );
-                    },
-                    itemCount: menulist.length,
-                  ),
-                ),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: Colors.red[300],
+                                borderRadius: BorderRadius.circular(30.0)),
+                            height: screenHeight * 0.2,
+                            child: Stack(
+                              children: [
+                                Sparkline(
+                                  data: _monthList,
+                                  pointSize: 7.0,
+                                  pointsMode: PointsMode.all,
+                                  pointColor: Colors.yellow,
+                                  fillMode: FillMode.below,
+                                  fillGradient: LinearGradient(
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                      colors: [
+                                        Colors.green[800],
+                                        Colors.green[200]
+                                      ]),
+                                ),
+                                Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          bottom: screenHeight * 0.01),
+                                      child: Text(
+                                        "Mecare daily patient visits",
+                                        style: TextStyle(
+                                            color: Colors.yellow,
+                                            fontSize: 17.2,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ))
+                              ],
+                            )),
+                        Container(
+                          margin: 0 == 0
+                              ? EdgeInsets.only(
+                                  left: screenWidth * 0.04,
+                                  right: screenWidth * 0.04)
+                              : EdgeInsets.only(
+                                  left: screenWidth * 0.04,
+                                  right: screenWidth * 0.04),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color:
+                                  0 == 0 ? Colors.yellow[500] : Colors.red[300],
+                              borderRadius: BorderRadius.circular(30.0)),
+                          height: screenHeight * 0.2,
+                          child: Text(menulist[0]),
+                        ),
+                        Container(
+                          margin: 0 == 0
+                              ? EdgeInsets.only(
+                                  left: screenWidth * 0.04,
+                                  right: screenWidth * 0.04)
+                              : EdgeInsets.only(
+                                  left: screenWidth * 0.04,
+                                  right: screenWidth * 0.04),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color:
+                                  0 == 0 ? Colors.yellow[500] : Colors.red[300],
+                              borderRadius: BorderRadius.circular(30.0)),
+                          height: screenHeight * 0.2,
+                          child: Text(menulist[0]),
+                        ),
+                      ],
+                    )),
               ),
               Padding(
                 padding: EdgeInsets.only(
