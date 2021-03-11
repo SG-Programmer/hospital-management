@@ -23,8 +23,9 @@ class _AppointmentPageState extends State<AppointmentPage> {
   bool booked = true;
   bool panding = true;
   int indexOfSloat;
-  List<int> bookedList = [1, 2, 3];
-  List<int> waitingList = [5, 6, 7];
+  List<int> bookedList = [];
+  List<int> waitingList = [];
+
   String time = "";
 
   Color colorSet(int index) {
@@ -37,22 +38,6 @@ class _AppointmentPageState extends State<AppointmentPage> {
       colorName = Colors.white;
     }
     return colorName;
-  }
-
-  appointmentStatus() {
-    waitingList.clear();
-    bookedList.clear();
-    _appointment.once().then((DataSnapshot snapshotslot) {
-      for (var itemslot in snapshotslot.value.keys) {
-        if (snapshotslot.value[itemslot]['status'] == "book") {
-          bookedList.add(snapshotslot.value[itemslot]['token_no']);
-        }
-        if (snapshotslot.value[itemslot]['status'] == "waiting") {
-          waitingList.add(snapshotslot.value[itemslot]['token_no']);
-        }
-      }
-      setState(() {});
-    });
   }
 
   slotTime(String timeOfBooking, int index) {
@@ -88,7 +73,6 @@ class _AppointmentPageState extends State<AppointmentPage> {
 
   @override
   void initState() {
-    appointmentStatus();
     super.initState();
   }
 
@@ -227,165 +211,196 @@ class _AppointmentPageState extends State<AppointmentPage> {
             child: Container(
               padding: EdgeInsets.only(
                   left: screenWidth * 0.02 + 2, right: screenWidth * 0.02 + 2),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Text("Approx 10:00 to 11:00"),
-                    Row(
-                      children: [
-                        slotTime("10:00 to 11:00", 1),
-                        slotTime("10:00 to 11:00", 2),
-                        slotTime("10:00 to 11:00", 3),
-                        slotTime("10:00 to 11:00", 4)
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        slotTime("08:00 to 09:00", 5),
-                        slotTime("08:00 to 09:00", 6),
-                        slotTime("08:00 to 09:00", 7),
-                        slotTime("08:00 to 09:00", 8)
-                      ],
-                    ),
-                    Text("Approx 11:00 to 12:00"),
-                    Row(
-                      children: [
-                        slotTime("11:00 to 12:00", 9),
-                        slotTime("11:00 to 12:00", 10),
-                        slotTime("11:00 to 12:00", 11),
-                        slotTime("11:00 to 12:00", 12)
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        slotTime("11:00 to 12:00", 13),
-                        slotTime("11:00 to 12:00", 14),
-                        slotTime("11:00 to 12:00", 15),
-                        slotTime("11:00 to 12:00", 16)
-                      ],
-                    ),
-                    Text("Approx 12:00 to 01:00"),
-                    Row(
-                      children: [
-                        slotTime("12:00 to 01:00", 17),
-                        slotTime("12:00 to 01:00", 18),
-                        slotTime("12:00 to 01:00", 19),
-                        slotTime("12:00 to 01:00", 20)
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        slotTime("12:00 to 01:00", 21),
-                        slotTime("12:00 to 01:00", 22),
-                        slotTime("12:00 to 01:00", 23),
-                        slotTime("12:00 to 01:00", 24)
-                      ],
-                    ),
-                    Text("Approx 02:00 to 03:00"),
-                    Row(
-                      children: [
-                        slotTime("02:00 to 03:00", 25),
-                        slotTime("02:00 to 03:00", 26),
-                        slotTime("02:00 to 03:00", 27),
-                        slotTime("02:00 to 03:00", 28)
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        slotTime("02:00 to 03:00", 29),
-                        slotTime("02:00 to 03:00", 30),
-                        slotTime("02:00 to 03:00", 31),
-                        slotTime("02:00 to 03:00", 32)
-                      ],
-                    ),
-                    Text("Approx 03:00 to 04:00"),
-                    Row(
-                      children: [
-                        slotTime("03:00 to 04:00", 33),
-                        slotTime("03:00 to 04:00", 34),
-                        slotTime("03:00 to 04:00", 35),
-                        slotTime("03:00 to 04:00", 36)
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        slotTime("03:00 to 04:00", 37),
-                        slotTime("03:00 to 04:00", 38),
-                        slotTime("03:00 to 04:00", 39),
-                        slotTime("03:00 to 04:00", 40)
-                      ],
-                    ),
-                    Text("Approx 04:00 to 05:00"),
-                    Row(
-                      children: [
-                        slotTime("04:00 to 05:00", 41),
-                        slotTime("04:00 to 05:00", 42),
-                        slotTime("04:00 to 05:00", 43),
-                        slotTime("04:00 to 05:00", 44)
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        slotTime("04:00 to 05:00", 45),
-                        slotTime("04:00 to 05:00", 46),
-                        slotTime("04:00 to 05:00", 47),
-                        slotTime("04:00 to 05:00", 48)
-                      ],
-                    ),
-                    Text("Approx 05:00 to 06:00"),
-                    Row(
-                      children: [
-                        slotTime("05:00 to 06:00", 49),
-                        slotTime("05:00 to 06:00", 50),
-                        slotTime("05:00 to 06:00", 51),
-                        slotTime("05:00 to 06:00", 52)
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        slotTime("05:00 to 06:00", 53),
-                        slotTime("05:00 to 06:00", 54),
-                        slotTime("05:00 to 06:00", 55),
-                        slotTime("05:00 to 06:00", 56)
-                      ],
-                    ),
-                    Text("Approx 06:00 to 07:00"),
-                    Row(
-                      children: [
-                        slotTime("06:00 to 07:00", 57),
-                        slotTime("06:00 to 07:00", 58),
-                        slotTime("06:00 to 07:00", 59),
-                        slotTime("06:00 to 07:00", 60)
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        slotTime("06:00 to 07:00", 61),
-                        slotTime("06:00 to 07:00", 62),
-                        slotTime("06:00 to 07:00", 63),
-                        slotTime("06:00 to 07:00", 64)
-                      ],
-                    ),
-                    Text("Approx 07:00 to 08:00"),
-                    Row(
-                      children: [
-                        slotTime("07:00 to 08:00", 65),
-                        slotTime("07:00 to 08:00", 66),
-                        slotTime("07:00 to 08:00", 67),
-                        slotTime("07:00 to 08:00", 68)
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        slotTime("07:00 to 08:00", 69),
-                        slotTime("07:00 to 08:00", 60),
-                        slotTime("07:00 to 08:00", 61),
-                        slotTime("07:00 to 08:00", 62)
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+              child: StreamBuilder(
+                  stream: _appointment.onValue,
+                  builder: (context, snapshot) {
+                    if (snapshot.data == null)
+                      return Container(
+                        padding: EdgeInsets.only(
+                            top: screenHeight * 0.3,
+                            bottom: screenHeight * 0.3,
+                            left: screenWidth * 0.4,
+                            right: screenWidth * 0.4),
+                        child: CircularProgressIndicator(),
+                      );
+                    var _key = snapshot.data.snapshot.value.keys;
+                    var _data = snapshot.data.snapshot.value;
+
+                    List<int> _bookedList = [];
+                    List<int> _waitingList = [];
+                    for (var item in _key) {
+                      if (_data[item]['status'] == "book") {
+                        _bookedList.add(_data[item]['token_no']);
+                      }
+                      if (_data[item]['status'] == "waiting") {
+                        _waitingList.add(_data[item]['token_no']);
+                      }
+                    }
+                    bookedList.clear();
+                    waitingList.clear();
+                    bookedList = _bookedList;
+                    waitingList = _waitingList;
+
+                    return SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Text("Approx 10:00 to 11:00"),
+                          Row(
+                            children: [
+                              slotTime("10:00 to 11:00", 1),
+                              slotTime("10:00 to 11:00", 2),
+                              slotTime("10:00 to 11:00", 3),
+                              slotTime("10:00 to 11:00", 4)
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              slotTime("08:00 to 09:00", 5),
+                              slotTime("08:00 to 09:00", 6),
+                              slotTime("08:00 to 09:00", 7),
+                              slotTime("08:00 to 09:00", 8)
+                            ],
+                          ),
+                          Text("Approx 11:00 to 12:00"),
+                          Row(
+                            children: [
+                              slotTime("11:00 to 12:00", 9),
+                              slotTime("11:00 to 12:00", 10),
+                              slotTime("11:00 to 12:00", 11),
+                              slotTime("11:00 to 12:00", 12)
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              slotTime("11:00 to 12:00", 13),
+                              slotTime("11:00 to 12:00", 14),
+                              slotTime("11:00 to 12:00", 15),
+                              slotTime("11:00 to 12:00", 16)
+                            ],
+                          ),
+                          Text("Approx 12:00 to 01:00"),
+                          Row(
+                            children: [
+                              slotTime("12:00 to 01:00", 17),
+                              slotTime("12:00 to 01:00", 18),
+                              slotTime("12:00 to 01:00", 19),
+                              slotTime("12:00 to 01:00", 20)
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              slotTime("12:00 to 01:00", 21),
+                              slotTime("12:00 to 01:00", 22),
+                              slotTime("12:00 to 01:00", 23),
+                              slotTime("12:00 to 01:00", 24)
+                            ],
+                          ),
+                          Text("Approx 02:00 to 03:00"),
+                          Row(
+                            children: [
+                              slotTime("02:00 to 03:00", 25),
+                              slotTime("02:00 to 03:00", 26),
+                              slotTime("02:00 to 03:00", 27),
+                              slotTime("02:00 to 03:00", 28)
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              slotTime("02:00 to 03:00", 29),
+                              slotTime("02:00 to 03:00", 30),
+                              slotTime("02:00 to 03:00", 31),
+                              slotTime("02:00 to 03:00", 32)
+                            ],
+                          ),
+                          Text("Approx 03:00 to 04:00"),
+                          Row(
+                            children: [
+                              slotTime("03:00 to 04:00", 33),
+                              slotTime("03:00 to 04:00", 34),
+                              slotTime("03:00 to 04:00", 35),
+                              slotTime("03:00 to 04:00", 36)
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              slotTime("03:00 to 04:00", 37),
+                              slotTime("03:00 to 04:00", 38),
+                              slotTime("03:00 to 04:00", 39),
+                              slotTime("03:00 to 04:00", 40)
+                            ],
+                          ),
+                          Text("Approx 04:00 to 05:00"),
+                          Row(
+                            children: [
+                              slotTime("04:00 to 05:00", 41),
+                              slotTime("04:00 to 05:00", 42),
+                              slotTime("04:00 to 05:00", 43),
+                              slotTime("04:00 to 05:00", 44)
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              slotTime("04:00 to 05:00", 45),
+                              slotTime("04:00 to 05:00", 46),
+                              slotTime("04:00 to 05:00", 47),
+                              slotTime("04:00 to 05:00", 48)
+                            ],
+                          ),
+                          Text("Approx 05:00 to 06:00"),
+                          Row(
+                            children: [
+                              slotTime("05:00 to 06:00", 49),
+                              slotTime("05:00 to 06:00", 50),
+                              slotTime("05:00 to 06:00", 51),
+                              slotTime("05:00 to 06:00", 52)
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              slotTime("05:00 to 06:00", 53),
+                              slotTime("05:00 to 06:00", 54),
+                              slotTime("05:00 to 06:00", 55),
+                              slotTime("05:00 to 06:00", 56)
+                            ],
+                          ),
+                          Text("Approx 06:00 to 07:00"),
+                          Row(
+                            children: [
+                              slotTime("06:00 to 07:00", 57),
+                              slotTime("06:00 to 07:00", 58),
+                              slotTime("06:00 to 07:00", 59),
+                              slotTime("06:00 to 07:00", 60)
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              slotTime("06:00 to 07:00", 61),
+                              slotTime("06:00 to 07:00", 62),
+                              slotTime("06:00 to 07:00", 63),
+                              slotTime("06:00 to 07:00", 64)
+                            ],
+                          ),
+                          Text("Approx 07:00 to 08:00"),
+                          Row(
+                            children: [
+                              slotTime("07:00 to 08:00", 65),
+                              slotTime("07:00 to 08:00", 66),
+                              slotTime("07:00 to 08:00", 67),
+                              slotTime("07:00 to 08:00", 68)
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              slotTime("07:00 to 08:00", 69),
+                              slotTime("07:00 to 08:00", 60),
+                              slotTime("07:00 to 08:00", 61),
+                              slotTime("07:00 to 08:00", 62)
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
             ),
           ),
           Container(
@@ -394,37 +409,59 @@ class _AppointmentPageState extends State<AppointmentPage> {
             color: Colors.indigoAccent[700],
             child: TextButton(
               onPressed: () {
-                String statusto;
-                String userID;
-                statusto = FirebaseAuth.instance.currentUser.email ==
-                        "admin@mecare.com"
-                    ? "book"
-                    : "waiting";
-                userID = FirebaseAuth.instance.currentUser.email ==
-                        "admin@mecare.com"
-                    ? widget.offlineUserId
-                    : FirebaseAuth.instance.currentUser.uid;
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return HeartbeatProgressIndicator(
-                          duration: Duration(seconds: 1),
-                          startScale: 0,
-                          endScale: 2.2,
-                          child: Icon(Icons.favorite, color: Colors.red));
+                if (indexOfSloat != null) {
+                  String statusto;
+                  String userID;
+                  statusto = FirebaseAuth.instance.currentUser.email ==
+                          "admin@mecare.com"
+                      ? "book"
+                      : "waiting";
+                  userID = FirebaseAuth.instance.currentUser.email ==
+                          "admin@mecare.com"
+                      ? widget.offlineUserId
+                      : FirebaseAuth.instance.currentUser.uid;
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return HeartbeatProgressIndicator(
+                            duration: Duration(seconds: 1),
+                            startScale: 0,
+                            endScale: 2.2,
+                            child: Icon(Icons.favorite, color: Colors.red));
+                      });
+                  _appointment.push().set({
+                    "user_id": userID,
+                    "token_no": indexOfSloat,
+                    "date": "12/12/2020",
+                    "time": time,
+                    "status": statusto
+                  }).then((value) {
+                    setState(() {
+                      indexOfSloat = null;
                     });
-                _appointment.push().set({
-                  "user_id": userID,
-                  "token_no": indexOfSloat,
-                  "date": "12/12/2020",
-                  "time": time,
-                  "status": statusto
-                }).then((value) {
-                  indexOfSloat = null;
-                  appointmentStatus();
 
-                  Navigator.pop(context);
-                });
+                    Navigator.pop(context);
+                  });
+                } else {
+                  showDialog(
+                      context: context,
+                      child: AlertDialog(
+                        title: Text("Alert"),
+                        content: Text("Please Select Sloat"),
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                "Ok",
+                                style: TextStyle(
+                                    fontSize: 17.5,
+                                    fontWeight: FontWeight.w600),
+                              ))
+                        ],
+                      ));
+                }
               },
               child: Text("Book Appointment",
                   style: TextStyle(
