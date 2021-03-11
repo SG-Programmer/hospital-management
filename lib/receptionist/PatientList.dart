@@ -63,7 +63,8 @@ class _PatientListState extends State<PatientList> {
       var _data = snapshot.value;
       patientData.clear();
       for (var _getOneKey in _key) {
-        if (_data[_getOneKey]['email_id'] != "admin@mecare.com") {
+        if (_data[_getOneKey]['email_id'] != "admin@mecare.com" &&
+            _data[_getOneKey]['email_id'] != "doctor@mecare.com") {
           PatientListData patientListData = new PatientListData(
               _data[_getOneKey]['first_name'],
               _data[_getOneKey]['last_name'],
@@ -106,68 +107,78 @@ class _PatientListState extends State<PatientList> {
                   top: index == 0 ? screenHeight * 0.0 : screenHeight * 0.01,
                   left: screenWidth * 0.07),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CircleAvatar(
-                    backgroundImage: profilePhoto[index],
-                  ),
-                  SizedBox(
-                    width: screenWidth * 0.05,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => PatientDatails(
-                              userName: patientData[index].userNameP,
-                              firstName: patientData[index].firstNameP,
-                              lastName: patientData[index].lastNameP,
-                              email: patientData[index].emailP,
-                              number: patientData[index].numberP,
-                              date: patientData[index].brithDateP,
-                              address: patientData[index].addressP,
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        backgroundImage: profilePhoto[index],
+                      ),
+                      SizedBox(
+                        width: screenWidth * 0.05,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PatientDatails(
+                                  userName: patientData[index].userNameP,
+                                  firstName: patientData[index].firstNameP,
+                                  lastName: patientData[index].lastNameP,
+                                  email: patientData[index].emailP,
+                                  number: patientData[index].numberP,
+                                  date: patientData[index].brithDateP,
+                                  address: patientData[index].addressP,
+                                ),
+                              ));
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              patientData[index].firstNameP +
+                                  " " +
+                                  patientData[index].lastNameP,
+                              style: TextStyle(fontWeight: FontWeight.w700),
                             ),
-                          ));
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          patientData[index].firstNameP +
-                              " " +
-                              patientData[index].lastNameP,
-                          style: TextStyle(fontWeight: FontWeight.w700),
+                            Text(patientData[index].userNameP,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black38))
+                          ],
                         ),
-                        Text(patientData[index].userNameP,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black38))
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  SizedBox(width: screenWidth * 0.2 + 14),
-                  IconButton(
-                      icon: Icon(
-                        Icons.call,
-                        color: Colors.blue[900],
-                      ),
-                      onPressed: null),
-                  IconButton(
-                      icon: Icon(
-                        Icons.message,
-                        color: Colors.blue[900],
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ChatPage(
-                                patientData[index].userNameP,
-                                patientData[index].userIdP,
-                                profilePhoto[index],
-                              ),
-                            ));
-                      })
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      IconButton(
+                          icon: Icon(
+                            Icons.call,
+                            color: Colors.blue[900],
+                          ),
+                          onPressed: null),
+                      IconButton(
+                          icon: Icon(
+                            Icons.message,
+                            color: Colors.blue[900],
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ChatPage(
+                                    patientData[index].userNameP,
+                                    patientData[index].userIdP,
+                                    profilePhoto[index],
+                                  ),
+                                ));
+                          })
+                    ],
+                  )
                 ],
               ),
             );

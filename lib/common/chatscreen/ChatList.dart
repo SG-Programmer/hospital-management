@@ -120,7 +120,7 @@ class _ChatListState extends State<ChatList> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: screenHeight * 0.3),
+          padding: EdgeInsets.only(top: screenHeight * 0.2 + 25),
           child: Container(
               padding: EdgeInsets.only(
                   top: screenHeight * 0.05, left: screenWidth * 0.06),
@@ -213,44 +213,45 @@ class _ChatListState extends State<ChatList> {
               )),
         ),
         Padding(
-          padding: EdgeInsets.only(top: screenHeight * 0.2 - 27),
+          padding: EdgeInsets.only(top: screenHeight * 0.2),
           child: Container(
             decoration: BoxDecoration(
                 color: Color(0xffffffff),
                 borderRadius: BorderRadius.circular(23.0)),
-            height: screenHeight * 0.2,
+            height: screenHeight * 0.1,
             width: double.infinity,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  height: screenHeight * 0.1 + 25,
-                  width: double.infinity,
-                  child: ListView.builder(
-                    itemCount: userKeys.length,
-                    scrollDirection: Axis.horizontal,
-                    padding: EdgeInsets.only(left: screenWidth * 0.04),
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: EdgeInsets.only(left: screenWidth * 0.02),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => ChatPage(
-                                userDetails[index]['user_name'],
-                                userDetails[index]['user_id'],
-                                profilePhoto[index],
-                              ),
-                            ));
-                          },
-                          child: CircleAvatar(
-                            radius: 31,
-                            backgroundImage: profilePhoto[index],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
+                // Container(
+                //   height: screenHeight * 0.1 + 25,
+                //   width: double.infinity,
+                //   child: ListView.builder(
+                //     itemCount: userKeys.length,
+                //     scrollDirection: Axis.horizontal,
+                //     padding: EdgeInsets.only(left: screenWidth * 0.04),
+                //     itemBuilder: (BuildContext context, int index) {
+                //       return Padding(
+                //         padding: EdgeInsets.only(left: screenWidth * 0.02),
+                //         child: GestureDetector(
+                //           onTap: () {
+                //             Navigator.of(context).push(MaterialPageRoute(
+                //               builder: (context) => ChatPage(
+                //                 userDetails[index]['user_name'],
+                //                 userDetails[index]['user_id'],
+                //                 profilePhoto[index],
+                //               ),
+                //             ));
+                //           },
+                //           child: CircleAvatar(
+                //             radius: 31,
+                //             backgroundImage: profilePhoto[index],
+                //           ),
+                //         ),
+                //       );
+                //     },
+                //   ),
+                // ),
                 Padding(
                   padding: EdgeInsets.only(
                       left: screenWidth * 0.06, top: screenHeight * 0.01),
