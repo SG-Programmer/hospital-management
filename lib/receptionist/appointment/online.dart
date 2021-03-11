@@ -23,12 +23,29 @@ class _OnlineState extends State<Online> {
     return StreamBuilder(
       stream: waitingAppoinment.onValue,
       builder: (context, appoinment) {
-        var _appoinmentKeys = appoinment.data.snapshot.value.keys;
-        var _appoinmentData = appoinment.data.snapshot.value;
-
+        if (appoinment.data == null)
+          return Container(
+            padding: EdgeInsets.only(
+                top: screenHeight * 0.3 - 20,
+                bottom: screenHeight * 0.3 - 20,
+                left: screenWidth * 0.4 + 8,
+                right: screenWidth * 0.4 + 8),
+            child: CircularProgressIndicator(),
+          );
         return StreamBuilder(
           stream: _registration.onValue,
           builder: (context, patientDatails) {
+            if (patientDatails.data == null)
+              return Container(
+                padding: EdgeInsets.only(
+                    top: screenHeight * 0.3 - 20,
+                    bottom: screenHeight * 0.3 - 20,
+                    left: screenWidth * 0.4 + 8,
+                    right: screenWidth * 0.4 + 8),
+                child: CircularProgressIndicator(),
+              );
+            var _appoinmentKeys = appoinment.data.snapshot.value.keys;
+            var _appoinmentData = appoinment.data.snapshot.value;
             var _patientKeys = patientDatails.data.snapshot.value.keys;
             var _patientdata = patientDatails.data.snapshot.value;
 
@@ -50,7 +67,6 @@ class _OnlineState extends State<Online> {
                 }
               }
             }
-
             return Container(
                 child: ListView.builder(
                     itemCount: _appoinmentDatails.length,

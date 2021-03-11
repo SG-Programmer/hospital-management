@@ -22,16 +22,19 @@ class _CompliteState extends State<Complite> {
   DatabaseReference _offlineUser =
       FirebaseDatabase.instance.reference().child("offlinePatient");
 
-  List<AppoinmentData> _appoinmentList2 = [];
-  List<PatientListData> _appoinmentUserDatail2 = [];
+  List<AppoinmentData> _appoinmentList = [];
+  List<PatientListData> _appoinmentUserDatail = [];
 
   @override
   void initState() {
     getAppoinmentList();
+
     super.initState();
   }
 
   getAppoinmentList() {
+    List<AppoinmentData> _appoinmentList2 = [];
+    List<PatientListData> _appoinmentUserDatail2 = [];
     _appoinmentList2.clear();
     _appoinmentUserDatail2.clear();
     waitingAppoinment
@@ -86,18 +89,28 @@ class _CompliteState extends State<Complite> {
                 }
               }
             }
+            setState(() {
+              _appoinmentList = _appoinmentList2;
+              _appoinmentUserDatail = _appoinmentUserDatail2;
+            });
           }
-          setState(() {});
         });
       });
-
-      setState(() {});
     });
   }
 
   @override
   Widget build(BuildContext context) {
     ScreenSize.setSize(context);
-    return listOfCard(_appoinmentList2, _appoinmentUserDatail2);
+    if (_appoinmentList.length == 0 && _appoinmentUserDatail.length == 0)
+      return Container(
+        padding: EdgeInsets.only(
+            top: screenHeight * 0.3 - 20,
+            bottom: screenHeight * 0.3 - 20,
+            left: screenWidth * 0.4 + 8,
+            right: screenWidth * 0.4 + 8),
+        child: CircularProgressIndicator(),
+      );
+    return listOfCard(_appoinmentList, _appoinmentUserDatail);
   }
 }
