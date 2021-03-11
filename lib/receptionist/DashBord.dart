@@ -182,7 +182,7 @@ class _DashBordState extends State<DashBord> {
                                 right: screenWidth * 0.04),
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
-                                color: Colors.red[300],
+                                color: Colors.grey[400],
                                 borderRadius: BorderRadius.circular(30.0)),
                             height: screenHeight * 0.2,
                             child: Stack(
@@ -193,12 +193,14 @@ class _DashBordState extends State<DashBord> {
                                   pointsMode: PointsMode.all,
                                   pointColor: Colors.yellow,
                                   fillMode: FillMode.below,
+                                  lineColor: Colors.blue[600],
+                                  lineWidth: screenHeight * 0.01 + 2,
                                   fillGradient: LinearGradient(
                                       begin: Alignment.topCenter,
                                       end: Alignment.bottomCenter,
                                       colors: [
-                                        Colors.green[800],
-                                        Colors.green[200]
+                                        Colors.green[900],
+                                        Colors.green[400]
                                       ]),
                                 ),
                                 Align(
@@ -216,38 +218,6 @@ class _DashBordState extends State<DashBord> {
                                     ))
                               ],
                             )),
-                        Container(
-                          margin: 0 == 0
-                              ? EdgeInsets.only(
-                                  left: screenWidth * 0.04,
-                                  right: screenWidth * 0.04)
-                              : EdgeInsets.only(
-                                  left: screenWidth * 0.04,
-                                  right: screenWidth * 0.04),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              color:
-                                  0 == 0 ? Colors.yellow[500] : Colors.red[300],
-                              borderRadius: BorderRadius.circular(30.0)),
-                          height: screenHeight * 0.2,
-                          child: Text(menulist[0]),
-                        ),
-                        Container(
-                          margin: 0 == 0
-                              ? EdgeInsets.only(
-                                  left: screenWidth * 0.04,
-                                  right: screenWidth * 0.04)
-                              : EdgeInsets.only(
-                                  left: screenWidth * 0.04,
-                                  right: screenWidth * 0.04),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              color:
-                                  0 == 0 ? Colors.yellow[500] : Colors.red[300],
-                              borderRadius: BorderRadius.circular(30.0)),
-                          height: screenHeight * 0.2,
-                          child: Text(menulist[0]),
-                        ),
                       ],
                     )),
               ),

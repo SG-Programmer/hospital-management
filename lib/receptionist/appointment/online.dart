@@ -11,195 +11,183 @@ class Online extends StatefulWidget {
 class _OnlineState extends State<Online> {
   //firebase
   DatabaseReference waitingAppoinment =
-      FirebaseDatabase.instance.reference().child("appointment");
+      FirebaseDatabase.instance.reference().child('appointment');
 
   DatabaseReference _registration =
       FirebaseDatabase.instance.reference().child("registration");
 
-  List<AppoinmentData> _appoinmentList = [];
-  List<AppoinmentUserDatail> _appoinmentUserDatail = [];
-
-  @override
-  void initState() {
-    super.initState();
-
-    getAppoinmentList();
-  }
-
-  getAppoinmentList() {
-    _appoinmentList.clear();
-    _appoinmentUserDatail.clear();
-    waitingAppoinment
-        .orderByChild("status")
-        .equalTo("waiting")
-        .once()
-        .then((DataSnapshot snap) {
-      var _key = snap.value.keys;
-      var data = snap.value;
-      for (var item in _key) {
-        AppoinmentData appoinmentData = new AppoinmentData(
-            data[item]['user_id'],
-            data[item]['date'],
-            data[item]['time'],
-            data[item]['token_no'],
-            item);
-        _appoinmentList.add(appoinmentData);
-      }
-
-      _registration.once().then((DataSnapshot snap) {
-        var _key = snap.value.keys;
-        var _data = snap.value;
-        for (var i = 0; i < _appoinmentList.length; i++) {
-          for (var item in _key) {
-            if (_appoinmentList[i].userId == item) {
-              AppoinmentUserDatail appoinmentUserDatail =
-                  new AppoinmentUserDatail(_data[item]['first_name'],
-                      _data[item]['last_name'], _data[item]['number']);
-              _appoinmentUserDatail.add(appoinmentUserDatail);
-            }
-          }
-        }
-        setState(() {});
-      });
-
-      setState(() {});
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     ScreenSize.setSize(context);
-    String data = "4";
-    return data == ""
-        ? Center(
-            child: Image.asset("images/nodatafound.png"),
-          )
-        : Container(
-            child: ListView.builder(
-                itemCount: _appoinmentList.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                              blurRadius: 5,
-                              color: Colors.black26,
-                              offset: Offset(0, 0))
-                        ],
-                        color: Colors.blue[50],
-                        borderRadius: BorderRadius.circular(20.0)),
-                    margin: EdgeInsets.only(
-                        top: screenHeight * 0.02,
-                        left: screenWidth * 0.06,
-                        right: screenWidth * 0.06),
-                    height: screenHeight * 0.2 - 40,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          top: screenHeight * 0.02, left: screenWidth * 0.03),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+    return StreamBuilder(
+      stream: waitingAppoinment.onValue,
+      builder: (context, appoinment) {
+        var _appoinmentKeys = appoinment.data.snapshot.value.keys;
+        var _appoinmentData = appoinment.data.snapshot.value;
+
+        return StreamBuilder(
+          stream: _registration.onValue,
+          builder: (context, patientDatails) {
+            var _patientKeys = patientDatails.data.snapshot.value.keys;
+            var _patientdata = patientDatails.data.snapshot.value;
+
+            List<Map<String, dynamic>> _appoinmentDatails = [];
+            for (var _appoinment in _appoinmentKeys) {
+              if (_appoinmentData[_appoinment]['status'] == "waiting") {
+                for (var _patien in _patientKeys) {
+                  if (_patientdata[_patien]['user_id'] ==
+                      _appoinmentData[_appoinment]['user_id']) {
+                    _appoinmentDatails.add({
+                      'token_id': _appoinment,
+                      'first_name': _patientdata[_patien]['first_name'],
+                      'last_name': _patientdata[_patien]['last_name'],
+                      'number': _patientdata[_patien]['number'],
+                      'token_no': _appoinmentData[_appoinment]['token_no'],
+                      'time': _appoinmentData[_appoinment]['time']
+                    });
+                  }
+                }
+              }
+            }
+
+            return Container(
+                child: ListView.builder(
+                    itemCount: _appoinmentDatails.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                  blurRadius: 5,
+                                  color: Colors.black26,
+                                  offset: Offset(0, 0))
+                            ],
+                            color: Colors.blue[50],
+                            borderRadius: BorderRadius.circular(20.0)),
+                        margin: EdgeInsets.only(
+                            top: screenHeight * 0.02,
+                            left: screenWidth * 0.06,
+                            right: screenWidth * 0.06),
+                        height: screenHeight * 0.2 - 40,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              top: screenHeight * 0.02,
+                              left: screenWidth * 0.03),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Icon(
-                                    Icons.supervised_user_circle,
-                                    size: screenHeight * 0.05,
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.supervised_user_circle,
+                                        size: screenHeight * 0.05,
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            left: screenWidth * 0.03),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              _appoinmentDatails[index]
+                                                      ['first_name'] +
+                                                  " " +
+                                                  _appoinmentDatails[index]
+                                                      ['last_name'],
+                                              style: TextStyle(
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                            SizedBox(
+                                                height:
+                                                    screenHeight * 0.01 - 5),
+                                            Text(
+                                              _appoinmentDatails[index]
+                                                  ['number'],
+                                              style: TextStyle(
+                                                  color: Colors.black54),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        left: screenWidth * 0.03),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          _appoinmentUserDatail[index]
-                                                  .firstName +
-                                              " " +
-                                              _appoinmentUserDatail[index]
-                                                  .lastName,
-                                          style: TextStyle(
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                        SizedBox(
-                                            height: screenHeight * 0.01 - 5),
-                                        Text(
-                                          _appoinmentUserDatail[index].number,
-                                          style:
-                                              TextStyle(color: Colors.black54),
-                                        ),
-                                      ],
+                                  Text("Token Number:-" +
+                                      _appoinmentDatails[index]['token_no']
+                                          .toString()),
+                                  Text("Time:-" +
+                                      _appoinmentDatails[index]['time'])
+                                ],
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                        right: screenWidth * 0.03),
+                                    width: screenWidth * 0.2 + 19,
+                                    height: screenHeight * 0.04 + 7,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        border:
+                                            Border.all(color: Colors.blue[800]),
+                                        borderRadius:
+                                            BorderRadius.circular(20.0)),
+                                    child: TextButton(
+                                      onPressed: () {
+                                        waitingAppoinment
+                                            .child(_appoinmentDatails[index]
+                                                ['token_id'])
+                                            .update({'status': "book"});
+                                      },
+                                      child: Text("Accept"),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: screenHeight * 0.01,
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                        right: screenWidth * 0.03),
+                                    width: screenWidth * 0.2 + 19,
+                                    height: screenHeight * 0.04 + 7,
+                                    decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        border:
+                                            Border.all(color: Colors.red[800]),
+                                        borderRadius:
+                                            BorderRadius.circular(20.0)),
+                                    child: TextButton(
+                                      onPressed: () {
+                                        waitingAppoinment
+                                            .child(_appoinmentDatails[index]
+                                                ['token_id'])
+                                            .remove();
+                                      },
+                                      child: Text(
+                                        "Delete",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
-                              Text("Token Number:-" +
-                                  _appoinmentList[index].tokeNumber.toString()),
-                              Text("Time:-" + _appoinmentList[index].time)
                             ],
                           ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                margin:
-                                    EdgeInsets.only(right: screenWidth * 0.03),
-                                width: screenWidth * 0.2 + 19,
-                                height: screenHeight * 0.04 + 7,
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    border: Border.all(color: Colors.blue[800]),
-                                    borderRadius: BorderRadius.circular(20.0)),
-                                child: TextButton(
-                                  onPressed: () {
-                                    waitingAppoinment
-                                        .child(_appoinmentList[index].tokenId)
-                                        .update({'status': "book"}).then(
-                                            (value) => getAppoinmentList());
-                                  },
-                                  child: Text("Accept"),
-                                ),
-                              ),
-                              SizedBox(
-                                height: screenHeight * 0.01,
-                              ),
-                              Container(
-                                margin:
-                                    EdgeInsets.only(right: screenWidth * 0.03),
-                                width: screenWidth * 0.2 + 19,
-                                height: screenHeight * 0.04 + 7,
-                                decoration: BoxDecoration(
-                                    color: Colors.red,
-                                    border: Border.all(color: Colors.red[800]),
-                                    borderRadius: BorderRadius.circular(20.0)),
-                                child: TextButton(
-                                  onPressed: () {
-                                    waitingAppoinment
-                                        .child(_appoinmentList[index]
-                                            .tokeNumber
-                                            .toString())
-                                        .remove()
-                                        .then((value) => getAppoinmentList());
-                                  },
-                                  child: Text(
-                                    "Delete",
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                }),
-          );
+                        ),
+                      );
+                    }));
+          },
+        );
+      },
+    );
   }
 }
