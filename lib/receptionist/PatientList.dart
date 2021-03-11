@@ -152,15 +152,7 @@ class _PatientListState extends State<PatientList> {
                     ],
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      IconButton(
-                          icon: Icon(
-                            Icons.call,
-                            color: Colors.blue[900],
-                          ),
-                          onPressed: null),
                       IconButton(
                           icon: Icon(
                             Icons.message,

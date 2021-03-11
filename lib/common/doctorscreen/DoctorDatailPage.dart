@@ -6,6 +6,7 @@ import 'package:hospital_management/common/chatscreen/ChatPage.dart';
 import 'package:hospital_management/common/doctorscreen/doctorDatailData.dart';
 import 'package:hospital_management/patient/AppointmentPage.dart';
 import 'package:hospital_management/receptionist/DashBord.dart';
+import 'package:hospital_management/receptionist/PatientList.dart';
 
 import 'package:hospital_management/utils/size.dart';
 
@@ -160,12 +161,6 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
                           Row(
                             children: [
                               IconButton(
-                                icon: Icon(Icons.call),
-                                onPressed: null,
-                                color: Colors.blue[800],
-                                disabledColor: Colors.blue[800],
-                              ),
-                              IconButton(
                                 icon: Icon(Icons.message),
                                 onPressed: () {
                                   Navigator.push(
@@ -186,7 +181,14 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
                                   ? IconButton(
                                       icon: Icon(Icons
                                           .supervised_user_circle_outlined),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PatientList(),
+                                            ));
+                                      },
                                       color: Colors.orange[400],
                                       disabledColor: Colors.orange[400],
                                     )
