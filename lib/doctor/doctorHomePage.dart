@@ -1,6 +1,8 @@
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_management/doctor/doctorChat.dart';
+import 'package:hospital_management/doctor/doctorHome.dart';
+import 'package:hospital_management/doctor/doctorPatient.dart';
 import 'package:hospital_management/doctor/doctorProfile.dart';
 
 class DoctorHomePage extends StatefulWidget {
@@ -27,9 +29,9 @@ class _DoctorHomePageState extends State<DoctorHomePage>
               controller: _tabController,
               physics: NeverScrollableScrollPhysics(),
               children: [
-                DoctorProfile(),
+                DoctorHome(),
                 DoctorChat(),
-                DoctorProfile(),
+                DoctorPatient(),
                 DoctorProfile()
               ]),
           bottomNavigationBar: FancyBottomNavigation(

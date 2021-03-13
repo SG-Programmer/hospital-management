@@ -177,14 +177,15 @@ class _LoginPageState extends State<LoginPage> {
                                   _sharedPreferences(emailController.text,
                                       passController.text);
                                   emailController.text == "admin@mecare.com"
-                                      ? Navigator.push(
+                                      ? Navigator.pushAndRemoveUntil(
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) => DashBord(),
-                                          ))
+                                          ),
+                                          (route) => false)
                                       : emailController.text ==
                                               "doctor@mecare.com"
-                                          ? Navigator.push(
+                                          ? Navigator.pushAndRemoveUntil(
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) => Scaffold(
@@ -192,8 +193,9 @@ class _LoginPageState extends State<LoginPage> {
                                                       false,
                                                   body: DoctorHomePage(),
                                                 ),
-                                              ))
-                                          : Navigator.push(
+                                              ),
+                                              (route) => false)
+                                          : Navigator.pushAndRemoveUntil(
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) => Scaffold(
@@ -201,7 +203,8 @@ class _LoginPageState extends State<LoginPage> {
                                                       false,
                                                   body: PatientDashbord(),
                                                 ),
-                                              ));
+                                              ),
+                                              (route) => false);
 
                                   emailController.text = "";
                                   passController.text = "";
