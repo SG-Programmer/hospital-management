@@ -217,7 +217,11 @@ class _OfflinePatientFormState extends State<OfflinePatientForm> {
                                 'sex': sex,
                                 'first_name': firstNameController.text,
                                 'last_name': lastNameController.text,
-                                'date': date.toString(),
+                                'date': date.day.toString() +
+                                    "-" +
+                                    date.month.toString() +
+                                    "-" +
+                                    date.year.toString(),
                                 'number': numberController.text,
                                 'city': cityController.text,
                                 'pin_conde': pinCodeController.text,

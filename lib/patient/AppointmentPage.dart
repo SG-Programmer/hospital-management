@@ -23,8 +23,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
   bool booked = true;
   bool panding = true;
   int indexOfSloat;
-  List<int> bookedList = [];
-  List<int> waitingList = [];
+  List<int> bookedList = [1, 2, 3];
+  List<int> waitingList = [5, 6, 9];
 
   String time = "";
 
@@ -223,6 +223,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                             right: screenWidth * 0.4),
                         child: CircularProgressIndicator(),
                       );
+
                     var _key = snapshot.data.snapshot.value.keys;
                     var _data = snapshot.data.snapshot.value;
 
@@ -393,8 +394,8 @@ class _AppointmentPageState extends State<AppointmentPage> {
                             children: [
                               slotTime("07:00 to 08:00", 69),
                               slotTime("07:00 to 08:00", 60),
-                              slotTime("07:00 to 08:00", 61),
-                              slotTime("07:00 to 08:00", 62)
+                              slotTime("07:00 to 08:00", 70),
+                              slotTime("07:00 to 08:00", 71)
                             ],
                           ),
                         ],

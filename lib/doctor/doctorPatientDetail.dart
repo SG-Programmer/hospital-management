@@ -40,7 +40,17 @@ class _DoctorPatientDetailState extends State<DoctorPatientDetail> {
             alignment: Alignment.topCenter,
             height: screenHeight * 0.4,
             width: double.infinity,
-            color: Colors.blue[800],
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                  Colors.purple[200],
+                  Colors.purple[300],
+                  Colors.purple[400],
+                  Colors.purple[500],
+                  Colors.purple[600],
+                ])),
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: Row(
@@ -151,7 +161,8 @@ class _DoctorPatientDetailState extends State<DoctorPatientDetail> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => DoctorAppoinment(),
+                                builder: (context) => DoctorAppoinment(
+                                    widget._datailList['user_id']),
                               ));
                         },
                         child: Container(
@@ -185,13 +196,13 @@ class _DoctorPatientDetailState extends State<DoctorPatientDetail> {
                                   Text("Appoinment",
                                       style: TextStyle(
                                           fontSize: 14.9,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.blue[500])),
+                                          fontWeight: FontWeight.w700,
+                                          color: Colors.blue[800])),
                                 ],
                               ),
                               IconButton(
                                   icon: Icon(Icons.arrow_forward_ios_rounded,
-                                      color: Colors.orange[600]),
+                                      color: Colors.blue[500]),
                                   onPressed: null)
                             ],
                           ),
@@ -232,16 +243,16 @@ class _DoctorPatientDetailState extends State<DoctorPatientDetail> {
                                 SizedBox(
                                   width: screenWidth * 0.02,
                                 ),
-                                Text("Madicen",
+                                Text("Medicine",
                                     style: TextStyle(
                                         fontSize: 14.9,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.blue[500])),
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.blue[800])),
                               ]),
                               IconButton(
                                   icon: Icon(
                                     Icons.arrow_forward_ios_rounded,
-                                    color: Colors.orange[600],
+                                    color: Colors.blue[500],
                                   ),
                                   onPressed: null)
                             ],

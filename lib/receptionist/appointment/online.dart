@@ -14,6 +14,14 @@ class _OnlineState extends State<Online> {
 
   DatabaseReference _registration =
       FirebaseDatabase.instance.reference().child("registration");
+  DatabaseReference appoinmentRecord =
+      FirebaseDatabase.instance.reference().child('appointmentRecord');
+
+  String todayDate = DateTime.now().day.toString() +
+      "-" +
+      DateTime.now().month.toString() +
+      "-" +
+      DateTime.now().year.toString();
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +66,10 @@ class _OnlineState extends State<Online> {
                       'token_id': _appoinment,
                       'first_name': _patientdata[_patien]['first_name'],
                       'last_name': _patientdata[_patien]['last_name'],
+                      'user_id': _patientdata[_patien]['user_id'],
                       'number': _patientdata[_patien]['number'],
                       'token_no': _appoinmentData[_appoinment]['token_no'],
+                      'date': _appoinmentData[_appoinment]['date'],
                       'time': _appoinmentData[_appoinment]['time']
                     });
                   }
@@ -161,7 +171,25 @@ class _OnlineState extends State<Online> {
                                         waitingAppoinment
                                             .child(_appoinmentDatails[index]
                                                 ['token_id'])
-                                            .update({'status': "book"});
+                                            .update({'status': "book"}).then(
+                                                (value) {
+                                          appoinmentRecord
+                                              .child(todayDate)
+                                              .child(_appoinmentDatails[index]
+                                                  ['user_id'])
+                                              .push()
+                                              .set({
+                                            'date': _appoinmentDatails[index]
+                                                ['date'],
+                                            'time': _appoinmentDatails[index]
+                                                ['time'],
+                                            'token_no':
+                                                _appoinmentDatails[index]
+                                                    ['token_no'],
+                                            'user_id': _appoinmentDatails[index]
+                                                ['user_id']
+                                          });
+                                        });
                                       },
                                       child: Text("Accept"),
                                     ),
