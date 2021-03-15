@@ -109,6 +109,9 @@ class _DoctorMedicineState extends State<DoctorMedicine> {
     return Scaffold(
       backgroundColor: Color.fromARGB(250, 233, 238, 241),
       resizeToAvoidBottomPadding: false,
+      appBar: AppBar(
+        title: Text("Medicine's"),
+      ),
       body: SafeArea(
           child: Column(
         children: [
