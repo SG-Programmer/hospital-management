@@ -9,19 +9,51 @@ class DoctorHome extends StatefulWidget {
 }
 
 class _DoctorHomeState extends State<DoctorHome> {
+  //Firebase Databse Reference's
   DatabaseReference _appointment =
       FirebaseDatabase.instance.reference().child('appointment');
   DatabaseReference _onlinePatient =
       FirebaseDatabase.instance.reference().child('registration');
   DatabaseReference _offlinePatinet =
       FirebaseDatabase.instance.reference().child('offlinePatient');
+
+  //Var
   List<Map<String, dynamic>> _appointmentList = [];
   NetworkImage _photo = NetworkImage(
       'https://i.pinimg.com/236x/ed/6c/38/ed6c382b3bf83cba46adb1efec0e49b6.jpg');
   List<String> listOfMenu = ["Medicin", "Symptoms", "Notification"];
+  var addlist = ["medicine", "symptoms", "notification"];
+  TextEditingController _addController = TextEditingController();
+  _showDialoag(String childName) {
+    return showDialog(
+        context: context,
+        child: AlertDialog(
+          title: Text("Add $childName"),
+          content: TextField(
+            autofocus: true,
+            controller: _addController,
+          ),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  FirebaseDatabase.instance
+                      .reference()
+                      .child(childName)
+                      .push()
+                      .set({'name': _addController.text}).then((value) {
+                    Navigator.pop(context);
+                    _addController.text = "";
+                  });
+                },
+                child: Text("Add"))
+          ],
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       backgroundColor: Color.fromARGB(15, 5, 11, 10),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,7 +88,7 @@ class _DoctorHomeState extends State<DoctorHome> {
                   _onlinePatient.onValue.listen((onlinepatient) {
                     var _onlineData = onlinepatient.snapshot.value;
                     _offlinePatinet.onValue.listen((offlinePatient) {
-                      var _offlineData = offlinePatient.snapshot.value;
+                      // var _offlineData = offlinePatient.snapshot.value;
                       _appointmentList.clear();
                       for (var key in _keys) {
                         for (var onlineKeys
@@ -168,7 +200,9 @@ class _DoctorHomeState extends State<DoctorHome> {
                             fontWeight: FontWeight.w600),
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          _showDialoag(addlist[index]);
+                        },
                         child: CircleAvatar(
                           radius: 16.0,
                           backgroundColor: Colors.blue,

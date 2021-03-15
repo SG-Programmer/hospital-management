@@ -213,7 +213,8 @@ class _DoctorPatientDetailState extends State<DoctorPatientDetail> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => DoctorMedicine(),
+                                builder: (context) => DoctorMedicine(
+                                    widget._datailList['user_id']),
                               ));
                         },
                         child: Container(
