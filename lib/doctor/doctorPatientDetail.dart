@@ -101,7 +101,7 @@ class _DoctorPatientDetailState extends State<DoctorPatientDetail> {
                               "First Name", widget._datailList['first_name']),
                           _textDatails("Email", widget._datailList['email_id']),
                           _textDatails("BirthDate", widget._datailList['date']),
-                          _textDatails("Height", "Smit"),
+                          _textDatails("Height", "5.6"),
                           _textDatails("Blud Group", "B+"),
                         ],
                       ),
@@ -119,7 +119,7 @@ class _DoctorPatientDetailState extends State<DoctorPatientDetail> {
                           _textDatails("Weight", "51.5"),
                           _textDatails(
                               "Gender",
-                              widget._datailList['sex'] == "Mr"
+                              widget._datailList['gender'] == "Mr"
                                   ? "Men"
                                   : "Women")
                         ],
