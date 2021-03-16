@@ -29,6 +29,7 @@ class _DoctorPatientDetailState extends State<DoctorPatientDetail> {
               child: AlertDialog(
                 title: Text("Enter Patient $titleName"),
                 content: TextField(
+                  autofocus: true,
                   controller: _controller,
                 ),
                 actions: [

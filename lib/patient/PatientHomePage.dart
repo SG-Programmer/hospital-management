@@ -33,7 +33,7 @@ class _PatientHomePageState extends State<PatientHomePage>
           physics: NeverScrollableScrollPhysics(),
           controller: controller,
           children: [
-            PatientAppointment(),
+            PatientAppointment(controller),
             PatientDoctor(),
             PatientChat(),
             PatientProfilePage()

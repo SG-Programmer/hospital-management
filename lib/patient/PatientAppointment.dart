@@ -1,12 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_management/utils/size.dart';
 
 class PatientAppointment extends StatefulWidget {
+  TabController controller;
+  PatientAppointment(this.controller);
   @override
   _PatientAppointmentState createState() => _PatientAppointmentState();
 }
 
 class _PatientAppointmentState extends State<PatientAppointment> {
+  DatabaseReference medicaleDetail =
+      FirebaseDatabase.instance.reference().child('medicale_detail');
   List<Icon> _iconList = [
     Icon(
       Icons.hearing_outlined,
@@ -39,6 +45,14 @@ class _PatientAppointmentState extends State<PatientAppointment> {
       size: 48,
     )
   ];
+  List<String> name = [
+    "Blud Pressure",
+    "Blud Group",
+    "Height",
+    "Weight",
+    "Health",
+    "Heart Beat",
+  ];
   List<Icon> _iconsList2 = [
     Icon(
       Icons.calendar_today,
@@ -61,6 +75,36 @@ class _PatientAppointmentState extends State<PatientAppointment> {
       size: 48,
     )
   ];
+  List<String> name2 = [
+    "Appoinment",
+    "Blud Pressure",
+    "Blud Pressure",
+    "Blud Pressure",
+  ];
+  List<dynamic> medicaleList = [
+    "Loading..",
+    "Loading..",
+    "Loading..",
+    "Loading..",
+    "Loading..",
+    "Loading..",
+  ];
+
+  @override
+  void initState() {
+    medicaleDetail.once().then((DataSnapshot snap) {
+      var _data = snap.value[FirebaseAuth.instance.currentUser.uid];
+      medicaleList.clear();
+
+      for (var key in _data.keys) {
+        medicaleList.add(_data[key]);
+      }
+      medicaleList.add("78.65");
+      setState(() {});
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,7 +162,11 @@ class _PatientAppointmentState extends State<PatientAppointment> {
                     MaterialButton(
                       height: screenHeight * 0.06,
                       color: Colors.lightGreen[200],
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          widget.controller.index = 3;
+                        });
+                      },
                       child: Text("  My Account  "),
                     )
                   ],
@@ -153,12 +201,12 @@ class _PatientAppointmentState extends State<PatientAppointment> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "56.5",
+                                medicaleList[index],
                                 style: TextStyle(
                                     fontSize: 18.3,
                                     fontWeight: FontWeight.w600),
                               ),
-                              Text("Heart Bit's",
+                              Text(name[index],
                                   style: TextStyle(
                                       fontSize: 14.7,
                                       fontWeight: FontWeight.w400))

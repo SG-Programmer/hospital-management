@@ -5,8 +5,8 @@ import 'package:timeline/model/timeline_model.dart';
 import 'package:timeline/timeline.dart';
 
 class DoctorAppoinment extends StatefulWidget {
-  String user_id;
-  DoctorAppoinment(this.user_id);
+  String userId;
+  DoctorAppoinment(this.userId);
   @override
   _DoctorAppoinmentState createState() => _DoctorAppoinmentState();
 }
@@ -42,7 +42,7 @@ class _DoctorAppoinmentState extends State<DoctorAppoinment> {
 
             var _data = appointmentrecord.data.snapshot.value;
             var _dateList = appointmentrecord.data.snapshot.value.keys;
-            var _user = widget.user_id;
+            var _user = widget.userId;
 
             for (var item in _dateList) {
               for (var user in _data[item].keys) {
