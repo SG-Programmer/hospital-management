@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
@@ -115,63 +116,65 @@ class _DoctorMedicineState extends State<DoctorMedicine> {
       body: SafeArea(
           child: Column(
         children: [
-          Container(
-              margin: EdgeInsets.all(11),
-              padding: EdgeInsets.all(11),
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(11)),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Text("Select Medicine:- ",
-                          style: TextStyle(fontSize: 16.8)),
-                      _select(medicineList, medicine, "medicine")
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        "Morning: ",
-                        style: TextStyle(fontSize: 16.8),
-                      ),
-                      _select(medicineOne, one, "one"),
-                      Container(
-                        height: screenHeight * 0.05,
-                        width: screenWidth * 0.01 - 2,
-                        color: Colors.black,
-                      ),
-                      Text("afternoon: ", style: TextStyle(fontSize: 16.8)),
-                      _select(medicineOne, two, "two"),
-                      Container(
-                        height: screenHeight * 0.05,
-                        width: screenWidth * 0.01 - 2,
-                        color: Colors.black,
-                      ),
-                      Text("Night: ", style: TextStyle(fontSize: 16.8)),
-                      _select(medicineOne, three, "three"),
-                    ],
-                  ),
-                  MaterialButton(
-                    onPressed: () {
-                      patientMedicine.child(widget.userId).push().set({
-                        'name': medicine,
-                        'morning': one,
-                        'afternoon': two,
-                        'night': three,
-                        'date': DateTime.now().day.toString() +
-                            "-" +
-                            DateTime.now().month.toString() +
-                            "-" +
-                            DateTime.now().year.toString()
-                      });
-                    },
-                    child: Text("Add",
-                        style: TextStyle(fontSize: 16.8, color: Colors.blue)),
-                  )
-                ],
-              )),
+          if (FirebaseAuth.instance.currentUser.email == "doctor@mecare.com")
+            Container(
+                margin: EdgeInsets.all(11),
+                padding: EdgeInsets.all(11),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(11)),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text("Select Medicine:- ",
+                            style: TextStyle(fontSize: 16.8)),
+                        _select(medicineList, medicine, "medicine")
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          "Morning: ",
+                          style: TextStyle(fontSize: 16.8),
+                        ),
+                        _select(medicineOne, one, "one"),
+                        Container(
+                          height: screenHeight * 0.05,
+                          width: screenWidth * 0.01 - 2,
+                          color: Colors.black,
+                        ),
+                        Text("afternoon: ", style: TextStyle(fontSize: 16.8)),
+                        _select(medicineOne, two, "two"),
+                        Container(
+                          height: screenHeight * 0.05,
+                          width: screenWidth * 0.01 - 2,
+                          color: Colors.black,
+                        ),
+                        Text("Night: ", style: TextStyle(fontSize: 16.8)),
+                        _select(medicineOne, three, "three"),
+                      ],
+                    ),
+                    MaterialButton(
+                      onPressed: () {
+                        patientMedicine.child(widget.userId).push().set({
+                          'name': medicine,
+                          'morning': one,
+                          'afternoon': two,
+                          'night': three,
+                          'date': DateTime.now().day.toString() +
+                              "-" +
+                              DateTime.now().month.toString() +
+                              "-" +
+                              DateTime.now().year.toString()
+                        });
+                      },
+                      child: Text("Add",
+                          style: TextStyle(fontSize: 16.8, color: Colors.blue)),
+                    )
+                  ],
+                )),
           Expanded(
             child: Container(
                 width: double.infinity,
@@ -223,17 +226,19 @@ class _DoctorMedicineState extends State<DoctorMedicine> {
                                       style: TextStyle(fontSize: 16.8)),
                                 ],
                               ),
-                              MaterialButton(
-                                onPressed: () {
-                                  patientMedicine
-                                      .child(widget.userId)
-                                      .child(snapshot.key)
-                                      .remove();
-                                },
-                                child: Text("Delete",
-                                    style: TextStyle(
-                                        fontSize: 16.8, color: Colors.red)),
-                              )
+                              if (FirebaseAuth.instance.currentUser.email ==
+                                  "doctor@mecare.com")
+                                MaterialButton(
+                                  onPressed: () {
+                                    patientMedicine
+                                        .child(widget.userId)
+                                        .child(snapshot.key)
+                                        .remove();
+                                  },
+                                  child: Text("Delete",
+                                      style: TextStyle(
+                                          fontSize: 16.8, color: Colors.red)),
+                                )
                             ],
                           ));
                     })),

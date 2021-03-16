@@ -433,7 +433,11 @@ class _AppointmentPageState extends State<AppointmentPage> {
                   _appointment.push().set({
                     "user_id": userID,
                     "token_no": indexOfSloat,
-                    "date": "12/12/2020",
+                    "date": DateTime.now().day.toString() +
+                        "-" +
+                        DateTime.now().month.toString() +
+                        "-" +
+                        DateTime.now().year.toString(),
                     "time": time,
                     "status": statusto
                   }).then((value) {

@@ -248,7 +248,7 @@ class _FinalRegistrationPageState extends State<FinalRegistrationPage> {
     medicale.child(userid).set({
       'Age': "null",
       'Blud Group': "null",
-      'Blud Presser': "null",
+      'Blud Pressure': "null",
       'Height:': "null",
       'Weight': "null",
     });

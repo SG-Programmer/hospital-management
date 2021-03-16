@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:hospital_management/doctor/doctorAppoinment.dart';
+import 'package:hospital_management/doctor/doctorMedicine.dart';
 import 'package:hospital_management/utils/size.dart';
 
 class PatientAppointment extends StatefulWidget {
@@ -20,12 +22,17 @@ class _PatientAppointmentState extends State<PatientAppointment> {
       size: 60,
     ),
     Icon(
+      Icons.arrow_upward_rounded,
+      color: Colors.black38,
+      size: 48,
+    ),
+    Icon(
       Icons.water_damage_outlined,
       color: Colors.black38,
       size: 48,
     ),
     Icon(
-      Icons.arrow_upward_rounded,
+      Icons.data_usage_sharp,
       color: Colors.black38,
       size: 48,
     ),
@@ -38,20 +45,15 @@ class _PatientAppointmentState extends State<PatientAppointment> {
       Icons.home_repair_service_outlined,
       color: Colors.black38,
       size: 48,
-    ),
-    Icon(
-      Icons.format_bold_rounded,
-      color: Colors.black38,
-      size: 48,
     )
   ];
   List<String> name = [
     "Blud Pressure",
-    "Blud Group",
     "Height",
+    "Blud Group",
+    "Age",
     "Weight",
     "Health",
-    "Heart Beat",
   ];
   List<Icon> _iconsList2 = [
     Icon(
@@ -64,22 +66,22 @@ class _PatientAppointmentState extends State<PatientAppointment> {
       color: Colors.lightGreen[200],
       size: 48,
     ),
-    Icon(
-      Icons.book_rounded,
-      color: Colors.lightGreen[200],
-      size: 48,
-    ),
-    Icon(
-      Icons.notification_important_rounded,
-      color: Colors.lightGreen[200],
-      size: 48,
-    )
+    // Icon(
+    //   Icons.book_rounded,
+    //   color: Colors.lightGreen[200],
+    //   size: 48,
+    // ),
+    // Icon(
+    //   Icons.notification_important_rounded,
+    //   color: Colors.lightGreen[200],
+    //   size: 48,
+    // )
   ];
   List<String> name2 = [
     "Appoinment",
-    "Blud Pressure",
-    "Blud Pressure",
-    "Blud Pressure",
+    "Medicine",
+    // "Report",
+    // "Notification",
   ];
   List<dynamic> medicaleList = [
     "Loading..",
@@ -95,11 +97,26 @@ class _PatientAppointmentState extends State<PatientAppointment> {
     medicaleDetail.once().then((DataSnapshot snap) {
       var _data = snap.value[FirebaseAuth.instance.currentUser.uid];
       medicaleList.clear();
-
-      for (var key in _data.keys) {
-        medicaleList.add(_data[key]);
+      String pressure = _data['Blud Pressure'];
+      medicaleList.add(_data['Blud Pressure']);
+      medicaleList.add(_data['Height:']);
+      medicaleList.add(_data['Blud Group']);
+      medicaleList.add(_data['Age']);
+      medicaleList.add(_data['Weight']);
+      String health = "null";
+      int num = int.parse(pressure);
+      if (_data['Blud Pressure'] == "null") {
+        health = "null";
+      } else {
+        if (num < 95) {
+          health = "65.00 %";
+        } else if (num < 128) {
+          health = "95.50 %";
+        } else if (num > 128) {
+          health = "55.50 %";
+        }
       }
-      medicaleList.add("78.65");
+      medicaleList.add(health);
       setState(() {});
     });
     super.initState();
@@ -113,7 +130,9 @@ class _PatientAppointmentState extends State<PatientAppointment> {
         children: [
           Container(
             padding: EdgeInsets.only(
-                left: screenWidth * 0.03, right: screenWidth * 0.03),
+              left: screenWidth * 0.03,
+              right: screenWidth * 0.03,
+            ),
             height: screenHeight * 0.2,
             width: double.infinity,
             decoration: BoxDecoration(
@@ -228,21 +247,39 @@ class _PatientAppointmentState extends State<PatientAppointment> {
                       mainAxisSpacing: 5),
                   itemCount: _iconsList2.length,
                   itemBuilder: (context, int index) {
-                    return Container(
-                      color: Colors.white,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          _iconsList2[index],
-                          SizedBox(
-                            height: screenHeight * 0.01,
-                          ),
-                          Text(
-                            "Appoinment",
-                            style: TextStyle(
-                                fontSize: 15.3, fontWeight: FontWeight.w500),
-                          )
-                        ],
+                    return GestureDetector(
+                      onTap: () {
+                        if (index == 0) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DoctorAppoinment(
+                                      FirebaseAuth.instance.currentUser.uid)));
+                        } else {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DoctorMedicine(
+                                    FirebaseAuth.instance.currentUser.uid),
+                              ));
+                        }
+                      },
+                      child: Container(
+                        color: Colors.white,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            _iconsList2[index],
+                            SizedBox(
+                              height: screenHeight * 0.01,
+                            ),
+                            Text(
+                              name2[index],
+                              style: TextStyle(
+                                  fontSize: 15.3, fontWeight: FontWeight.w500),
+                            )
+                          ],
+                        ),
                       ),
                     );
                   }),

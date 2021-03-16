@@ -20,7 +20,7 @@ class _DoctorPatientDetailState extends State<DoctorPatientDetail> {
     return GestureDetector(
       onTap: () {
         if (titleName == "Age" ||
-            titleName == "Height" ||
+            titleName == "Height:" ||
             titleName == "Weight" ||
             titleName == "Blud Group" ||
             titleName == "Blud Pressure") {
@@ -117,56 +117,122 @@ class _DoctorPatientDetailState extends State<DoctorPatientDetail> {
                 top: screenHeight * 0.2,
                 left: screenWidth * 0.03,
                 right: screenWidth * 0.03),
-            child: Container(
-              height: screenHeight * 0.5,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(14)),
-              child: Padding(
-                padding: EdgeInsets.only(
-                    top: screenHeight * 0.08,
-                    left: screenWidth * 0.06,
-                    right: screenWidth * 0.09),
-                child: Row(
-                  children: [
-                    Container(
-                      width: screenWidth * 0.5 - 15,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            child: StreamBuilder(
+                stream: medicale.onValue,
+                builder: (context, snapshot) {
+                  if (snapshot.data == null)
+                    return Container(
+                      height: screenHeight * 0.5,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(14)),
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            top: screenHeight * 0.08,
+                            left: screenWidth * 0.06,
+                            right: screenWidth * 0.09),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: screenWidth * 0.5 - 15,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  _textDatails("First Name",
+                                      widget._datailList['first_name']),
+                                  _textDatails(
+                                      "Email", widget._datailList['email_id']),
+                                  _textDatails("Blud Pressure", "Loading.."),
+                                  _textDatails("Height:", "Loading.."),
+                                  _textDatails("Blud Group", "Loading.."),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  _textDatails("Last Name",
+                                      widget._datailList['last_name']),
+                                  _textDatails("Mobile Number",
+                                      widget._datailList['number']),
+                                  _textDatails("Age", "Loading.."),
+                                  _textDatails("Weight", "Loading.."),
+                                  _textDatails(
+                                      "Gender",
+                                      widget._datailList['gender'] == "Mr"
+                                          ? "Men"
+                                          : "Women")
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+
+                  var _datas = snapshot
+                      .data.snapshot.value[widget._datailList["user_id"]];
+                  return Container(
+                    height: screenHeight * 0.5,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(14)),
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          top: screenHeight * 0.08,
+                          left: screenWidth * 0.06,
+                          right: screenWidth * 0.09),
+                      child: Row(
                         children: [
-                          _textDatails(
-                              "First Name", widget._datailList['first_name']),
-                          _textDatails("Email", widget._datailList['email_id']),
-                          _textDatails("Blud Pressure", "120.6"),
-                          _textDatails("Height", "5.6"),
-                          _textDatails("Blud Group", "B+"),
+                          Container(
+                            width: screenWidth * 0.5 - 15,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                _textDatails("First Name",
+                                    widget._datailList['first_name']),
+                                _textDatails(
+                                    "Email", widget._datailList['email_id']),
+                                _textDatails(
+                                    "Blud Pressure", _datas['Blud Pressure']),
+                                _textDatails("Height:", _datas['Height:']),
+                                _textDatails(
+                                    "Blud Group", _datas['Blud Group']),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                _textDatails("Last Name",
+                                    widget._datailList['last_name']),
+                                _textDatails("Mobile Number",
+                                    widget._datailList['number']),
+                                _textDatails("Age", _datas['Age']),
+                                _textDatails("Weight", _datas['Weight']),
+                                _textDatails(
+                                    "Gender",
+                                    widget._datailList['gender'] == "Mr"
+                                        ? "Men"
+                                        : "Women")
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                    Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          _textDatails(
-                              "Last Name", widget._datailList['last_name']),
-                          _textDatails(
-                              "Mobile Number", widget._datailList['number']),
-                          _textDatails("Age", "19"),
-                          _textDatails("Weight", "51.5"),
-                          _textDatails(
-                              "Gender",
-                              widget._datailList['gender'] == "Mr"
-                                  ? "Men"
-                                  : "Women")
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+                  );
+                }),
           ),
           Padding(
             padding: EdgeInsets.only(
