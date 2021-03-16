@@ -46,6 +46,8 @@ class _FinalRegistrationPageState extends State<FinalRegistrationPage> {
   final DatabaseReference _registrationReference =
       FirebaseDatabase.instance.reference().child("registration");
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  DatabaseReference medicale =
+      FirebaseDatabase.instance.reference().child('medicale_detail');
 
   //variable
   bool userIndatabse;
@@ -242,6 +244,13 @@ class _FinalRegistrationPageState extends State<FinalRegistrationPage> {
       "pin_code": widget.pinCodeController.text,
       "address": widget.addressController.text,
       "type": "patient"
+    });
+    medicale.child(userid).set({
+      'Age': "null",
+      'Blud Group': "null",
+      'Blud Presser': "null",
+      'Height:': "null",
+      'Weight': "null",
     });
   }
 

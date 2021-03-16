@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_management/doctor/doctorAppoinment.dart';
 import 'package:hospital_management/doctor/doctorMedicine.dart';
@@ -12,20 +13,56 @@ class DoctorPatientDetail extends StatefulWidget {
 }
 
 class _DoctorPatientDetailState extends State<DoctorPatientDetail> {
+  DatabaseReference medicale =
+      FirebaseDatabase.instance.reference().child('medicale_detail');
+  TextEditingController _controller = TextEditingController();
   _textDatails(String titleName, String firstName) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          titleName,
-          style: TextStyle(color: Colors.black26, fontWeight: FontWeight.w500),
-        ),
-        SizedBox(
-          height: screenHeight * 0.01 - 5,
-        ),
-        Text(firstName,
-            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16.3))
-      ],
+    return GestureDetector(
+      onTap: () {
+        if (titleName == "Age" ||
+            titleName == "Height" ||
+            titleName == "Weight" ||
+            titleName == "Blud Group" ||
+            titleName == "Blud Pressure") {
+          showDialog(
+              context: context,
+              child: AlertDialog(
+                title: Text("Enter Patient $titleName"),
+                content: TextField(
+                  controller: _controller,
+                ),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        medicale.child(widget._datailList['user_id']).update(
+                            {titleName: _controller.text}).then((value) {
+                          Navigator.pop(context);
+                          _controller.text = "";
+                        });
+                      },
+                      child: Text(
+                        "Add",
+                        style: TextStyle(color: Colors.blue, fontSize: 17.3),
+                      ))
+                ],
+              ));
+        }
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            titleName,
+            style:
+                TextStyle(color: Colors.black26, fontWeight: FontWeight.w500),
+          ),
+          SizedBox(
+            height: screenHeight * 0.01 - 5,
+          ),
+          Text(firstName,
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16.3))
+        ],
+      ),
     );
   }
 
@@ -100,7 +137,7 @@ class _DoctorPatientDetailState extends State<DoctorPatientDetail> {
                           _textDatails(
                               "First Name", widget._datailList['first_name']),
                           _textDatails("Email", widget._datailList['email_id']),
-                          _textDatails("BirthDate", widget._datailList['date']),
+                          _textDatails("Blud Pressure", "120.6"),
                           _textDatails("Height", "5.6"),
                           _textDatails("Blud Group", "B+"),
                         ],
