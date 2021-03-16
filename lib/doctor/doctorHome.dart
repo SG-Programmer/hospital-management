@@ -40,7 +40,14 @@ class _DoctorHomeState extends State<DoctorHome> {
                       .reference()
                       .child(childName)
                       .push()
-                      .set({'name': _addController.text}).then((value) {
+                      .set({
+                    'name': _addController.text,
+                    "date": DateTime.now().day.toString() +
+                        "-" +
+                        DateTime.now().month.toString() +
+                        "-" +
+                        DateTime.now().year.toString(),
+                  }).then((value) {
                     Navigator.pop(context);
                     _addController.text = "";
                   });
