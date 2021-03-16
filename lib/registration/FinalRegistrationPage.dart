@@ -232,7 +232,11 @@ class _FinalRegistrationPageState extends State<FinalRegistrationPage> {
       "first_name": widget.firstNameController.text,
       "last_name": widget.lastNameController.text,
       "sex": widget.sex,
-      "date": widget.date.toString(),
+      "date": widget.date.day.toString() +
+          "-" +
+          widget.date.month.toString() +
+          "-" +
+          widget.date.year.toString(),
       "number": widget.numberController.text,
       "city": widget.cityController.text,
       "pin_code": widget.pinCodeController.text,

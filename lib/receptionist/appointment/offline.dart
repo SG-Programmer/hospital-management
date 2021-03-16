@@ -96,26 +96,26 @@ class _OfflineState extends State<Offline> {
     return Scaffold(
       body: Column(
         children: [
-          Padding(
-            padding: EdgeInsets.only(
-                left: screenWidth * 0.04,
-                right: screenWidth * 0.04,
-                top: screenHeight * 0.01),
-            child: Container(
-              height: screenHeight * 0.06,
-              width: double.infinity,
-              child: TextField(
-                onChanged: (value) {},
-                decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                        icon: Icon(
-                          Icons.search,
-                          size: 31,
-                        ),
-                        onPressed: () {})),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: EdgeInsets.only(
+          //       left: screenWidth * 0.04,
+          //       right: screenWidth * 0.04,
+          //       top: screenHeight * 0.01),
+          //   child: Container(
+          //     height: screenHeight * 0.06,
+          //     width: double.infinity,
+          //     child: TextField(
+          //       onChanged: (value) {},
+          //       decoration: InputDecoration(
+          //           suffixIcon: IconButton(
+          //               icon: Icon(
+          //                 Icons.search,
+          //                 size: 31,
+          //               ),
+          //               onPressed: () {})),
+          //     ),
+          //   ),
+          // ),
           Expanded(
             child: Container(
               child: FirebaseAnimatedList(

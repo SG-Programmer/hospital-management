@@ -72,7 +72,11 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(labelName),
+          Text(
+            labelName,
+            style:
+                TextStyle(color: Colors.blue[800], fontWeight: FontWeight.w500),
+          ),
           Container(
             margin: EdgeInsets.only(top: screenHeight * 0.01),
             width: double.infinity,
@@ -101,29 +105,38 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
   userProfile() {
     return Column(
       children: [
-        CircleAvatar(
-            radius: 55,
-            backgroundImage: image == null
-                ? NetworkImage(
-                    'https://media.istockphoto.com/photos/portrait-of-a-doctor-picture-id92347287?k=6&m=92347287&s=612x612&w=0&h=URJcB3uKHzlWq42b5UjoA2bd8hPI8B1RLI8ZIpUMsRc=')
-                : AssetImage(image.path)),
+        Container(
+          height: screenHeight * 0.2 - 32,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(100),
+              border: Border.all(color: Colors.white, width: 5)),
+          child: CircleAvatar(
+              radius: 55,
+              backgroundImage: image == null
+                  ? NetworkImage(
+                      'https://media.istockphoto.com/photos/portrait-of-a-doctor-picture-id92347287?k=6&m=92347287&s=612x612&w=0&h=URJcB3uKHzlWq42b5UjoA2bd8hPI8B1RLI8ZIpUMsRc=')
+                  : AssetImage(image.path)),
+        ),
         Divider(
-          color: Colors.black26,
+          color: Colors.orange[200],
           thickness: 2.3,
           height: 29,
-          endIndent: 176,
-          indent: 176,
+          endIndent: 170,
+          indent: 170,
         ),
         SizedBox(
           height: screenHeight * 0.02,
         ),
         Text(pUserName,
-            style: TextStyle(fontWeight: FontWeight.w800, fontSize: 19)),
+            style: TextStyle(
+                fontWeight: FontWeight.w800,
+                fontSize: 22.8,
+                color: Colors.white)),
         Text(pGender + " " + pFirstName + " " + pLastName,
             style: TextStyle(
                 fontWeight: FontWeight.w400,
-                fontSize: 12,
-                color: Colors.black45)),
+                fontSize: 17,
+                color: Colors.white)),
       ],
     );
   }
@@ -134,15 +147,21 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
         SizedBox(
           width: screenWidth * 0.1,
         ),
-        CircleAvatar(
-          radius: 55,
-          child: GestureDetector(
-              onTap: () => _getImage(),
-              child: Icon(Icons.camera_alt_outlined, color: Colors.black)),
-          backgroundImage: image == null
-              ? NetworkImage(
-                  'https://media.istockphoto.com/photos/portrait-of-a-doctor-picture-id92347287?k=6&m=92347287&s=612x612&w=0&h=URJcB3uKHzlWq42b5UjoA2bd8hPI8B1RLI8ZIpUMsRc=')
-              : AssetImage(image.path),
+        Container(
+          height: screenHeight * 0.2 - 32,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(100),
+              border: Border.all(color: Colors.white, width: 5)),
+          child: CircleAvatar(
+            radius: 55,
+            child: GestureDetector(
+                onTap: () => _getImage(),
+                child: Icon(Icons.camera_alt_outlined, color: Colors.black)),
+            backgroundImage: image == null
+                ? NetworkImage(
+                    'https://media.istockphoto.com/photos/portrait-of-a-doctor-picture-id92347287?k=6&m=92347287&s=612x612&w=0&h=URJcB3uKHzlWq42b5UjoA2bd8hPI8B1RLI8ZIpUMsRc=')
+                : AssetImage(image.path),
+          ),
         ),
         SizedBox(
           width: screenWidth * 0.1,
@@ -151,12 +170,15 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(pUserName,
-                style: TextStyle(fontWeight: FontWeight.w800, fontSize: 19)),
+                style: TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 22.8,
+                    color: Colors.white)),
             Text(pGender + " " + pFirstName + " " + pLastName,
                 style: TextStyle(
                     fontWeight: FontWeight.w400,
-                    fontSize: 12,
-                    color: Colors.black45)),
+                    fontSize: 17,
+                    color: Colors.white)),
           ],
         ),
       ],
@@ -185,6 +207,12 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                 : screenHeight * 0.3 - 15,
             decoration: BoxDecoration(
                 color: Colors.white,
+                gradient: LinearGradient(colors: [
+                  Colors.blue[100],
+                  Colors.blue[300],
+                  Colors.blue[400],
+                  Colors.blue[500]
+                ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
                 boxShadow: [
                   BoxShadow(
                       blurRadius: 5,
@@ -255,32 +283,37 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                         "First Name",
                         firstNameController,
                         ValidationBuilder().minLength(1).build(),
-                        Icon(Icons.supervised_user_circle_outlined)),
+                        Icon(
+                          Icons.supervised_user_circle_outlined,
+                          color: Colors.orange,
+                        )),
                     containerOfDatails(
                         "Last Name",
                         lastNameController,
                         ValidationBuilder().minLength(1).build(),
-                        Icon(Icons.supervised_user_circle_outlined)),
+                        Icon(Icons.supervised_user_circle_outlined,
+                            color: Colors.orange)),
                     containerOfDatails(
                         "Mobile Number",
                         numberController,
                         ValidationBuilder().minLength(10).maxLength(10).build(),
-                        Icon(Icons.phone)),
+                        Icon(Icons.phone, color: Colors.orange)),
                     containerOfDatails(
                         "City",
                         cityController,
                         ValidationBuilder().minLength(1).build(),
-                        Icon(Icons.location_city)),
+                        Icon(Icons.location_city, color: Colors.orange)),
                     containerOfDatails(
                         "Address",
                         addressController,
                         ValidationBuilder().minLength(10).build(),
-                        Icon(Icons.location_city_rounded)),
+                        Icon(Icons.location_city_rounded,
+                            color: Colors.orange)),
                     containerOfDatails(
                         "Pin Code",
                         pinCodeController,
                         ValidationBuilder().minLength(6).maxLength(6).build(),
-                        Icon(Icons.confirmation_number)),
+                        Icon(Icons.confirmation_number, color: Colors.orange)),
                   ],
                 ),
               ),
