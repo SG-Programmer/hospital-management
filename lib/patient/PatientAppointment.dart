@@ -15,6 +15,9 @@ class PatientAppointment extends StatefulWidget {
 class _PatientAppointmentState extends State<PatientAppointment> {
   DatabaseReference medicaleDetail =
       FirebaseDatabase.instance.reference().child('medicale_detail');
+  DatabaseReference patient =
+      FirebaseDatabase.instance.reference().child('registration');
+
   List<Icon> _iconList = [
     Icon(
       Icons.hearing_outlined,
@@ -92,8 +95,18 @@ class _PatientAppointmentState extends State<PatientAppointment> {
     "Loading..",
   ];
 
+  static String patientName = "........";
+  static String userName = "....";
+
   @override
   void initState() {
+    var email = FirebaseAuth.instance.currentUser.uid;
+    patient.orderByChild('user_id').equalTo(email).once().then((value) {
+      patientName = value.value[email]['first_name'] +
+          " " +
+          value.value[email]['last_name'];
+      userName = value.value[email]['user_name'];
+    });
     medicaleDetail.once().then((DataSnapshot snap) {
       var _data = snap.value[FirebaseAuth.instance.currentUser.uid];
       medicaleList.clear();
@@ -161,13 +174,13 @@ class _PatientAppointmentState extends State<PatientAppointment> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Nitin Kanjariya",
+                          patientName,
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 17.5,
                               fontWeight: FontWeight.w600),
                         ),
-                        Text("Nitin0561",
+                        Text(userName,
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 15.5,
