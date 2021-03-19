@@ -1,10 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:hospital_management/receptionist/List.dart';
-import 'package:hospital_management/receptionist/PatientListData.dart';
 import 'package:hospital_management/utils/size.dart';
-
-import 'appoinmentData.dart';
 
 class Complite extends StatefulWidget {
   @override
@@ -22,95 +18,148 @@ class _CompliteState extends State<Complite> {
   DatabaseReference _offlineUser =
       FirebaseDatabase.instance.reference().child("offlinePatient");
 
-  List<AppoinmentData> _appoinmentList = [];
-  List<PatientListData> _appoinmentUserDatail = [];
+  var onlinePatinetKey;
+  var offlinePatientKey;
 
-  @override
-  void initState() {
-    getAppoinmentList();
-
-    super.initState();
-  }
-
-  getAppoinmentList() {
-    List<AppoinmentData> _appoinmentList2 = [];
-    List<PatientListData> _appoinmentUserDatail2 = [];
-    _appoinmentList2.clear();
-    _appoinmentUserDatail2.clear();
-    waitingAppoinment
-        .orderByChild("status")
-        .equalTo("book")
-        .once()
-        .then((DataSnapshot snap) {
-      var _key = snap.value.keys;
-      var data = snap.value;
-      for (var item in _key) {
-        AppoinmentData appoinmentData2 = new AppoinmentData(
-            data[item]['user_id'],
-            data[item]['date'],
-            data[item]['time'],
-            data[item]['token_no'],
-            item);
-        _appoinmentList2.add(appoinmentData2);
-      }
-
-      _registration.once().then((DataSnapshot snap) {
-        var _key = snap.value.keys;
-        var _data = snap.value;
-        _offlineUser.once().then((DataSnapshot snap2) {
-          var _key2 = snap2.value.keys;
-          var _data2 = snap2.value;
-          for (var i = 0; i < _appoinmentList2.length; i++) {
-            for (var item in _key) {
-              if (_appoinmentList2[i].userId == item) {
-                PatientListData appoinmentUserDatail = new PatientListData(
-                    _data[item]['first_name'],
-                    _data[item]['last_name'],
-                    _data[item]['user_name'],
-                    _data[item]['email_id'],
-                    _data[item]['number'],
-                    _data[item]['address'],
-                    _data[item]['date'],
-                    _data[item]['user_id']);
-                _appoinmentUserDatail2.add(appoinmentUserDatail);
-              }
-              for (var item2 in _key2) {
-                if (_appoinmentList2[i].userId == item2) {
-                  PatientListData appoinmentUserDatail2 = new PatientListData(
-                      _data2[item2]['first_name'],
-                      _data2[item2]['last_name'],
-                      _data2[item2]['user_name'],
-                      _data2[item2]['email_id'],
-                      _data2[item2]['number'],
-                      _data2[item2]['address'],
-                      _data2[item2]['date'],
-                      _data[item]['user_id']);
-                  _appoinmentUserDatail2.add(appoinmentUserDatail2);
-                }
-              }
-            }
-            setState(() {
-              _appoinmentList = _appoinmentList2;
-              _appoinmentUserDatail = _appoinmentUserDatail2;
-            });
-          }
-        });
-      });
-    });
-  }
+  var onlinePatientData;
+  var offlinePatientData;
 
   @override
   Widget build(BuildContext context) {
     ScreenSize.setSize(context);
-    if (_appoinmentList.length == 0 && _appoinmentUserDatail.length == 0)
-      return Container(
-        padding: EdgeInsets.only(
-            top: screenHeight * 0.3 - 20,
-            bottom: screenHeight * 0.3 - 20,
-            left: screenWidth * 0.4 + 8,
-            right: screenWidth * 0.4 + 8),
-        child: CircularProgressIndicator(),
-      );
-    return listOfCard(_appoinmentList, _appoinmentUserDatail);
+
+    return StreamBuilder(
+        stream: waitingAppoinment.onValue,
+        builder: (context, snapshot) {
+          _registration.onValue.listen((onlinePatientDetails) {
+            onlinePatinetKey = onlinePatientDetails.snapshot.value.keys;
+            onlinePatientData = onlinePatientDetails.snapshot.value;
+          });
+          _offlineUser.onValue.listen((offlinePatientDetails) {
+            offlinePatientKey = offlinePatientDetails.snapshot.value.keys;
+            offlinePatientData = offlinePatientDetails.snapshot.value;
+          });
+          List<Map<String, dynamic>> bookList = [];
+          if (snapshot.data == null ||
+              onlinePatientData == null ||
+              onlinePatientData == null)
+            return Container(
+              padding: EdgeInsets.only(
+                  top: screenHeight * 0.3 - 20,
+                  bottom: screenHeight * 0.3 - 20,
+                  left: screenWidth * 0.4 + 8,
+                  right: screenWidth * 0.4 + 8),
+              child: CircularProgressIndicator(),
+            );
+
+          if (snapshot.data != null &&
+              onlinePatientData != null &&
+              offlinePatientData != null) {
+            var appoinmentKey = snapshot.data.snapshot.value.keys;
+            var appoinmentdata = snapshot.data.snapshot.value;
+            for (var aKey in appoinmentKey) {
+              if (appoinmentdata[aKey]['status'] == "book") {
+                for (var onKey in onlinePatinetKey) {
+                  if (appoinmentdata[aKey]['user_id'] ==
+                      onlinePatientData[onKey]['user_id']) {
+                    bookList.add({
+                      "name": onlinePatientData[onKey]['first_name'] +
+                          " " +
+                          onlinePatientData[onKey]['last_name'],
+                      "number": onlinePatientData[onKey]['number'],
+                      "time": appoinmentdata[aKey]['time'],
+                      'token_no': appoinmentdata[aKey]['token_no'],
+                    });
+                  }
+                }
+                for (var offKey in offlinePatientKey) {
+                  if (offlinePatientData[offKey]['user_id'] ==
+                      appoinmentdata[aKey]['user_id']) {
+                    bookList.add({
+                      "name": offlinePatientData[offKey]['first_name'] +
+                          " " +
+                          offlinePatientData[offKey]['last_name'],
+                      "number": offlinePatientData[offKey]['number'],
+                      "time": appoinmentdata[aKey]['time'],
+                      'token_no': appoinmentdata[aKey]['token_no'],
+                    });
+                  }
+                }
+              }
+            }
+          }
+
+          return ListView.builder(
+            itemCount: bookList.length,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //       builder: (context) => PatientDatails(
+                  //         userName: _appoinmentUserDatail[index].userNameP ??
+                  //             _appoinmentUserDatail[index].firstNameP,
+                  //         firstName: _appoinmentUserDatail[index].firstNameP,
+                  //         lastName: _appoinmentUserDatail[index].lastNameP,
+                  //         email: _appoinmentUserDatail[index].emailP ?? "Null",
+                  //         number: _appoinmentUserDatail[index].numberP,
+                  //         date: _appoinmentUserDatail[index].brithDateP,
+                  //         address: _appoinmentUserDatail[index].addressP,
+                  //       ),
+                  //     ));
+                },
+                child: Container(
+                  margin: EdgeInsets.only(
+                      top: screenHeight * 0.01 + 4,
+                      left: screenWidth * 0.05,
+                      right: screenWidth * 0.05),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.0),
+                      color: Colors.blue[400]),
+                  child: Padding(
+                    padding: EdgeInsets.all(screenHeight * 0.02),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.supervised_user_circle,
+                              size: screenHeight * 0.06,
+                            ),
+                            SizedBox(
+                              width: screenWidth * 0.02,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  bookList[index]['name'],
+                                  style: TextStyle(
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(bookList[index]['number']),
+                              ],
+                            )
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text("Time:-" + bookList[index]['time']),
+                            Text("Token No:-" +
+                                bookList[index]['token_no'].toString())
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        });
   }
 }
