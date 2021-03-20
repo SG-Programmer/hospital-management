@@ -10,6 +10,7 @@ String pCity;
 String pPinCode;
 String pAddress;
 String pGender;
+String pimageURL;
 
 class PataientDetails {
   setUserDetails(DatabaseReference _databasereference) {
@@ -26,6 +27,7 @@ class PataientDetails {
       pGender = value.value['sex'];
       pAddress = value.value['address'];
       pCity = value.value['city'];
+      pimageURL = value.value['img'];
     });
   }
 }

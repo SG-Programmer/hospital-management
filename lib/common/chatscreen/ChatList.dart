@@ -153,7 +153,7 @@ class _ChatListState extends State<ChatList> {
                     }
 
                     return ListView.builder(
-                      itemCount: userKeys.length,
+                      itemCount: userKeys.length - 1,
                       itemBuilder: (context, index) {
                         return ListTile(
                           onTap: () {
@@ -192,7 +192,7 @@ class _ChatListState extends State<ChatList> {
                         baseColor: Colors.grey,
                         highlightColor: Colors.teal,
                         child: ListView.builder(
-                          itemCount: 9,
+                          itemCount: 50,
                           itemBuilder: (context, index) {
                             return ListTile(
                               leading: Icon(

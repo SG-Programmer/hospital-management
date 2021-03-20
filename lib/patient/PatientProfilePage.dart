@@ -113,8 +113,7 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
           child: CircleAvatar(
               radius: 55,
               backgroundImage: image == null
-                  ? NetworkImage(
-                      'https://media.istockphoto.com/photos/portrait-of-a-doctor-picture-id92347287?k=6&m=92347287&s=612x612&w=0&h=URJcB3uKHzlWq42b5UjoA2bd8hPI8B1RLI8ZIpUMsRc=')
+                  ? NetworkImage(pimageURL)
                   : AssetImage(image.path)),
         ),
         Divider(
@@ -158,8 +157,7 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                 onTap: () => _getImage(),
                 child: Icon(Icons.camera_alt_outlined, color: Colors.black)),
             backgroundImage: image == null
-                ? NetworkImage(
-                    'https://media.istockphoto.com/photos/portrait-of-a-doctor-picture-id92347287?k=6&m=92347287&s=612x612&w=0&h=URJcB3uKHzlWq42b5UjoA2bd8hPI8B1RLI8ZIpUMsRc=')
+                ? NetworkImage(pimageURL)
                 : AssetImage(image.path),
           ),
         ),
