@@ -111,25 +111,30 @@ class _PatientAppointmentState extends State<PatientAppointment> {
       var _data = snap.value[FirebaseAuth.instance.currentUser.uid];
       medicaleList.clear();
       String pressure = _data['Blud Pressure'];
-      medicaleList.add(_data['Blud Pressure']);
+      medicaleList.add(pressure == "0" ? "null" : _data['Blud Pressure']);
       medicaleList.add(_data['Height:']);
       medicaleList.add(_data['Blud Group']);
       medicaleList.add(_data['Age']);
       medicaleList.add(_data['Weight']);
       String health = "null";
-      int num = int.parse(pressure);
-      if (_data['Blud Pressure'] == "null") {
-        health = "null";
+      int num1 = int.parse(pressure);
+
+      if (pressure == "0") {
+        pressure = "null";
+        medicaleList.add(pressure);
       } else {
-        if (num < 95) {
+        if (num1 < 95) {
           health = "65.00 %";
-        } else if (num < 128) {
+          medicaleList.add(health);
+        } else if (num1 < 128) {
           health = "95.50 %";
-        } else if (num > 128) {
+          medicaleList.add(health);
+        } else if (num1 > 128) {
           health = "55.50 %";
+          medicaleList.add(health);
         }
       }
-      medicaleList.add(health);
+
       setState(() {});
     });
     super.initState();

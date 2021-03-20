@@ -16,6 +16,7 @@ class FinalRegistrationPage extends StatefulWidget {
   TextEditingController addressController = TextEditingController();
   DateTime date;
   String sex;
+  String imageURL;
 
   FinalRegistrationPage(
       {this.sexController,
@@ -26,7 +27,8 @@ class FinalRegistrationPage extends StatefulWidget {
       this.cityController,
       this.pinCodeController,
       this.addressController,
-      this.sex});
+      this.sex,
+      this.imageURL});
 
   @override
   _FinalRegistrationPageState createState() => _FinalRegistrationPageState();
@@ -243,12 +245,13 @@ class _FinalRegistrationPageState extends State<FinalRegistrationPage> {
       "city": widget.cityController.text,
       "pin_code": widget.pinCodeController.text,
       "address": widget.addressController.text,
-      "type": "patient"
+      "type": "patient",
+      "img": widget.imageURL
     });
     medicale.child(userid).set({
       'Age': "null",
       'Blud Group': "null",
-      'Blud Pressure': "null",
+      'Blud Pressure': "0",
       'Height:': "null",
       'Weight': "null",
     });

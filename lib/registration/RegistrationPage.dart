@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:hospital_management/registration/FinalRegistrationPage.dart';
@@ -26,7 +28,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
   //variable
   String sex = "Mr";
   DateTime date = DateTime.now();
-
+  String imageURL;
+  var imageName;
   //Image
   File image;
   //List And Map
@@ -72,6 +75,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       setState(() {
         if (pickedFile != null) {
           image = File(pickedFile.path);
+          imageName = image.path.split("/").last;
         } else {
           print("Image not select");
         }
@@ -91,8 +95,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   CircleAvatar(
                       radius: 58,
                       backgroundImage: image == null
-                          ? NetworkImage(
-                              'https://atos.net/wp-content/uploads/2017/05/Profile_gray.png')
+                          ? AssetImage('images/user.png')
                           : AssetImage(image.path)),
                   TextButton(
                     onPressed: () {
@@ -220,22 +223,56 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12.0)),
                           onPressed: () {
-                            if (_formKey.currentState.validate()) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => FinalRegistrationPage(
-                                        sexController: sexController,
-                                        firstNameController:
-                                            firstNameController,
-                                        lastNameController: lastNameController,
-                                        date: date,
-                                        numberController: numberController,
-                                        cityController: cityController,
-                                        pinCodeController: pinCodeController,
-                                        addressController: addressController,
-                                        sex: sex),
-                                  ));
+                            if (_formKey.currentState.validate() &&
+                                image != null) {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Container(
+                                        padding: EdgeInsets.only(
+                                            top: screenHeight * 0.5,
+                                            bottom: screenHeight * 0.4,
+                                            left: screenWidth * 0.4 + 7,
+                                            right: screenWidth * 0.4 + 7),
+                                        height: 30,
+                                        width: 30,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 3.2,
+                                        ));
+                                  });
+                              FirebaseStorage.instance
+                                  .ref()
+                                  .child("registration/$imageName")
+                                  .putFile(image)
+                                  .then((val) => print(val.ref
+                                          .getDownloadURL()
+                                          .then((value) => imageURL = value)
+                                          .then((value) {
+                                        Navigator.pop(context);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  FinalRegistrationPage(
+                                                      sexController:
+                                                          sexController,
+                                                      firstNameController:
+                                                          firstNameController,
+                                                      lastNameController:
+                                                          lastNameController,
+                                                      date: date,
+                                                      numberController:
+                                                          numberController,
+                                                      cityController:
+                                                          cityController,
+                                                      pinCodeController:
+                                                          pinCodeController,
+                                                      addressController:
+                                                          addressController,
+                                                      sex: sex,
+                                                      imageURL: imageURL),
+                                            ));
+                                      })));
                             }
                           },
                           child: Text("Continue"),
