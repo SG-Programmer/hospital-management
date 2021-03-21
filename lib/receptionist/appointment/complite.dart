@@ -67,6 +67,7 @@ class _CompliteState extends State<Complite> {
                           " " +
                           onlinePatientData[onKey]['last_name'],
                       "number": onlinePatientData[onKey]['number'],
+                      "img": onlinePatientData[onKey]['img'],
                       "time": appoinmentdata[aKey]['time'],
                       'token_no': appoinmentdata[aKey]['token_no'],
                     });
@@ -124,10 +125,16 @@ class _CompliteState extends State<Complite> {
                       children: [
                         Row(
                           children: [
-                            Icon(
-                              Icons.supervised_user_circle,
-                              size: screenHeight * 0.06,
-                            ),
+                            if (bookList[index]['img'] != null)
+                              CircleAvatar(
+                                backgroundImage:
+                                    NetworkImage(bookList[index]['img']),
+                              ),
+                            if (bookList[index]['img'] == null)
+                              Icon(
+                                Icons.supervised_user_circle,
+                                size: screenHeight * 0.06,
+                              ),
                             SizedBox(
                               width: screenWidth * 0.02,
                             ),

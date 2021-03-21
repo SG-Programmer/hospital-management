@@ -66,14 +66,16 @@ class _PatientListState extends State<PatientList> {
         if (_data[_getOneKey]['email_id'] != "admin@mecare.com" &&
             _data[_getOneKey]['email_id'] != "doctor@mecare.com") {
           PatientListData patientListData = new PatientListData(
-              _data[_getOneKey]['first_name'],
-              _data[_getOneKey]['last_name'],
-              _data[_getOneKey]['user_name'],
-              _data[_getOneKey]['email_id'],
-              _data[_getOneKey]['number'],
-              _data[_getOneKey]['address'],
-              _data[_getOneKey]['date'],
-              _data[_getOneKey]['user_id']);
+            _data[_getOneKey]['first_name'],
+            _data[_getOneKey]['last_name'],
+            _data[_getOneKey]['user_name'],
+            _data[_getOneKey]['email_id'],
+            _data[_getOneKey]['number'],
+            _data[_getOneKey]['address'],
+            _data[_getOneKey]['date'],
+            _data[_getOneKey]['user_id'],
+            _data[_getOneKey]['img'],
+          );
           patientData.add(patientListData);
         }
       }
@@ -112,7 +114,8 @@ class _PatientListState extends State<PatientList> {
                   Row(
                     children: [
                       CircleAvatar(
-                        backgroundImage: profilePhoto[index],
+                        backgroundImage:
+                            NetworkImage(patientData[index].imgUrl),
                       ),
                       SizedBox(
                         width: screenWidth * 0.05,
@@ -130,6 +133,7 @@ class _PatientListState extends State<PatientList> {
                                   number: patientData[index].numberP,
                                   date: patientData[index].brithDateP,
                                   address: patientData[index].addressP,
+                                  imgUrl: patientData[index].imgUrl,
                                 ),
                               ));
                         },
@@ -165,7 +169,7 @@ class _PatientListState extends State<PatientList> {
                                   builder: (context) => ChatPage(
                                     patientData[index].userNameP,
                                     patientData[index].userIdP,
-                                    profilePhoto[index],
+                                    NetworkImage(patientData[index].imgUrl),
                                   ),
                                 ));
                           })

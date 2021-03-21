@@ -66,6 +66,7 @@ class _OnlineState extends State<Online> {
                       'token_id': _appoinment,
                       'first_name': _patientdata[_patien]['first_name'],
                       'last_name': _patientdata[_patien]['last_name'],
+                      'img': _patientdata[_patien]['img'],
                       'user_id': _patientdata[_patien]['user_id'],
                       'number': _patientdata[_patien]['number'],
                       'token_no': _appoinmentData[_appoinment]['token_no'],
@@ -109,9 +110,9 @@ class _OnlineState extends State<Online> {
                                 children: [
                                   Row(
                                     children: [
-                                      Icon(
-                                        Icons.supervised_user_circle,
-                                        size: screenHeight * 0.05,
+                                      CircleAvatar(
+                                        backgroundImage: NetworkImage(
+                                            _appoinmentDatails[index]['img']),
                                       ),
                                       Padding(
                                         padding: EdgeInsets.only(

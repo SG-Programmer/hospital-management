@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hospital_management/utils/size.dart';
 
 class PatientDatails extends StatefulWidget {
-  String userName, firstName, lastName, email, number, date, address;
+  String userName, firstName, lastName, email, number, date, address, imgUrl;
   PatientDatails(
       {this.userName,
       this.firstName,
@@ -10,7 +10,8 @@ class PatientDatails extends StatefulWidget {
       this.email,
       this.number,
       this.date,
-      this.address});
+      this.address,
+      this.imgUrl});
   @override
   _PatientDatailsState createState() => _PatientDatailsState();
 }
@@ -64,9 +65,9 @@ class _PatientDatailsState extends State<PatientDatails> {
             ]),
             child: Column(
               children: [
-                Icon(
-                  Icons.supervised_user_circle_outlined,
-                  size: 69.0,
+                CircleAvatar(
+                  radius: 42,
+                  backgroundImage: NetworkImage(widget.imgUrl),
                 ),
                 SizedBox(
                   height: screenHeight * 0.02,
