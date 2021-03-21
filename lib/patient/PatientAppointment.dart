@@ -97,15 +97,15 @@ class _PatientAppointmentState extends State<PatientAppointment> {
 
   static String patientName = "........";
   static String userName = "....";
+  static String imgUrl = "";
 
-  @override
-  void initState() {
-    var email = FirebaseAuth.instance.currentUser.uid;
-    patient.orderByChild('user_id').equalTo(email).once().then((value) {
-      patientName = value.value[email]['first_name'] +
-          " " +
-          value.value[email]['last_name'];
-      userName = value.value[email]['user_name'];
+  _getProfile() {
+    var id = FirebaseAuth.instance.currentUser.uid;
+    patient.orderByChild('user_id').equalTo(id).once().then((value) {
+      patientName =
+          value.value[id]['first_name'] + " " + value.value[id]['last_name'];
+      userName = value.value[id]['user_name'];
+      imgUrl = value.value[id]['img'];
     });
     medicaleDetail.once().then((DataSnapshot snap) {
       var _data = snap.value[FirebaseAuth.instance.currentUser.uid];
@@ -137,6 +137,11 @@ class _PatientAppointmentState extends State<PatientAppointment> {
 
       setState(() {});
     });
+  }
+
+  @override
+  void initState() {
+    _getProfile();
     super.initState();
   }
 
@@ -169,9 +174,9 @@ class _PatientAppointmentState extends State<PatientAppointment> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Icon(
-                      Icons.supervised_user_circle,
-                      size: 78,
+                    CircleAvatar(
+                      radius: 45.6,
+                      backgroundImage: NetworkImage(imgUrl),
                     ),
                     SizedBox(width: screenWidth * 0.03),
                     Column(

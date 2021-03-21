@@ -29,12 +29,14 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
       FirebaseDatabase.instance.reference().child("doctor_detail");
   DatabaseReference _notes =
       FirebaseDatabase.instance.reference().child("notes");
-  String doctorUserName = "";
-  String doctroFirstName = "";
-  String doctroLastName = "";
-  String doctorStstus = "";
-  String doctorabout = "";
-  String doctorUserId = "";
+  static String doctorUserName = "";
+  static String doctroFirstName = "";
+  static String doctroLastName = "";
+  static String doctorStstus = "";
+  static String doctorabout = "";
+  static String doctorUserId = "";
+  static String imgUrl =
+      "https://cdn0.iconfinder.com/data/icons/seo-web-optimization-3/24/148-512.png";
   @override
   void initState() {
     super.initState();
@@ -46,7 +48,8 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
           snap.value['last_name'],
           snap.value['status'],
           snap.value['about'],
-          snap.value['user_id']);
+          snap.value['user_id'],
+          snap.value['img']);
       doctorDatailList.add(doctorDatailData);
       setState(() {
         doctorUserName = doctorDatailList[0].userNameP;
@@ -55,6 +58,7 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
         doctorStstus = doctorDatailList[0].ststusP;
         doctorabout = doctorDatailList[0].aboutP;
         doctorUserId = doctorDatailList[0].userIdP;
+        imgUrl = doctorDatailList[0].imgUrlP;
       });
     });
   }
@@ -136,7 +140,7 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
                   child: Row(
                     children: [
                       CircleAvatar(
-                          radius: 34.0, backgroundImage: widget.doctorPhoto),
+                          radius: 34.0, backgroundImage: NetworkImage(imgUrl)),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -169,7 +173,7 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
                                         builder: (context) => ChatPage(
                                           doctorUserName,
                                           doctorUserId,
-                                          widget.doctorPhoto,
+                                          NetworkImage(imgUrl),
                                         ),
                                       ));
                                 },
@@ -199,7 +203,7 @@ class _DoctorDatailPageState extends State<DoctorDatailPage> {
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 AppointmentPage(
-                                              doctorPhoto: widget.doctorPhoto,
+                                              doctorPhoto: NetworkImage(imgUrl),
                                               doctorName: doctroFirstName +
                                                   " " +
                                                   doctroLastName,
