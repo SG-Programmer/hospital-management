@@ -19,8 +19,6 @@ class _DoctorHomeState extends State<DoctorHome> {
 
   //Var
   List<Map<String, dynamic>> _appointmentList = [];
-  NetworkImage _photo = NetworkImage(
-      'https://i.pinimg.com/236x/ed/6c/38/ed6c382b3bf83cba46adb1efec0e49b6.jpg');
   List<String> listOfMenu = ["Medicin", "Symptoms", "Notification"];
   var addlist = ["medicine", "symptoms", "notification"];
   TextEditingController _addController = TextEditingController();
@@ -113,7 +111,8 @@ class _DoctorHomeState extends State<DoctorHome> {
                               'gender': _onlineData[onlineKeys]['sex'],
                               'email_id': _onlineData[onlineKeys]['email_id'],
                               'appointmentDtae': _data[key]['date'],
-                              'appointmentTime': _data[key]['time']
+                              'appointmentTime': _data[key]['time'],
+                              'img': _onlineData[onlineKeys]['img'],
                             });
                           }
                         }
@@ -131,7 +130,9 @@ class _DoctorHomeState extends State<DoctorHome> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => DoctorPatientDetail(
-                                    _appointmentList[index], _photo),
+                                    _appointmentList[index],
+                                    NetworkImage(
+                                        _appointmentList[index]['img'])),
                               ));
                         },
                         child: Container(

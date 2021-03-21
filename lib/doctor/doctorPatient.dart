@@ -182,6 +182,7 @@ class _DoctorPatientState extends State<DoctorPatient> {
                                   'user_name': _data[item]['user_name'],
                                   'gender': _data[item]['sex'],
                                   'email_id': _data[item]['email_id'],
+                                  'img': _data[item]['img'],
                                 });
                               }
                               if (_data[item]['sex'] == "Mis" &&
@@ -195,6 +196,7 @@ class _DoctorPatientState extends State<DoctorPatient> {
                                   'user_name': _data[item]['user_name'],
                                   'gender': _data[item]['sex'],
                                   'email_id': _data[item]['email_id'],
+                                  'img': _data[item]['img'],
                                 });
                               }
                               if (_all == true) {
@@ -207,6 +209,7 @@ class _DoctorPatientState extends State<DoctorPatient> {
                                   'user_name': _data[item]['user_name'],
                                   'gender': _data[item]['sex'],
                                   'email_id': _data[item]['email_id'],
+                                  'img': _data[item]['img'],
                                 });
                               }
                             }
@@ -219,17 +222,18 @@ class _DoctorPatientState extends State<DoctorPatient> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => DoctorPatientDetail(
-                                              _datalist[index],
-                                              NetworkImage(
-                                                  'https://i.pinimg.com/236x/ed/6c/38/ed6c382b3bf83cba46adb1efec0e49b6.jpg')),
+                                          builder: (context) =>
+                                              DoctorPatientDetail(
+                                                  _datalist[index],
+                                                  NetworkImage(
+                                                      _datalist[index]['img'])),
                                         ));
                                   },
                                   child: ListTile(
                                       leading: CircleAvatar(
                                         radius: 29,
-                                        child: Icon(
-                                            Icons.supervised_user_circle_sharp),
+                                        backgroundImage: NetworkImage(
+                                            _datalist[index]['img']),
                                       ),
                                       title: Text(_datalist[index]
                                               ['first_name'] +
@@ -246,13 +250,15 @@ class _DoctorPatientState extends State<DoctorPatient> {
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) => ChatPage(
-                                                      _datalist[index]
-                                                          ['user_name'],
-                                                      _datalist[index]
-                                                          ['user_id'],
-                                                      NetworkImage(
-                                                          "https://i.pinimg.com/236x/ed/6c/38/ed6c382b3bf83cba46adb1efec0e49b6.jpg"))));
+                                                  builder: (context) =>
+                                                      ChatPage(
+                                                          _datalist[index]
+                                                              ['user_name'],
+                                                          _datalist[index]
+                                                              ['user_id'],
+                                                          NetworkImage(
+                                                              _datalist[index]
+                                                                  ['img']))));
                                         },
                                       )),
                                 );

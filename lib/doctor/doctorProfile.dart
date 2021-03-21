@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:hospital_management/doctor/noteDetails.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../registration/LoginPage.dart';
 import '../utils/size.dart';
@@ -29,7 +33,13 @@ class _DoctorProfileState extends State<DoctorProfile> {
   //Variables
   bool submitButtonShow = false;
   bool shoTextField = false;
-
+  String imgUrl =
+      "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F939365%2Floading_arrows_profile_profile_synchronization_sync_synchronization_icon&psig=AOvVaw2FXZ2KS6ZaT0R9Fxt5kHm7&ust=1616393720589000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCKjp4oLewO8CFQAAAAAdAAAAABAD";
+  String imageURL;
+  var imageName;
+  //Image
+  File image;
+  //List And Map
   _textField(String lableName, TextEditingController _textController,
       String Function(String) _valatidator) {
     return Padding(
@@ -101,7 +111,21 @@ class _DoctorProfileState extends State<DoctorProfile> {
         lastNameController.text = value.value['last_name'];
         statusController.text = value.value['status'];
         aboutController.text = value.value['about'];
+        imgUrl = value.value['img'];
       });
+    });
+  }
+
+  final picker = ImagePicker();
+  Future imagePicker() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        image = File(pickedFile.path);
+        imageName = image.path.split("/").last;
+      } else {
+        print("Image not select");
+      }
     });
   }
 
@@ -150,7 +174,9 @@ class _DoctorProfileState extends State<DoctorProfile> {
               ),
               CircleAvatar(
                 radius: screenHeight * 0.06 + 5,
-                child: Icon(Icons.supervised_user_circle_outlined),
+                backgroundImage: image == null
+                    ? NetworkImage(imgUrl)
+                    : AssetImage(image.path),
               ),
               SizedBox(
                 height: screenHeight * 0.01 + 6,
@@ -164,7 +190,9 @@ class _DoctorProfileState extends State<DoctorProfile> {
                       fontWeight: FontWeight.w500),
                 ),
                 onTap: () {
-                  print('Change profile');
+                  if (submitButtonShow == true) {
+                    imagePicker();
+                  }
                 },
               ),
               SizedBox(
@@ -194,15 +222,39 @@ class _DoctorProfileState extends State<DoctorProfile> {
                               if (_formKey.currentState.validate()) {
                                 submitButtonShow = false;
                                 shoTextField = false;
-                                _doctordatail.update({
-                                  'first_name': firstNameController.text,
-                                  'last_name': lastNameController.text,
-                                  'status': statusController.text,
-                                  'about': aboutController.text
-                                }).then((value) {
-                                  _getData();
-                                  Navigator.pop(context);
-                                });
+
+                                if (image == null) {
+                                  _doctordatail.update({
+                                    'first_name': firstNameController.text,
+                                    'last_name': lastNameController.text,
+                                    'status': statusController.text,
+                                    'about': aboutController.text
+                                  }).then((value) {
+                                    _getData();
+                                    Navigator.pop(context);
+                                  });
+                                } else {
+                                  FirebaseStorage.instance
+                                      .ref()
+                                      .child('registration/$imageName')
+                                      .putFile(image)
+                                      .then((val) =>
+                                          val.ref.getDownloadURL().then((url) {
+                                            imageURL = url;
+                                            _doctordatail.update({
+                                              'first_name':
+                                                  firstNameController.text,
+                                              'last_name':
+                                                  lastNameController.text,
+                                              'status': statusController.text,
+                                              'about': aboutController.text,
+                                              'img': url
+                                            }).then((value) {
+                                              _getData();
+                                              Navigator.pop(context);
+                                            });
+                                          }));
+                                }
                               }
                             });
                           },
