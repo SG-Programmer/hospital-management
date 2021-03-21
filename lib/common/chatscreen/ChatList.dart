@@ -23,25 +23,6 @@ class _ChatListState extends State<ChatList> {
     Icons.supervised_user_circle,
   ];
 
-  List<NetworkImage> profilePhoto = [
-    NetworkImage(
-        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-    NetworkImage(
-        'https://sm.askmen.com/askmen_in/article/f/facebook-p/facebook-profile-picture-affects-chances-of-gettin_gstt.jpg'),
-    NetworkImage(
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU53EcOIyxE7pOZJBvGHJGbDk39EYxvOhbdw&usqp=CAU'),
-    NetworkImage(
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5KVsWtDwcdLRc9q1P9N8leBy_zz9gfKZK1Q&usqp=CAU'),
-    NetworkImage(
-        'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mnx8bWFsZSUyMHByb2ZpbGV8ZW58MHx8MHw%3D&ixlib=rb-1.2.1&w=1000&q=80'),
-    NetworkImage(
-        'https://sm.askmen.com/askmen_in/article/f/facebook-p/facebook-profile-picture-affects-chances-of-gettin_gstt.jpg'),
-    NetworkImage(
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU53EcOIyxE7pOZJBvGHJGbDk39EYxvOhbdw&usqp=CAU'),
-    NetworkImage(
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5KVsWtDwcdLRc9q1P9N8leBy_zz9gfKZK1Q&usqp=CAU')
-  ];
-
   List userKeys = [];
   List<Map<String, dynamic>> userDetails = [{}];
   bool allButtonColor = true;
@@ -142,18 +123,20 @@ class _ChatListState extends State<ChatList> {
                       if (_data[item]['user_id'] !=
                           FirebaseAuth.instance.currentUser.uid) {
                         userKeys.add(item);
+
                         userDetails.add({
                           "first_name": _data[item]['first_name'],
                           "last_name": _data[item]['last_name'],
                           "user_name": _data[item]['user_name'],
                           "email_id": _data[item]['email_id'],
-                          "user_id": _data[item]['user_id']
+                          "user_id": _data[item]['user_id'],
+                          "img": _data[item]['img']
                         });
                       }
                     }
 
                     return ListView.builder(
-                      itemCount: userKeys.length - 1,
+                      itemCount: userKeys.length,
                       itemBuilder: (context, index) {
                         return ListTile(
                           onTap: () {
@@ -163,13 +146,15 @@ class _ChatListState extends State<ChatList> {
                                   builder: (context) => ChatPage(
                                     userDetails[index]['user_name'],
                                     userDetails[index]['user_id'],
-                                    profilePhoto[index],
+                                    NetworkImage(userDetails[index]['img']),
                                   ),
                                 ));
                           },
                           leading: CircleAvatar(
                             child: CircleAvatar(
-                              backgroundImage: profilePhoto[index],
+                              backgroundImage: NetworkImage(
+                                  userDetails[index]['img'],
+                                  scale: 2.0),
                             ),
                           ),
                           title: Text(
