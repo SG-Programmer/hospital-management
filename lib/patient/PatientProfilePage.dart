@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:hospital_management/patient/pataientDetails.dart';
@@ -37,6 +38,7 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
 
   //file
   File image;
+  String imageName;
 
   @override
   void initState() {
@@ -188,6 +190,7 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
     setState(() {
       if (pick != null) {
         image = File(pick.path);
+        imageName = image.path.split("/").last;
       } else {
         print('image not picked');
       }
@@ -338,13 +341,52 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                 strokeWidth: 3.2,
               ));
         });
-    _databaseReference.child(FirebaseAuth.instance.currentUser.uid).update({
-      "first_name": firstNameController.text,
-      "last_name": lastNameController.text,
-      "number": numberController.text,
-      "city": cityController.text,
-      "pin_code": pinCodeController.text,
-      "address": addressController.text,
-    }).then((value) => Navigator.pop(context));
+    if (image == null) {
+      _databaseReference.child(FirebaseAuth.instance.currentUser.uid).update({
+        "first_name": firstNameController.text,
+        "last_name": lastNameController.text,
+        "number": numberController.text,
+        "city": cityController.text,
+        "pin_code": pinCodeController.text,
+        "address": addressController.text,
+      }).then((value) {
+        pFirstName = firstNameController.text;
+        pLastName = lastNameController.text;
+        pNumber = numberController.text;
+        pCity = cityController.text;
+        pPinCode = pinCodeController.text;
+        pAddress = addressController.text;
+        Navigator.pop(context);
+      });
+    } else {
+      FirebaseStorage.instance
+          .ref()
+          .child('registration/$imageName')
+          .putFile(image)
+          .then((val) {
+        val.ref.getDownloadURL().then((url) {
+          _databaseReference
+              .child(FirebaseAuth.instance.currentUser.uid)
+              .update({
+            "first_name": firstNameController.text,
+            "last_name": lastNameController.text,
+            "number": numberController.text,
+            "city": cityController.text,
+            "pin_code": pinCodeController.text,
+            "address": addressController.text,
+            "img": url
+          }).then((value) {
+            pimageURL = url;
+            pFirstName = firstNameController.text;
+            pLastName = lastNameController.text;
+            pNumber = numberController.text;
+            pCity = cityController.text;
+            pPinCode = pinCodeController.text;
+            pAddress = addressController.text;
+            Navigator.pop(context);
+          });
+        });
+      });
+    }
   }
 }
