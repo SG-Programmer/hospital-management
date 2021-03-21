@@ -45,6 +45,7 @@ class _DashBordState extends State<DashBord> {
             'token_no': data['token_no'],
             'first_name': snap.value['first_name'],
             'last_name': snap.value['last_name'],
+            'img': snap.value['img'],
           });
         });
       }
@@ -276,11 +277,17 @@ class _DashBordState extends State<DashBord> {
                                         _list[index]['last_name'])
                                   ],
                                 ),
-                                Icon(
-                                  Icons.supervised_user_circle,
-                                  color: Colors.blue[900],
-                                  size: 32.0,
-                                ),
+                                if (_list[index]['img'] != null)
+                                  CircleAvatar(
+                                    backgroundImage:
+                                        NetworkImage(_list[index]['img']),
+                                  ),
+                                if (_list[index]['img'] == null)
+                                  Icon(
+                                    Icons.supervised_user_circle,
+                                    color: Colors.blue[900],
+                                    size: 32.0,
+                                  ),
                               ],
                             ),
                           ));

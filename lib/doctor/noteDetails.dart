@@ -90,6 +90,7 @@ class _NoteDetailsState extends State<NoteDetails> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextFormField(
+                      autofocus: true,
                       controller: noteController,
                     ),
                   ),

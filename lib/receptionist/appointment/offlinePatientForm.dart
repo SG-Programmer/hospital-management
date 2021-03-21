@@ -10,6 +10,9 @@ class OfflinePatientForm extends StatefulWidget {
 }
 
 class _OfflinePatientFormState extends State<OfflinePatientForm> {
+  _OfflinePatientFormState() {
+    _getData();
+  }
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   //TextField Controller
@@ -30,6 +33,22 @@ class _OfflinePatientFormState extends State<OfflinePatientForm> {
   //firebase
   DatabaseReference _offlinePatient =
       FirebaseDatabase.instance.reference().child('offlinePatient');
+  //Firebase reference
+  DatabaseReference _doctordatail =
+      FirebaseDatabase.instance.reference().child('doctor_detail');
+  static String firstName = "";
+  static String lastName = "";
+  static String imgUrl = "s";
+
+  _getData() {
+    _doctordatail.once().then((value) {
+      setState(() {
+        firstName = value.value['first_name'];
+        lastName = value.value['last_name'];
+        imgUrl = value.value['img'];
+      });
+    });
+  }
 
   selectDate(BuildContext context) async {
     date = await showDatePicker(
@@ -234,8 +253,9 @@ class _OfflinePatientFormState extends State<OfflinePatientForm> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => AppointmentPage(
-                                        doctorName: "jatin Patel",
+                                        doctorName: firstName + " " + lastName,
                                         offlineUserId: _offlineUserKey,
+                                        doctorPhoto: NetworkImage(imgUrl),
                                       ),
                                     ));
                               });

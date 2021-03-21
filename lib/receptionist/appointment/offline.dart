@@ -12,10 +12,28 @@ class Offline extends StatefulWidget {
 
 class _OfflineState extends State<Offline> {
   Query _query;
+  //Firebase reference
+  DatabaseReference _doctordatail =
+      FirebaseDatabase.instance.reference().child('doctor_detail');
+
+  static String firstName = "";
+  static String lastName = "";
+  static String imgUrl = "s";
+
+  _getData() {
+    _doctordatail.once().then((value) {
+      setState(() {
+        firstName = value.value['first_name'];
+        lastName = value.value['last_name'];
+        imgUrl = value.value['img'];
+      });
+    });
+  }
 
   @override
   void initState() {
     _query = FirebaseDatabase.instance.reference().child('offlinePatient');
+    _getData();
     super.initState();
   }
 
@@ -26,8 +44,9 @@ class _OfflineState extends State<Offline> {
             context,
             MaterialPageRoute(
               builder: (context) => AppointmentPage(
-                doctorName: "Dr.Jatina patel",
+                doctorName: firstName + " " + lastName,
                 offlineUserId: _data['user_id'],
+                doctorPhoto: NetworkImage(imgUrl),
               ),
             ));
       },
