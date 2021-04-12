@@ -29,6 +29,13 @@ class _PatientDashbordState extends State<PatientDashbord> {
     Icons.supervised_user_circle_outlined
   ];
 
+  List<AssetImage> bannerlist = [
+    AssetImage("images/banner2.png"),
+    AssetImage("images/banner1.jpg"),
+    AssetImage("images/banner4.jpg"),
+    AssetImage("images/baner3.jpg"),
+  ];
+
   List<String> iconNameList = ['Home', 'Doctor/Appointment', 'Chat', 'Profile'];
 
   DatabaseReference _databasereference =
@@ -209,7 +216,7 @@ class _PatientDashbordState extends State<PatientDashbord> {
           Padding(
             padding: EdgeInsets.only(
                 left: screenPaddingSide, top: screenHeight * 0.02),
-            child: Text("Popular categories",
+            child: Text("Me Care",
                 style: TextStyle(
                     color: Colors.black87,
                     fontWeight: FontWeight.w700,
@@ -226,7 +233,7 @@ class _PatientDashbordState extends State<PatientDashbord> {
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: DotsIndicator(
-                    dotsCount: 3,
+                    dotsCount: bannerlist.length,
                     position: pageInd,
                     axis: Axis.vertical,
                     decorator: DotsDecorator(
@@ -243,7 +250,7 @@ class _PatientDashbordState extends State<PatientDashbord> {
                   width: screenWidth * 0.9,
                   child: PageView.builder(
                       scrollDirection: Axis.vertical,
-                      itemCount: 3,
+                      itemCount: bannerlist.length,
                       onPageChanged: (index) {
                         setState(() {
                           pageInd = index.toDouble();
@@ -251,17 +258,20 @@ class _PatientDashbordState extends State<PatientDashbord> {
                       },
                       itemBuilder: (BuildContext context, index) {
                         return Container(
-                          height: screenHeight * 0.2,
-                          width: screenWidth * 0.9,
-                          margin: EdgeInsets.only(
-                              left: screenPaddingSide,
-                              top: screenHeight * 0.01,
-                              bottom: screenHeight * 0.01),
-                          decoration: BoxDecoration(
-                              color: Colors.red[500],
-                              borderRadius: BorderRadius.circular(13)),
-                          child: Text("fsdff"),
-                        );
+                            height: screenHeight * 0.2,
+                            width: screenWidth * 0.9,
+                            margin: EdgeInsets.only(
+                                left: screenPaddingSide,
+                                top: screenHeight * 0.01,
+                                bottom: screenHeight * 0.01),
+                            decoration: BoxDecoration(
+                                color: Colors.red[500],
+                                borderRadius: BorderRadius.circular(13)),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(13),
+                              child: Image(
+                                  fit: BoxFit.fill, image: bannerlist[index]),
+                            ));
                       })),
             ],
           ),

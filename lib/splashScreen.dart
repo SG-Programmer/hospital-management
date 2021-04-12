@@ -70,20 +70,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     ScreenSize.setSize(context);
-    return Container(
-      color: Colors.red,
-      child: Center(
-        child: MaterialButton(
-            child: Text("presss ME"),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PatientDashbord(),
-                ),
-              );
-            }),
-      ),
-    );
+    return Image(
+        fit: BoxFit.fill, image: AssetImage('images/splashscrrren.jpg'));
   }
 }

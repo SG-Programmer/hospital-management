@@ -7,6 +7,7 @@ import 'package:hospital_management/doctor/doctorHomePage.dart';
 import 'package:hospital_management/patient/PatientDashbord.dart';
 import 'package:hospital_management/receptionist/DashBord.dart';
 import 'package:hospital_management/registration/RegistrationPage.dart';
+import 'package:hospital_management/registration/forgotPassword.dart';
 import 'package:hospital_management/utils/size.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -131,11 +132,20 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(
                           height: screenHeight * 0.02,
                         ),
-                        Text(
-                          "Forgot Password ?",
-                          style: TextStyle(
-                              color: Color(0xff272549),
-                              fontWeight: FontWeight.w600),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ForgotPassword(),
+                                ));
+                          },
+                          child: Text(
+                            "Forgot Password ?",
+                            style: TextStyle(
+                                color: Color(0xff272549),
+                                fontWeight: FontWeight.w600),
+                          ),
                         ),
                         SizedBox(
                           height: screenHeight * 0.04,
