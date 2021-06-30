@@ -2,6 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sparkline/flutter_sparkline.dart';
 import 'package:hospital_management/receptionist/HomPage.dart';
+import 'package:hospital_management/receptionist/star.dart';
 import 'package:hospital_management/registration/LoginPage.dart';
 import 'package:hospital_management/utils/size.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -326,11 +327,17 @@ class _DashBordState extends State<DashBord> {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => HomePage(index),
-                                ));
+                            index == 4
+                                ? Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Star(),
+                                    ))
+                                : Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HomePage(index),
+                                    ));
                           },
                           child: Container(
                               alignment: Alignment.center,
